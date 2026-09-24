@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics Notes — 9702</title>
+<style>
+:root{
+  --bg: #faf9f6;
+  --panel: #ffffff;
+  --ink: #1c1c1c;
+  --ink-soft: #52524f;
+  --rule: #ddd8cc;
+  --module: #1f3a5f;
+  --subtopic: #0f5c4a;
+  --accent: #b8452f;
+  --accent-bg: #fbeae5;
+  --formula-bg: #eef2f7;
+  --formula-border: #b7c6dd;
+  --example-bg: #f4f7ee;
+  --example-border: #c3d1a8;
+  --priority-bg: #fff3d6;
+  --priority-border: #e2b23c;
+  --priority-ink: #7a5300;
+  --recall-bg: #f2f0fb;
+  --recall-border: #cabde8;
+  --mono-bg: #f0efe9;
+  --warn-bg: #fdeceb;
+  --warn-border: #d98f85;
+  --warn-ink: #8a2f24;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#181a17; --panel:#20231f; --ink:#eae7dd; --ink-soft:#b7b3a4;
+    --rule:#3a3d35; --module:#8fb4e0; --subtopic:#6fd4ae; --accent:#e59379;
+    --accent-bg:#3a2620; --formula-bg:#20293a; --formula-border:#3c5578;
+    --example-bg:#232a1e; --example-border:#4c5f34; --priority-bg:#3a2f10;
+    --priority-border:#8a6a1f; --priority-ink:#f0c569; --recall-bg:#251f34;
+    --recall-border:#4d3f6b; --mono-bg:#26281f;
+    --warn-bg:#3a201c; --warn-border:#8a453a; --warn-ink:#f0a99a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#181a17; --panel:#20231f; --ink:#eae7dd; --ink-soft:#b7b3a4;
+  --rule:#3a3d35; --module:#8fb4e0; --subtopic:#6fd4ae; --accent:#e59379;
+  --accent-bg:#3a2620; --formula-bg:#20293a; --formula-border:#3c5578;
+  --example-bg:#232a1e; --example-border:#4c5f34; --priority-bg:#3a2f10;
+  --priority-border:#8a6a1f; --priority-ink:#f0c569; --recall-bg:#251f34;
+  --recall-border:#4d3f6b; --mono-bg:#26281f;
+  --warn-bg:#3a201c; --warn-border:#8a453a; --warn-ink:#f0a99a;
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family: "Georgia","Iowan Old Style", serif;
+  font-size:11pt;
+  line-height:1.55;
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px 80px;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:"Helvetica Neue",Arial,sans-serif; color:var(--module); margin:0;}
+
+header{
+  position:sticky; top:0; z-index:20;
+  background:var(--bg);
+  padding:18px 0 10px;
+  border-bottom:2px solid var(--module);
+}
+header h1{font-size:19pt; letter-spacing:.2px;}
+header .subtitle{color:var(--ink-soft); font-size:10.5pt; margin-top:2px;}
+header .back{
+  display:inline-block; margin-top:8px; font-family:"Helvetica Neue",Arial,sans-serif;
+  font-size:9pt; color:var(--module); text-decoration:none; border:1px solid var(--rule);
+  padding:3px 10px; border-radius:20px;
+}
+nav.toc{ margin-top:12px; display:flex; flex-wrap:wrap; gap:6px 10px; }
+nav.toc a{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:9pt; color:var(--module);
+  text-decoration:none; background:var(--panel); border:1px solid var(--rule);
+  padding:4px 10px; border-radius:20px; white-space:nowrap;
+}
+nav.toc a:hover{border-color:var(--module);}
+
+section.module{ margin-top:38px; padding-top:6px; }
+section.module > h2{ font-size:16pt; padding-bottom:6px; border-bottom:1px solid var(--rule); margin-bottom:14px; }
+.cornell{ display:grid; grid-template-columns: 1fr 230px; gap:22px; align-items:start; }
+.cornell .main{min-width:0;}
+.cornell .margin{ border-left:2px dashed var(--rule); padding-left:16px; }
+@media (max-width:760px){
+  .cornell{grid-template-columns:1fr;}
+  .cornell .margin{border-left:none; border-top:2px dashed var(--rule); padding-left:0; padding-top:12px;}
+}
+
+h3.subtopic{font-size:14pt; color:var(--subtopic); margin:22px 0 8px;}
+h3.subtopic:first-child{margin-top:0;}
+p{margin:8px 0;}
+
+.box{ border-radius:8px; padding:12px 14px; margin:12px 0; font-size:11pt; }
+.box > :first-child{margin-top:0;}
+.box > :last-child{margin-bottom:0;}
+.def{background:var(--panel); border:1px solid var(--rule); border-left:4px solid var(--module);}
+.def .label, .formula .label, .example .label, .warn .label{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.5pt; font-weight:700; letter-spacing:.6px;
+  text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:4px;
+}
+.formula{background:var(--formula-bg); border:1px solid var(--formula-border);}
+.formula .expr{font-size:13pt; font-family:"Cambria Math","Georgia",serif; text-align:center; margin:6px 0;}
+.example{background:var(--example-bg); border:1px solid var(--example-border);}
+.example .label{color:#5a7233;}
+.warn{background:var(--warn-bg); border:1px solid var(--warn-border);}
+.warn .label{color:var(--warn-ink);}
+.warn::before{content:"⚠ ";}
+.gap{background:var(--formula-bg); border:1px dashed var(--formula-border);}
+.gap::before{
+  content:"⊕ NOT IN YOUR NOTES — SYLLABUS POINT"; display:block;
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.5pt; font-weight:700; letter-spacing:.6px;
+  color:var(--module); margin-bottom:4px;
+}
+.extra{background:var(--example-bg); border:1px dashed var(--subtopic);}
+.extra::before{
+  content:"➕ EXTRA — BEYOND SYLLABUS WORDING"; display:block;
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.5pt; font-weight:700; letter-spacing:.6px;
+  color:var(--subtopic); margin-bottom:4px;
+}
+
+.quiz{background:var(--panel); border:1px solid var(--rule); border-radius:10px; padding:16px 18px; margin:20px 0;}
+.quiz > h4{font-size:12pt; color:var(--module); margin:0 0 10px;}
+.quiz-item{border-top:1px solid var(--rule); padding:10px 0;}
+.quiz-item:first-of-type{border-top:none; padding-top:0;}
+.quiz-item summary{cursor:pointer; font-weight:600; font-size:10.5pt;}
+.quiz-item summary::marker{color:var(--module);}
+.quiz-item .qanswer{margin-top:8px; padding:8px 10px; background:var(--recall-bg); border:1px solid var(--recall-border); border-radius:6px; font-size:10pt;}
+code, .mono{
+  font-family:"SF Mono","Menlo",monospace; background:var(--mono-bg); padding:1px 5px;
+  border-radius:4px; font-size:10pt;
+}
+.steps{margin:6px 0 4px 0; padding-left:20px;}
+.steps li{margin:4px 0;}
+
+.table-wrap{overflow-x:auto; margin:10px 0; -webkit-overflow-scrolling:touch;}
+.table-wrap table{margin:0;}
+table.bits{border-collapse:collapse; margin:8px 0; font-family:"SF Mono",monospace; font-size:9.5pt;}
+table.bits td{border:1px solid var(--rule); padding:3px 6px; text-align:center;}
+table.range{border-collapse:collapse; width:100%; min-width:480px; font-size:9.5pt;}
+table.range th, table.range td{border:1px solid var(--rule); padding:6px 8px; text-align:left; white-space:nowrap;}
+table.range th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt; text-transform:uppercase; letter-spacing:.4px;}
+table.filetable{border-collapse:collapse; width:100%; min-width:420px; font-size:10pt;}
+table.filetable th, table.filetable td{border:1px solid var(--rule); padding:8px 10px; vertical-align:top; text-align:left;}
+table.filetable th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:9pt;}
+table.data{border-collapse:collapse; font-size:9.5pt; font-family:"SF Mono",monospace;}
+table.data th, table.data td{border:1px solid var(--rule); padding:4px 10px; text-align:center;}
+table.data th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt;}
+
+.priority{
+  display:inline-flex; align-items:center; gap:6px; background:var(--priority-bg);
+  border:1px solid var(--priority-border); color:var(--priority-ink);
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8pt; font-weight:700;
+  letter-spacing:.5px; text-transform:uppercase; padding:3px 9px; border-radius:20px; margin:0 0 10px 0;
+}
+.priority::before{content:"★"; font-size:9pt;}
+
+.recall{
+  background:var(--recall-bg); border:1px solid var(--recall-border); border-radius:8px;
+  padding:10px 12px; font-size:9.8pt; margin-bottom:14px;
+}
+.recall .label{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8pt; font-weight:700;
+  text-transform:uppercase; letter-spacing:.5px; color:#6b5a9c; display:block; margin-bottom:4px;
+}
+.recall summary{cursor:pointer; font-weight:600;}
+.recall .answer{margin-top:6px; padding-top:6px; border-top:1px dashed var(--recall-border); color:var(--ink-soft);}
+
+.indexcard{
+  display:block; background:var(--panel); border:1px solid var(--rule); border-left:4px solid var(--module);
+  border-radius:8px; padding:14px 16px; margin:12px 0; text-decoration:none; color:var(--ink);
+}
+.indexcard h3{font-family:"Helvetica Neue",Arial,sans-serif; color:var(--module); font-size:13pt; margin:0 0 4px;}
+.indexcard p{margin:0; color:var(--ink-soft); font-size:10pt;}
+.indexcard:hover{border-left-color:var(--accent);}
+
+footer{margin-top:50px; padding-top:14px; border-top:1px solid var(--rule); font-size:9pt; color:var(--ink-soft); font-family:"Helvetica Neue",sans-serif;}
+
+</style>
+<style>
+  .heatchart{background:var(--panel); border:1px solid var(--rule); border-radius:8px; padding:10px; margin:12px 0;}
+  .heatchart svg{width:100%; height:auto; display:block;}
+  .hc-label{font-family:"Helvetica Neue",sans-serif; font-size:11px; fill:var(--ink-soft);}
+  .chart{background:var(--panel); border:1px solid var(--rule); border-radius:8px; padding:10px; margin:12px 0;}
+  .chart svg{width:100%; height:auto; display:block;}
+  .axis-label{font-family:"Helvetica Neue",sans-serif; font-size:11px; fill:var(--ink-soft);}
+  .tick-label{font-family:"SF Mono",monospace; font-size:9px; fill:var(--ink-soft);}
+  .keyline{border-collapse:collapse; width:100%; font-size:10pt; margin:8px 0;}
+  .keyline th, .keyline td{border:1px solid var(--rule); padding:6px 9px; text-align:left; vertical-align:top;}
+  .keyline th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt;}
+  section.topictitle{margin-top:56px; border-top:4px solid var(--module); padding-top:10px;}
+  section.topictitle h1.topicnum{font-size:20pt; margin:0;}
+  section.topictitle .topicsub{color:var(--ink-soft); font-family:"Helvetica Neue",sans-serif; font-size:10pt;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Physics Notes</h1>
+  <div class="subtitle">Cambridge International A Level Physics (9702) · organised from class notes, checked against the 9702 syllabus (2025–2027)</div>
+  <nav class="toc">
+    <a href="#topic12">12 · Motion in a Circle</a>
+    <a href="#topic14">14 · Temperature</a>
+    <a href="#topic15">15 · Ideal Gases</a>
+    <a href="#topic16">16 · Thermodynamics</a>
+    <a href="#practical">Practical Skills (P3/5)</a>
+  </nav>
+</header>
+
+<p style="margin-top:18px; font-size:9.5pt; color:var(--ink-soft);">
+Key: <span class="priority" style="margin:0;">high-yield</span> = commonly examined &nbsp;·&nbsp;
+<span style="color:var(--warn-ink);">⚠ corrected</span> = a mistake in your original notes, fixed &nbsp;·&nbsp;
+<span style="color:var(--module);">⊕ not in your notes</span> = a syllabus point your notes missed, filled in here &nbsp;·&nbsp;
+<span style="color:var(--subtopic);">➕ extra</span> = in your notes but beyond the syllabus wording — good to know, won't be directly examined
+</p>
+
+<!-- ======================================================= TOPIC 12 ======================================================= -->
+<section class="topictitle" id="topic12">
+  <h1 class="topicnum">Topic 12 · Motion in a Circle</h1>
+  <div class="topicsub">Syllabus 12.1 Kinematics of uniform circular motion · 12.2 Centripetal acceleration</div>
+</section>
+
+<section class="module" id="angular-displacement">
+  <h2>12.1a Angular Displacement (θ)</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">s = rθ</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
+          distance travelled = radius × angular displacement (radians)
+        </p>
+      </div>
+      <div class="def box">
+        <span class="label">Definition — the radian</span>
+        One radian is the angle <strong>subtended</strong> at the centre of a circle where the arc length equals the radius.
+      </div>
+      <div class="formula box">
+        <span class="label">Degrees ⇄ radians</span>
+        π rad = 180°<br>
+        Degrees → radians: <code>× π</code> then <code>÷ 180</code><br>
+        Radians → degrees: <code>× 180</code> then <code>÷ π</code>
+      </div>
+      <div class="table-wrap">
+      <table class="filetable">
+        <tr><th>Fraction of full turn</th><th>Degrees</th><th>Radians</th></tr>
+        <tr><td>1/2</td><td>180°</td><td>π</td></tr>
+        <tr><td>1/4</td><td>90°</td><td>π/2</td></tr>
+        <tr><td>1/6</td><td>60°</td><td>π/3</td></tr>
+        <tr><td>1/8</td><td>45°</td><td>π/4</td></tr>
+        <tr><td>1/10</td><td>36°</td><td>π/5</td></tr>
+        <tr><td>1/20</td><td>18°</td><td>π/10</td></tr>
+      </table>
+      </div>
+      <div class="example box">
+        <span class="label">Worksheet practice — degrees ⇄ radians</span>
+        30° = 0.52 rad &nbsp;·&nbsp; 210° = 3.67 rad &nbsp;·&nbsp; 0.05° = 8.73×10⁻⁴ rad<br>
+        1.0 rad = 57.3° &nbsp;·&nbsp; 4.0 rad = 229.2° &nbsp;·&nbsp; 0.15 rad = 8.6°
+      </div>
+      <div class="example box">
+        <span class="label">Worksheet practice — Mercury's orbit (period = 88 days)</span>
+        44 days → half an orbit → <strong>π ≈ 3.14 rad</strong><br>
+        1 day → (2π / 88) × 1 = <strong>0.071 rad</strong>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your answer for "1 day" was 0.71 rad — a decimal-point slip. (2π/88) × 1 = 0.0714, so it should be <strong>0.071 rad</strong>, ten times smaller.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What condition on arc length defines exactly 1 radian?</summary>
+        <div class="answer">Arc length equal to the radius.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="angular-velocity">
+  <h2>12.1b Speed &amp; Angular Velocity</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="formula box">
+        <span class="label">Speed around a circular path</span>
+        <div class="expr">v = 2πr / t &nbsp;(m s⁻¹)</div>
+      </div>
+      <div class="def box">
+        <span class="label">Definition — angular velocity (ω, omega)</span>
+        The rate of change of angular displacement.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">ω = dθ/dt = 2π / T &nbsp;(rad s⁻¹)</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
+          2π = angle of one full rotation · T = time for one rotation (the period)
+        </p>
+      </div>
+      <div class="def box">
+        <span class="label">Definition — tangential (linear) velocity</span>
+        The speed of a point at a particular position on the circle — directed tangent to the circle at that point.
+      </div>
+      <div class="formula box">
+        <span class="label">Deriving v = rω</span>
+        <div class="expr">s = rθ &nbsp;→&nbsp; ds/dt = r · dθ/dt &nbsp;→&nbsp; v = rω &nbsp;⇔&nbsp; ω = v/r</div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A wheel completes one rotation every 4 s. What is ω?</summary>
+        <div class="answer">ω = 2π / 4 = 1.57 rad s⁻¹.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Rearrange v = rω to make ω the subject.</summary>
+        <div class="answer">ω = v / r</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="centripetal">
+  <h2>12.2 Centripetal Acceleration &amp; Force</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Concept</span>
+        A force of constant magnitude, always perpendicular to the direction of motion, causes centripetal acceleration — and this keeps an object moving in a circle at constant angular speed. This force always points <strong>towards the centre</strong>; the object's velocity is always <strong>tangent</strong> to the circle, so acceleration and velocity are always at 90° to each other.
+      </div>
+      <div class="formula box">
+        <span class="label">Centripetal acceleration</span>
+        <div class="expr">a = v²/r &nbsp;&nbsp;=&nbsp;&nbsp; ω²r</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">(substituting v = ωr)</p>
+      </div>
+      <div class="formula box">
+        <span class="label">Centripetal force (F = ma)</span>
+        <div class="expr">F = mv²/r &nbsp;&nbsp;=&nbsp;&nbsp; mω²r</div>
+      </div>
+      <p>Use <code>v²/r</code> when you know the linear speed, and <code>ω²r</code> when you know the angular velocity (e.g. from a period).</p>
+
+      <h3 class="subtopic">What actually provides the centripetal force?</h3>
+      <div class="table-wrap">
+      <table class="filetable">
+        <tr><th>Situation</th><th>Centripetal force provided by</th></tr>
+        <tr><td>Car cornering at speed</td><td>Friction between tyres and road</td></tr>
+        <tr><td>Planet orbiting the Sun</td><td>Gravitational pull of the Sun</td></tr>
+        <tr><td>Electron orbiting a nucleus</td><td>Electromagnetic (electrostatic) force of attraction</td></tr>
+        <tr><td>Clothes spinning in a washing machine drum</td><td>Contact (normal) force between drum and clothes</td></tr>
+      </table>
+      </div>
+
+      <h3 class="subtopic">Worked examples (Worksheet A2)</h3>
+      <div class="example box">
+        <span class="label">Aeroplane — v = 150 m s⁻¹, r = 20×10³ m, m = 80 kg</span>
+        ω = v/r = 150/20 000 = <strong>7.5×10⁻³ rad s⁻¹</strong><br>
+        a = ω²r = (7.5×10⁻³)² × 20 000 = <strong>1.125 m s⁻²</strong><br>
+        F = ma = 80 × 1.125 = <strong>90 N</strong>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your working wrote ω as 7.5×10³ and used "150" in the a = ω²r step — both look like transcription slips (a positive exponent instead of negative, and v reused where r was needed). The final numbers (1.125 m s⁻² and 90 N) are actually correct, which only works out if ω = 7.5×10⁻³ rad s⁻¹ and r = 20 000 m are used — so that's what's shown above.
+      </div>
+
+      <div class="example box">
+        <span class="label">Stone on a string — r = 0.8 m, 10 revolutions in 8.2 s, m = 0.09 kg</span>
+        T = 8.2/10 = <strong>0.82 s</strong><br>
+        circumference = 2πr = <strong>5.03 m</strong><br>
+        v = 5.03/0.82 = <strong>6.13 m s⁻¹</strong><br>
+        a = v²/r = 6.13²/0.8 = <strong>47 m s⁻²</strong><br>
+        F = ma = 47 × 0.09 = <strong>4.23 N</strong> — provided by the <strong>tension in the string</strong><br>
+        Angle between the stone's acceleration and its velocity: <strong>90°</strong>
+      </div>
+
+      <div class="example box">
+        <span class="label">Clay on a turntable — r = 0.12 m, T = 1.6 s, m = 0.3 kg</span>
+        v = 2πr/T = 2π(0.12)/1.6 = <strong>0.47 m s⁻¹</strong><br>
+        F = mv²/r = 0.3×0.47²/0.12 = <strong>0.55 N</strong> (friction, at this speed)<br>
+        <em>If max. friction = 70% of weight, find v when the clay just slips:</em><br>
+        0.3 × 9.81 × 0.7 = 2.06 N = mv²/r &nbsp;→&nbsp; v² = 2.06×0.12/0.3 &nbsp;→&nbsp; <strong>v = 0.9 m s⁻¹</strong>
+      </div>
+
+      <div class="example box">
+        <span class="label">Skateboarder in a dip — falls 5.2 m, r = 16 m, m = 70 kg, starts at rest</span>
+        Energy conservation: mgh = ½mv² &nbsp;→&nbsp; v² = 2gh = 2×9.81×5.2 = 102.0 &nbsp;→&nbsp; <strong>v = 10.1 m s⁻¹</strong><br>
+        a = v²/r = 102.0/16 = <strong>6.38 m s⁻²</strong> (directed upward, towards the centre of curvature)<br>
+        Contact force R: at the bottom of the dip, <code>R − mg = ma</code>, so <strong>R = m(g + a) = 70 × (9.81 + 6.38) ≈ 1130 N</strong>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your answer gave R = 6.38 × 70 = 446.6 N — that's just <code>ma</code>, the <em>net</em> centripetal force. But the contact force R also has to support the skateboarder's weight on top of that: R − mg = ma, so <strong>R = ma + mg ≈ 1130 N</strong>, not 446.6 N. This is a classic exam trap in "bottom of a dip / loop" questions — always draw the free-body diagram and remember gravity is still acting.
+      </div>
+
+      <div class="example box">
+        <span class="label">Banked car — m = 820 kg, v = 32 m s⁻¹, banked at 20°</span>
+        Vertical equilibrium: <code>R cos 20° = mg</code> &nbsp;→&nbsp; R = (820×9.81)/cos 20° = <strong>8.56 kN</strong> ✓ (as given)
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which form of a would you use if given only T and r?</summary>
+        <div class="answer">a = ω²r, with ω = 2π/T first.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>At the bottom of a dip, is the contact force bigger or smaller than the object's weight?</summary>
+        <div class="answer">Bigger — R = mg + ma, so it always exceeds the weight when moving through the dip.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Topic 12</h4>
+    <details class="quiz-item"><summary>1. Convert 3π/4 rad to degrees.</summary><div class="qanswer">135°</div></details>
+    <details class="quiz-item"><summary>2. A satellite orbits with ω = 1.2×10⁻³ rad s⁻¹ at radius 7000 km. Find its speed.</summary><div class="qanswer">v = ωr = 1.2×10⁻³ × 7.0×10⁶ = 8400 m s⁻¹</div></details>
+    <details class="quiz-item"><summary>3. Why is a satellite in circular orbit accelerating even though its speed is constant?</summary><div class="qanswer">Its velocity's direction is constantly changing, and acceleration is the rate of change of velocity (a vector) — a constant-magnitude, always-perpendicular force (gravity) causes this.</div></details>
+    <details class="quiz-item"><summary>4. A ball on a string is swung in a vertical circle. At the top of the circle, what two forces provide the centripetal force?</summary><div class="qanswer">Tension in the string and the ball's weight — both act towards the centre at the top of the circle, so T + mg = mv²/r there.</div></details>
+    <details class="quiz-item"><summary>5. Double the radius of a circular path while keeping speed v constant. What happens to the centripetal acceleration?</summary><div class="qanswer">It halves (a = v²/r, so a is inversely proportional to r).</div></details>
+  </div>
+</section>
+
+<!-- ======================================================= TOPIC 14 ======================================================= -->
+<section class="topictitle" id="topic14">
+  <h1 class="topicnum">Topic 14 · Temperature</h1>
+  <div class="topicsub">Syllabus 14.1 Thermal equilibrium · 14.2 Temperature scales · 14.3 Specific heat capacity &amp; specific latent heat</div>
+</section>
+
+<section class="module" id="thermal-equilibrium">
+  <h2>14.1 Thermal Equilibrium</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="def box">
+        <span class="label">Definition</span>
+        Thermal energy transfers from regions of higher temperature to regions of lower temperature, due to particle collisions that transfer energy. Regions of <strong>equal temperature</strong> are in thermal equilibrium — there is no net flow of thermal energy between them.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>At thermal equilibrium, does energy stop being transferred entirely?</summary>
+        <div class="answer">No — collisions (and hence energy transfer) still happen both ways, but there's no <em>net</em> flow because both directions balance out.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="temp-scales">
+  <h2>14.2 Temperature Scales &amp; Thermometers</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="formula box">
+        <span class="label">Kelvin ⇄ Celsius</span>
+        <div class="expr">T / K = θ / °C + 273.15</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        The original note said "1 kelvin = 273.15 celsius" — not right, since a kelvin and a degree Celsius are the <strong>same size</strong> step. What's true is <strong>0 °C = 273.15 K</strong> (the scales just start at different points).
+      </div>
+      <div class="def box">
+        <span class="label">At absolute zero (0 K)</span>
+        <ul style="margin:4px 0 0 18px; padding:0;">
+          <li>Minimum internal energy · Zero kinetic energy</li>
+          <li>Zero pressure · Close to zero volume</li>
+        </ul>
+        Plotting volume (or pressure) against temperature for a gas and extrapolating the line back to zero gives an experimental estimate of absolute zero.
+      </div>
+
+      <div class="gap box">
+        Any physical property that varies smoothly and measurably with temperature can be used to build a thermometer. The syllabus names four examples — your notes cover two of them:
+        <table class="keyline" style="margin-top:8px;">
+          <tr><th>Thermometric property</th><th>In your notes?</th></tr>
+          <tr><td>Resistance of a metal</td><td>✓ (resistance thermometer, below)</td></tr>
+          <tr><td>E.m.f. of a thermocouple</td><td>✓ (thermocouple thermometer, below)</td></tr>
+          <tr><td>Density of a liquid</td><td>✗ — as a liquid warms it expands, so its density falls; measuring density (e.g. via a floating bulb/hydrometer) gives a temperature reading.</td></tr>
+          <tr><td>Volume of a gas at constant pressure</td><td>✗ — at constant pressure, gas volume increases linearly with thermodynamic temperature (Charles' law, see Topic 15), so volume can be read as a temperature.</td></tr>
+        </table>
+      </div>
+
+      <h3 class="subtopic">Resistance thermometers</h3>
+      <div class="def box">
+        <span class="label">Principle</span>
+        Uses the property that a material's electrical resistance varies with temperature.
+      </div>
+      <ul style="margin:4px 0 0 18px; padding:0;">
+        <li>Measures across roughly −200 °C to 1200 °C</li>
+        <li>Output data can be stored/logged easily (it's already electrical)</li>
+        <li>Robust, used for solids and some liquids</li>
+      </ul>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your note said resistance thermometers have "short response, accurate reading" — but your own comparison table (below) says the opposite: they're <strong>larger</strong>, with <strong>greater thermal capacity</strong>, so are <strong>slower-acting</strong> than thermocouples. The slower response is the trade-off for a resistance thermometer's stability and accuracy.
+      </div>
+
+      <h3 class="subtopic">Thermocouple thermometers</h3>
+      <div class="def box">
+        <span class="label">Principle</span>
+        A wire made of two different metals is joined at two junctions. When there is a temperature <strong>difference</strong> between the two junctions, the thermocouple produces a small e.m.f. that depends on that difference — this is what's measured and converted into a temperature reading.
+      </div>
+      <ul style="margin:4px 0 0 18px; padding:0;">
+        <li>Small size → small thermal capacity → quick to respond</li>
+        <li>Can measure temperature at a single point, over a very wide range</li>
+      </ul>
+
+      <div class="table-wrap">
+      <table class="filetable">
+        <tr><th>Feature</th><th>Resistance thermometer</th><th>Thermocouple thermometer</th></tr>
+        <tr><td>Robustness</td><td>Very robust</td><td>Robust</td></tr>
+        <tr><td>Range</td><td>Thermistor: narrow<br>Resistance wire: wide</td><td>Can be very wide</td></tr>
+        <tr><td>Size / response</td><td>Larger, greater thermal capacity → slower-acting</td><td>Smaller → quicker-acting; measures at a point</td></tr>
+        <tr><td>Sensitivity</td><td>Thermistor: high (narrow range)<br>Resistance wire: less sensitive</td><td>Can be sensitive if appropriate metals chosen</td></tr>
+        <tr><td>Linearity</td><td>Thermistor: fairly linear (narrow range)<br>Resistance wire: good linearity</td><td>Non-linear — requires calibration</td></tr>
+      </table>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Convert 25 °C to kelvin.</summary>
+        <div class="answer">25 + 273.15 = 298.15 K</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Need a fast response at one precise point — which sensor?</summary>
+        <div class="answer">Thermocouple thermometer.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="shc">
+  <h2>14.3 Specific Heat Capacity &amp; Specific Latent Heat</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition — specific heat capacity</span>
+        The amount of energy required to increase the temperature of 1 kg of a material by 1 °C (equivalently, 1 K).
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">c = ΔQ / (mΔT)</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
+          units: J kg⁻¹ K⁻¹ &nbsp;·&nbsp; ΔT = T<sub>final</sub> − T<sub>initial</sub>
+        </p>
+      </div>
+
+      <h3 class="subtopic">Mixing materials</h3>
+      <div class="def box">
+        <span class="label">Principle</span>
+        Thermal energy transfers from the hotter object to the colder object until both reach the same final temperature.
+      </div>
+      <div class="formula box">
+        <span class="label">Conservation of energy</span>
+        <div class="expr">−ΔE<sub>hot</sub> = ΔE<sub>cold</sub></div>
+      </div>
+
+      <div class="example box">
+        <span class="label">Worked example — copper ball (700 °C) dropped into 700 g water (20 °C), equilibrium at 80 °C</span>
+        c<sub>water</sub> = 4200 J kg⁻¹K⁻¹, c<sub>copper</sub> = 385 J kg⁻¹K⁻¹. Find the mass of the copper ball.<br>
+        −(m<sub>c</sub> × 385 × (80 − 700)) = 0.7 × 4200 × (80 − 20)<br>
+        m<sub>c</sub> × 385 × 620 = 176 400 &nbsp;→&nbsp; <strong>m<sub>c</sub> ≈ 0.74 kg</strong>
+      </div>
+
+      <div class="def box">
+        <span class="label">Definition — specific latent heat</span>
+        The energy required to change the state of 1 kg of a substance, with <strong>no change in temperature</strong>.
+      </div>
+      <div class="def box">
+        <span class="label">Latent heat of fusion / vaporisation</span>
+        Fusion: energy to turn 1 kg of a substance from solid ⇔ liquid.<br>
+        Vaporisation: energy to turn 1 kg of a substance from liquid ⇔ gas.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>ΔT is T₂ − T₁ or T₁ − T₂?</summary>
+        <div class="answer">T₂ − T₁ (final minus initial).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>During a change of state, does temperature rise as energy is added?</summary>
+        <div class="answer">No — latent heat is absorbed/released with no temperature change.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Topic 14</h4>
+    <details class="quiz-item"><summary>1. State the condition for two objects to be in thermal equilibrium.</summary><div class="qanswer">They must be at the same temperature (no net transfer of thermal energy between them).</div></details>
+    <details class="quiz-item"><summary>2. Convert 373.15 K to °C.</summary><div class="qanswer">373.15 − 273.15 = 100 °C</div></details>
+    <details class="quiz-item"><summary>3. Name two thermometric properties not based on electricity.</summary><div class="qanswer">Density of a liquid; volume of a gas at constant pressure. (Length of a liquid column in a thermometer is another common example.)</div></details>
+    <details class="quiz-item"><summary>4. 500 g of water is heated from 15 °C to 35 °C. How much energy is needed? (c = 4200 J kg⁻¹K⁻¹)</summary><div class="qanswer">Q = mcΔT = 0.5 × 4200 × 20 = 42 000 J</div></details>
+    <details class="quiz-item"><summary>5. Why does the temperature of melting ice stay at 0 °C even while it's being heated?</summary><div class="qanswer">The energy supplied goes into breaking intermolecular bonds (increasing potential energy), not increasing kinetic energy — this is the latent heat of fusion.</div></details>
+  </div>
+</section>
+
+<!-- ======================================================= TOPIC 15 ======================================================= -->
+<section class="topictitle" id="topic15">
+  <h1 class="topicnum">Topic 15 · Ideal Gases</h1>
+  <div class="topicsub">Syllabus 15.1 The mole · 15.2 Equation of state · 15.3 Kinetic theory of gases</div>
+</section>
+
+<section class="module" id="mole">
+  <h2>15.1 The Mole</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="gap box">
+        Your notes don't mention the mole at all — this is 15.1 of the syllabus, worth including:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Definition</span>
+          Amount of substance is an SI base quantity, measured in <strong>moles (mol)</strong>. One mole of any substance contains a number of particles equal to the <strong>Avogadro constant</strong>, N<sub>A</sub> = 6.02 × 10²³ mol⁻¹.
+        </div>
+      </div>
+
+      <h3 class="subtopic">Worked examples</h3>
+      <div class="example box">
+        <span class="label">Molecules and atoms — 4 moles of CO₂</span>
+        Number of CO₂ molecules = 4 × N<sub>A</sub> = 4 × 6.022×10²³ = <strong>2.4088×10²⁴</strong><br>
+        Number of carbon atoms = 2.4088×10²⁴ × 1 (one C per molecule) = <strong>2.4088×10²⁴</strong><br>
+        Number of oxygen atoms = 2.4088×10²⁴ × 2 (two O per molecule) = <strong>4.8176×10²⁴</strong>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your working took <sup>1</sup>⁄<sub>3</sub> and <sup>2</sup>⁄<sub>3</sub> of the molecule count for the carbon and oxygen totals — that would only make sense if 2.4088×10²⁴ were a total <em>atom</em> count being split by proportion. It's actually a <em>molecule</em> count, and each CO₂ molecule already contains exactly 1 carbon atom and 2 oxygen atoms — so you multiply by 1 and by 2, you don't take a fraction. The rule: atoms of an element = (number of molecules) × (atoms of that element per molecule).
+      </div>
+
+      <div class="example box">
+        <span class="label">Mass ⇄ moles ⇄ atoms — a 1.0 kg gold-197 bar</span>
+        (1 atom of gold-197 has 197 nucleons, mass 197 u, where 1 u = 1.66×10⁻²⁷ kg)<br>
+        a) Mass of one atom = 197 × 1.66×10⁻²⁷ = <strong>3.27×10⁻²⁵ kg</strong><br>
+        b) Number of atoms = 1.0 / 3.27×10⁻²⁵ = <strong>3.06×10²⁴</strong><br>
+        c) Number of moles = 3.06×10²⁴ / 6.022×10²³ = <strong>5.08 mol</strong>
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">This question was left unfinished in your notes — completed above. Notice part (c) can also be found directly as mass ÷ molar mass (1000 g ÷ 197 g mol⁻¹ = 5.08 mol) — same answer, faster route once you know the molar mass.</p>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>How many molecules are in 2 moles of oxygen gas?</summary>
+        <div class="answer">2 × 6.02×10²³ = 1.204×10²⁴ molecules</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>1 mole of methane, CH₄. How many hydrogen atoms in total?</summary>
+        <div class="answer">4 × N<sub>A</sub> = 4 × 6.02×10²³ = 2.408×10²⁴ (four H atoms per molecule)</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="gas-laws">
+  <h2>15.2 Equation of State</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <p>The pressure of a fixed mass of gas depends on the volume of its container and the temperature of the particles.</p>
+
+      <div class="table-wrap">
+      <table class="keyline">
+        <tr><th>Law</th><th>Held constant</th><th>Relationship</th></tr>
+        <tr><td><strong>Boyle's law</strong></td><td>Temperature</td><td>P ∝ 1/V &nbsp;→&nbsp; P₁V₁ = P₂V₂</td></tr>
+        <tr><td><strong>Charles' law</strong></td><td>Pressure</td><td>V ∝ T &nbsp;→&nbsp; V₁/T₁ = V₂/T₂</td></tr>
+        <tr><td><strong>Pressure law</strong></td><td>Volume</td><td>P ∝ T &nbsp;→&nbsp; P₁/T₁ = P₂/T₂</td></tr>
+      </table>
+      </div>
+
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your notes wrote these three laws as <code>PV = T</code>, <code>V = P×T</code>, and <code>P = V×T</code>. In each case, a proportionality (∝) turns into an equation with a <strong>constant</strong> — not into another physical quantity that happens to share a letter with something else in the same topic. So it should be <code>PV = constant</code>, <code>V = constant × T</code>, <code>P = constant × T</code>. The ratio forms in the table above (e.g. P₁V₁ = P₂V₂) are what you'll actually use in calculations, and your Charles'/pressure-law ratio forms were already written correctly.
+      </div>
+
+      <div class="def box">
+        <span class="label">Definition — ideal gas</span>
+        A gas that obeys <strong>pV ∝ T</strong> (T = thermodynamic temperature) at all pressures, volumes and temperatures is called an ideal gas.
+      </div>
+
+      <div class="formula box">
+        <span class="label">Ideal gas equation</span>
+        <div class="expr">pV = nRT &nbsp;&nbsp;=&nbsp;&nbsp; pV = NkT</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
+          n = number of moles · R = molar gas constant = 8.31 J K⁻¹ mol⁻¹ · N = number of molecules · k = Boltzmann constant
+        </p>
+      </div>
+      <div class="gap box">
+        The relationship between the two constants: <strong>k = R / N<sub>A</sub></strong> = 8.31 / 6.02×10²³ = 1.38×10⁻²³ J K⁻¹. Don't mix this <em>k</em> (Boltzmann constant) up with the generic "constant" used for the three gas laws above — same letter, different meaning.
+      </div>
+
+      <h3 class="subtopic">Types of change</h3>
+      <div class="table-wrap">
+      <table class="keyline">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Isothermal</td><td>Constant temperature</td></tr>
+        <tr><td>Isobaric</td><td>Constant pressure</td></tr>
+        <tr><td>Isochoric</td><td>Constant volume</td></tr>
+      </table>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your notes had "isometric" for the constant-volume case — the standard physics term is <strong>isochoric</strong> ("isometric" is used in art/exercise contexts, not thermodynamics).
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A gas is compressed at constant temperature. What stays the same in pV = constant?</summary>
+        <div class="answer">The product pV — as V decreases, p increases proportionally.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Write the Boltzmann constant in terms of R and N<sub>A</sub>.</summary>
+        <div class="answer">k = R / N<sub>A</sub></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="kinetic-theory">
+  <h2>15.3 Kinetic Theory of Gases</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">Assumptions of an ideal gas</h3>
+      <ul style="margin:4px 0 0 18px; padding:0;">
+        <li>Particles have negligible volume compared to the volume of the gas</li>
+        <li>Collisions (between particles, and with the container) are perfectly elastic</li>
+        <li>Intermolecular forces can be ignored, except during collisions</li>
+        <li>There is a very large number of particles</li>
+        <li>Particles move in random directions with random speeds</li>
+        <li>The time of a collision is negligible compared to the time between collisions</li>
+      </ul>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your last assumption said "they obey gas laws" — but the gas laws are a <em>consequence</em> of kinetic theory, not an assumption you'd use to derive it (that would be circular reasoning). The actual assumption is that <strong>particles obey Newton's laws of motion</strong>.
+      </div>
+
+      <span class="priority">high-yield</span>
+      <div class="example box">
+        <span class="label">Derivation — you flagged this one to add ("Claude — add to notes")</span>
+        Consider N molecules, each of mass m, bouncing around a cube of side L (volume V = L³). Look at one molecule with velocity component c<sub>x</sub> perpendicular to one pair of walls.
+        <ol class="steps">
+          <li><strong>One collision:</strong> the wall is rigid and the collision elastic, so the molecule rebounds with its speed unchanged, direction reversed. Change in momentum = m c<sub>x</sub> − (−m c<sub>x</sub>) = 2m c<sub>x</sub>.</li>
+          <li><strong>Time between hits on that same wall:</strong> the molecule must cross the cube and back, a distance 2L, at speed c<sub>x</sub> → time = 2L / c<sub>x</sub>.</li>
+          <li><strong>Force from one molecule</strong> = rate of change of momentum = 2m c<sub>x</sub> ÷ (2L / c<sub>x</sub>) = m c<sub>x</sub>² / L.</li>
+          <li><strong>Force from all N molecules</strong> on that wall = N m ⟨c<sub>x</sub>²⟩ / L (using the <em>mean</em>-square, since molecules don't all move at the same speed).</li>
+          <li><strong>Pressure</strong> = force ÷ area = [N m ⟨c<sub>x</sub>²⟩ / L] ÷ L² = N m ⟨c<sub>x</sub>²⟩ / V.</li>
+          <li><strong>Extend from 1D to 3D:</strong> motion is random, so on average ⟨c<sub>x</sub>²⟩ = ⟨c<sub>y</sub>²⟩ = ⟨c<sub>z</sub>²⟩. Since c² = c<sub>x</sub>² + c<sub>y</sub>² + c<sub>z</sub>², this means ⟨c²⟩ = 3⟨c<sub>x</sub>²⟩, so ⟨c<sub>x</sub>²⟩ = ⅓⟨c²⟩.</li>
+        </ol>
+        Substituting into step 5:
+        <div class="expr">p = ⅓Nm⟨c²⟩ / V &nbsp;&nbsp;⇔&nbsp;&nbsp; pV = ⅓Nm⟨c²⟩</div>
+      </div>
+      <div class="formula box">
+        <span class="label">Pressure of an ideal gas</span>
+        <div class="expr">pV = ⅓Nm⟨c²⟩</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
+          N = number of molecules · m = mass of one molecule · ⟨c²⟩ = mean-square speed
+        </p>
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — finding c.r.m.s.</span>
+        N = 3.0×10²³ molecules, m = 5.0×10⁻²⁶ kg each, V = 2.0×10⁻³ m³, p = 1.5×10⁵ Pa.<br>
+        ⟨c²⟩ = 3pV / (Nm) = (3 × 1.5×10⁵ × 2.0×10⁻³) / (3.0×10²³ × 5.0×10⁻²⁶) = 900 / 0.015 = 6.0×10⁴ m² s⁻²<br>
+        c<sub>r.m.s.</sub> = √(6.0×10⁴) ≈ <strong>245 m s⁻¹</strong>
+      </div>
+
+      <div class="gap box">
+        Your notes titled this section "root-mean-square speed" but stopped after the pressure equation — here's the rest:
+        <div class="formula box" style="margin-top:8px;">
+          <span class="label">Root-mean-square speed</span>
+          <div class="expr">c<sub>r.m.s.</sub> = √⟨c²⟩</div>
+          <p style="font-size:9.5pt; color:var(--ink-soft);">— the square root of the <em>mean</em> of the squared speeds (not the mean speed itself, and not the square of the mean speed).</p>
+        </div>
+        <div class="formula box">
+          <span class="label">Average kinetic energy of a molecule</span>
+          Comparing pV = ⅓Nm⟨c²⟩ with pV = NkT gives:
+          <div class="expr">½m⟨c²⟩ = <sup>3</sup>⁄<sub>2</sub>kT &nbsp;&nbsp;=&nbsp;&nbsp; <sup>3</sup>⁄<sub>2</sub> · <sup>RT</sup>⁄<sub>N<sub>A</sub></sub></div>
+          <p style="font-size:9.5pt; color:var(--ink-soft);">(the second form just substitutes k = R/N<sub>A</sub> — useful if you're given R and N<sub>A</sub> rather than k directly). This is a key result: average molecular KE depends only on <strong>thermodynamic temperature</strong>, nothing else.</p>
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Is c<sub>r.m.s.</sub> the same as the mean speed of the particles?</summary>
+        <div class="answer">No — it's the square root of the mean of the squared speeds, which is always slightly higher than the plain mean speed.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>If you double the thermodynamic temperature, what happens to the average KE of a molecule?</summary>
+        <div class="answer">It doubles too (average KE ∝ T directly).</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Topic 15</h4>
+    <details class="quiz-item"><summary>1. A gas at 2.0×10⁵ Pa and 3.0 m³ is compressed to 1.0 m³ at constant temperature. Find the new pressure.</summary><div class="qanswer">P₁V₁ = P₂V₂ → P₂ = (2.0×10⁵ × 3.0)/1.0 = 6.0×10⁵ Pa</div></details>
+    <details class="quiz-item"><summary>2. What does it mean for a gas to be "ideal"?</summary><div class="qanswer">It obeys pV ∝ T at all pressures, volumes, and temperatures.</div></details>
+    <details class="quiz-item"><summary>3. Find k using R = 8.31 J K⁻¹mol⁻¹ and N_A = 6.02×10²³ mol⁻¹.</summary><div class="qanswer">k = R/N_A = 8.31/6.02×10²³ = 1.38×10⁻²³ J K⁻¹</div></details>
+    <details class="quiz-item"><summary>4. Why do gas particles need to be treated as having negligible volume in this model?</summary><div class="qanswer">So that the volume of the container can be treated as the volume available for the particles to move in, simplifying the pressure derivation.</div></details>
+    <details class="quiz-item"><summary>5. Two gas samples are at the same temperature. Do their molecules have the same c.r.m.s.?</summary><div class="qanswer">Only if they have the same molecular mass — ½m⟨c²⟩ = 3/2 kT means a lighter molecule needs a higher c.r.m.s. to have the same average KE at the same T.</div></details>
+  </div>
+</section>
+
+<!-- ======================================================= TOPIC 16 ======================================================= -->
+<section class="topictitle" id="topic16">
+  <h1 class="topicnum">Topic 16 · Thermodynamics</h1>
+  <div class="topicsub">Syllabus 16.1 Internal energy · 16.2 The first law of thermodynamics</div>
+</section>
+
+<section class="module" id="internal-energy">
+  <h2>16.1 Internal Energy</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition — temperature</span>
+        The measure of the average kinetic energy of the particles in a substance.
+      </div>
+      <div class="def box">
+        <span class="label">Definition — internal energy</span>
+        The sum of the kinetic energies and potential energies of the particles moving randomly in a substance. A rise in an object's temperature means a rise in its internal energy.
+      </div>
+      <div class="formula box">
+        <span class="label">Putting it together</span>
+        <div class="expr">Internal energy = (KE of molecules) + (PE of bonds)</div>
+      </div>
+
+      <h3 class="subtopic">The heating curve</h3>
+      <div class="heatchart">
+        <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+          <line x1="40" y1="20" x2="40" y2="230" stroke="currentColor" style="color:var(--ink-soft)"/>
+          <line x1="40" y1="230" x2="480" y2="230" stroke="currentColor" style="color:var(--ink-soft)"/>
+          <text class="hc-label" x="0" y="16">Temp.</text>
+          <text class="hc-label" x="380" y="250">Heat absorbed / kJ</text>
+          <polyline points="40,230 95,140 150,140 230,55 340,55 400,20 460,10"
+            fill="none" stroke="var(--module)" stroke-width="2.5"/>
+          <text class="hc-label" x="60" y="200" style="fill:var(--accent); font-weight:bold;">A</text>
+          <text class="hc-label" x="115" y="132" style="fill:var(--accent); font-weight:bold;">B</text>
+          <text class="hc-label" x="185" y="115" style="fill:var(--accent); font-weight:bold;">C</text>
+          <text class="hc-label" x="280" y="48" style="fill:var(--accent); font-weight:bold;">D</text>
+          <text class="hc-label" x="425" y="16" style="fill:var(--accent); font-weight:bold;">E</text>
+        </svg>
+      </div>
+      <div class="table-wrap">
+      <table class="filetable">
+        <tr><th>Region</th><th>What's happening</th></tr>
+        <tr><td><strong>A</strong> — solid warming</td><td>Temperature rises. Particles vibrate more vigorously about fixed positions → average KE increases.</td></tr>
+        <tr><td><strong>B</strong> — melting (plateau)</td><td>Change of state: energy breaks/weakens bonds, not raising temperature. KE constant; PE increases.</td></tr>
+        <tr><td><strong>C</strong> — liquid warming</td><td>Temperature rises again — same mechanism as A, now in the liquid phase.</td></tr>
+        <tr><td><strong>D</strong> — boiling (plateau)</td><td>Bonds are broken completely as liquid becomes gas. KE constant; PE increases (its biggest jump).</td></tr>
+        <tr><td><strong>E</strong> — gas warming</td><td>Temperature continues to rise as the gas is heated further; average KE keeps increasing.</td></tr>
+      </table>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected for consistency</span>
+        Your original annotations for regions A and C included shorthand (e.g. "IMF less strong", "Eₚ ↓ ⇒ 0") that doesn't quite match the standard model above: <strong>within</strong> a phase (A, C, E) only KE changes; <strong>during</strong> a change of state (B, D) only PE changes.
+      </div>
+      <div class="warn box">
+        <span class="label">Unclear in the original — please check</span>
+        A short annotation "<strong>E: T lowest</strong>" next to the gas-heating segment isn't clear enough to interpret confidently (possibly about specific heat capacity?) — left out rather than guessed at. Worth checking with your teacher.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>During melting (region B), does temperature change?</summary>
+        <div class="answer">No — it stays constant while energy breaks bonds (increases PE) instead.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="first-law">
+  <h2>16.2 The First Law of Thermodynamics</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="formula box">
+        <span class="label">Deriving work done, W = pΔV</span>
+        Start from basic mechanics: <code>W = Fs</code> (work = force × distance moved by a piston).<br>
+        Since <code>p = F/A</code>, we get <code>F = pA</code>. Substituting:
+        <div class="expr">W = pAs</div>
+        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">A × s = the volume swept out by the piston, ΔV, so:</p>
+        <div class="expr" style="font-size:15pt;"><strong>W = pΔV</strong></div>
+      </div>
+      <div class="def box">
+        <span class="label">Sign convention</span>
+        Gas <strong>expansion</strong>: the gas pushes outward and does work on its surroundings → W (work done <em>on</em> the gas) is <strong>negative</strong>.<br>
+        Gas <strong>compression</strong>: the surroundings push in and do work on the gas → W is <strong>positive</strong>.
+      </div>
+      <div class="formula box">
+        <span class="label">First law of thermodynamics</span>
+        <div class="expr">ΔU = q + W</div>
+        <p style="font-size:9.5pt; color:var(--ink-soft);">
+          ΔU = the increase in internal energy of the gas · q = energy transferred to the system via heating · W = work done <strong>on</strong> the system (see sign convention above).
+        </p>
+      </div>
+      <div class="example box">
+        <span class="label">Worked example</span>
+        A gas absorbs 500 J of heat and expands, doing 200 J of work on its surroundings. Find ΔU.<br>
+        Expansion → work done <em>on</em> the gas is negative: W = −200 J &nbsp;→&nbsp; ΔU = 500 + (−200) = <strong>300 J</strong>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A gas is compressed and cooled. What are the signs of q and W in ΔU = q + W?</summary>
+        <div class="answer">q is negative (heat leaves the system), W is positive (work is done on the gas by compressing it).</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Topic 16</h4>
+    <details class="quiz-item"><summary>1. A block's temperature rises. What happened to its internal energy?</summary><div class="qanswer">It increased — a temperature rise means the average KE of its particles increased, which increases internal energy.</div></details>
+    <details class="quiz-item"><summary>2. A gas expands at constant pressure 1.0×10⁵ Pa, volume increasing by 0.02 m³. How much work does it do on its surroundings?</summary><div class="qanswer">W = pΔV = 1.0×10⁵ × 0.02 = 2000 J</div></details>
+    <details class="quiz-item"><summary>3. State the first law of thermodynamics in symbols.</summary><div class="qanswer">ΔU = q + W</div></details>
+    <details class="quiz-item"><summary>4. 300 J of heat is removed from a gas while 100 J of work is done on it. Find ΔU.</summary><div class="qanswer">ΔU = q + W = (−300) + 100 = −200 J (internal energy decreases)</div></details>
+    <details class="quiz-item"><summary>5. During melting, is any work done by/on the substance in the pΔV sense?</summary><div class="qanswer">Usually negligible for melting (volume change is small) — nearly all the energy goes into breaking bonds (increasing internal energy), not doing pΔV work.</div></details>
+  </div>
+</section>
+
+<!-- ======================================================= PRACTICAL SKILLS ======================================================= -->
+<section class="topictitle" id="practical">
+  <h1 class="topicnum">Practical Skills — Capacitor Discharge</h1>
+  <div class="topicsub">Paper 3 (Advanced Practical Skills) &amp; Paper 5 (Planning, Analysis and Evaluation) — not a numbered content topic</div>
+</section>
+
+<section class="module" id="linearising">
+  <h2>Linearising an Exponential Decay</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="def box">
+        <span class="label">Exam strategy</span>
+        Start with Question 2 — it's usually more self-contained and a better use of time first.
+      </div>
+      <div class="formula box">
+        <span class="label">Golden rule</span>
+        There is always an equation to rearrange. Since you need a <strong>straight-line</strong> graph, rearrange it into the form:
+        <div class="expr">y = mx + c</div>
+      </div>
+
+      <span class="priority">high-yield</span>
+      <div class="formula box">
+        <span class="label">Discharge equation</span>
+        <div class="expr">I = I<sub>0</sub> e<sup>−t/RC</sup></div>
+      </div>
+      <p>This is exponential, not linear — take <code>ln</code> of both sides:</p>
+      <div class="formula box">
+        <span class="label">Linearised form</span>
+        <div class="expr">ln I &nbsp;=&nbsp; ln I<sub>0</sub> &nbsp;+&nbsp; ( −1/RC ) t</div>
+        <p style="text-align:center; margin-top:8px; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
+          y = ln I &nbsp;·&nbsp; x = t &nbsp;·&nbsp; gradient m = −1/RC &nbsp;·&nbsp; intercept c = ln I₀
+        </p>
+      </div>
+
+      <div class="table-wrap">
+      <table class="data">
+        <tr><th>t / s</th><th>Current</th><th>ln I</th></tr>
+        <tr><td>0</td><td>198</td><td>5.29</td></tr>
+        <tr><td>15</td><td>143</td><td>4.96</td></tr>
+        <tr><td>30</td><td>106</td><td>4.66</td></tr>
+        <tr><td>45</td><td>78</td><td>4.36</td></tr>
+        <tr><td>60</td><td>58</td><td>4.06</td></tr>
+        <tr><td>75</td><td>43</td><td>3.76</td></tr>
+        <tr><td>90</td><td>32</td><td>3.47</td></tr>
+      </table>
+      </div>
+      <div class="warn box">
+        <span class="label">Worth double-checking</span>
+        The current column is labelled "Current/A" — values like 198 A would be enormous for a simple RC circuit. This was very likely <strong>mA</strong> in the original question; it doesn't affect the technique (the gradient is unaffected by the unit label), but check before quoting I₀ in a final answer.
+      </div>
+
+      <div class="chart">
+        <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg">
+          <line x1="60" y1="20" x2="60" y2="270" stroke="currentColor" stroke-width="1" style="color:var(--ink-soft)"/>
+          <line x1="60" y1="270" x2="470" y2="270" stroke="currentColor" stroke-width="1" style="color:var(--ink-soft)"/>
+          <text class="tick-label" x="20" y="24">5.50</text>
+          <text class="tick-label" x="20" y="74">5.00</text>
+          <text class="tick-label" x="20" y="124">4.50</text>
+          <text class="tick-label" x="20" y="174">4.00</text>
+          <text class="tick-label" x="20" y="224">3.50</text>
+          <text class="tick-label" x="20" y="274">3.00</text>
+          <text class="tick-label" x="56" y="286">0</text>
+          <text class="tick-label" x="118" y="286">15</text>
+          <text class="tick-label" x="184" y="286">30</text>
+          <text class="tick-label" x="251" y="286">45</text>
+          <text class="tick-label" x="318" y="286">60</text>
+          <text class="tick-label" x="384" y="286">75</text>
+          <text class="tick-label" x="451" y="286">90</text>
+          <text class="axis-label" x="4" y="14">ln I</text>
+          <text class="axis-label" x="440" y="296">t / s</text>
+          <polyline points="60,41 126.7,74 193.3,104 260,134 326.6,164 393.3,194 460,223"
+            fill="none" stroke="var(--accent)" stroke-width="2"/>
+          <g fill="var(--module)">
+            <circle cx="60" cy="41" r="3"/><circle cx="126.7" cy="74" r="3"/><circle cx="193.3" cy="104" r="3"/>
+            <circle cx="260" cy="134" r="3"/><circle cx="326.6" cy="164" r="3"/><circle cx="393.3" cy="194" r="3"/>
+            <circle cx="460" cy="223" r="3"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="example box">
+        <span class="label">Extracting R, C, I₀ — gradient from (0, 5.29) and (90, 3.47)</span>
+        gradient = (3.47 − 5.29)/(90 − 0) = −0.0202 s⁻¹ &nbsp;=&nbsp; −1/RC &nbsp;→&nbsp; <strong>RC ≈ 49.5 s</strong><br>
+        y-intercept = ln I₀ = 5.29 &nbsp;→&nbsp; I₀ = e<sup>5.29</sup> ≈ <strong>198</strong> (matches the measured value at t = 0 ✓)
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why does the exam always want a straight-line graph rather than a curve?</summary>
+        <div class="answer">A gradient and y-intercept can be read precisely off a straight line; it's much harder to reliably extract constants from a curve.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>If you know RC and are given R, how do you find C?</summary>
+        <div class="answer">C = (RC) ÷ R.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Practical Skills</h4>
+    <details class="quiz-item"><summary>1. Why take ln of both sides of I = I₀e⁻ᵗ/ᴿᶜ rather than plotting I against t directly?</summary><div class="qanswer">Plotting I against t gives a curve, from which a gradient/intercept can't be read reliably; taking ln turns it into a straight line (y = mx + c form).</div></details>
+    <details class="quiz-item"><summary>2. In ln I = ln I₀ − t/RC, what is plotted on the x-axis?</summary><div class="qanswer">t (time)</div></details>
+    <details class="quiz-item"><summary>3. A graph of ln I against t has gradient −0.05 s⁻¹. Find RC.</summary><div class="qanswer">RC = 1/0.05 = 20 s</div></details>
+    <details class="quiz-item"><summary>4. Why is the y-intercept of this graph equal to ln I₀, not I₀ itself?</summary><div class="qanswer">Because the equation being plotted is ln I = ln I₀ + (gradient)×t — the intercept is whatever "c" is in y = mx + c, and here y = ln I, so c = ln I₀.</div></details>
+  </div>
+</section>
+
+<footer>
+  Organised from handwritten class notes — Cambridge 9702, checked against the 9702 syllabus for 2025–2027. Rough working has been stripped; only checked/verified examples are kept.
+</footer>
+
+</body>
+</html>
