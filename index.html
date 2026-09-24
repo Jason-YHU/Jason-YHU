@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jason's Notes</title>
+<style>
+:root{
+  --bg:#faf9f6; --panel:#ffffff; --ink:#1c1c1c; --ink-soft:#52524f;
+  --rule:#ddd8cc; --accent:#1f3a5f; --accent-ink:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#181a17; --panel:#20231f; --ink:#eae7dd; --ink-soft:#b7b3a4;
+    --rule:#3a3d35; --accent:#8fb4e0; --accent-ink:#181a17;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#181a17; --panel:#20231f; --ink:#eae7dd; --ink-soft:#b7b3a4;
+  --rule:#3a3d35; --accent:#8fb4e0; --accent-ink:#181a17;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:var(--bg); color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:16px;
+}
+main{
+  width:100%; max-width:420px; text-align:center; background:var(--panel);
+  border:1px solid var(--rule); border-radius:12px; padding:40px 24px;
+}
+h1{margin:0 0 8px; font-size:1.75rem}
+p{margin:0 0 28px; color:var(--ink-soft)}
+.btn{
+  display:inline-block; padding:14px 36px; border-radius:8px;
+  background:var(--accent); color:var(--accent-ink); text-decoration:none;
+  font-weight:600; font-size:1.1rem; transition:opacity .15s;
+}
+.btn:hover,.btn:focus-visible{opacity:.85}
+</style>
+</head>
+<body>
+<main>
+  <h1>Notes</h1>
+  <p>Choose a subject</p>
+  <a class="btn" href="Physics_notes.html">Physics</a>
+</main>
+</body>
+</html>
