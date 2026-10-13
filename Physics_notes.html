@@ -84,6 +84,14 @@ nav.toc a{
   padding:4px 10px; border-radius:20px; white-space:nowrap;
 }
 nav.toc a:hover{border-color:var(--module);}
+html{scroll-behavior:smooth;}
+.totop{position:fixed; right:14px; bottom:14px; z-index:30; display:none; font-family:"Helvetica Neue",Arial,sans-serif; font-size:10pt; font-weight:600; color:#fff; background:var(--module); border:none; border-radius:22px; padding:9px 16px; box-shadow:0 2px 8px rgba(0,0,0,.25); cursor:pointer;}
+.totop.show{display:block;}
+@media (max-width:760px){
+  header{position:static;}
+  nav.toc a{padding:7px 12px;}
+}
+@media print{.totop{display:none !important;}}
 
 section.module{ margin-top:38px; padding-top:6px; }
 section.module > h2{ font-size:16pt; padding-bottom:6px; border-bottom:1px solid var(--rule); margin-bottom:14px; }
@@ -199,6 +207,32 @@ footer{margin-top:50px; padding-top:14px; border-top:1px solid var(--rule); font
   section.topictitle{margin-top:56px; border-top:4px solid var(--module); padding-top:10px;}
   section.topictitle h1.topicnum{font-size:20pt; margin:0;}
   section.topictitle .topicsub{color:var(--ink-soft); font-family:"Helvetica Neue",sans-serif; font-size:10pt;}
+
+  .fig{background:var(--panel); border:1px solid var(--rule); border-radius:8px; padding:8px; margin:12px 0;}
+  .fig svg{width:100%; height:auto; display:block;}
+  .fig .cap{font-family:"Helvetica Neue",Arial,sans-serif; font-size:9pt; color:var(--ink-soft); margin-top:4px; text-align:center;}
+  .fig-label{font-family:"Helvetica Neue",Arial,sans-serif; fill:var(--ink);}
+  .figgrid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .figgrid .fig{margin:0;}
+  @media (max-width:700px){.figgrid{grid-template-columns:1fr;}}
+  .vars{margin-top:9px; padding-top:7px; border-top:1px dashed var(--rule); font-family:"Helvetica Neue",Arial,sans-serif; font-size:9.5pt; line-height:1.6; color:var(--ink); text-align:left;}
+  .vars .vlabel{font-weight:700; color:var(--module); text-transform:uppercase; font-size:8pt; letter-spacing:.6px; margin-right:6px;}
+  .vars b{font-family:"Cambria Math",Georgia,serif; font-size:10.5pt;}
+  .vars .vnote{display:block; margin-top:4px; color:var(--ink-soft); font-size:9pt;}
+
+  .ftable{border-collapse:collapse; width:100%; min-width:640px; font-size:10pt;}
+  .ftable th, .ftable td{border:1px solid var(--rule); padding:7px 9px; vertical-align:top; text-align:left;}
+  .ftable th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt; text-transform:uppercase; letter-spacing:.4px;}
+  .ftable td.fname{font-weight:700; width:22%;}
+  .ftable td.fx{font-family:"Cambria Math",Georgia,serif; font-size:12pt; width:30%;}
+  .ftable td.fv{font-family:"Helvetica Neue",Arial,sans-serif; font-size:9.3pt; line-height:1.55;}
+  .ftable td.fv b{font-family:"Cambria Math",Georgia,serif; font-size:10pt;}
+  .ftag{display:inline-block; font-family:"Helvetica Neue",Arial,sans-serif; font-size:7.5pt; font-weight:700; letter-spacing:.4px; padding:1px 6px; border-radius:10px; margin-left:4px; vertical-align:middle;}
+  .ftag.gap{background:var(--formula-bg); color:var(--module); border:1px dashed var(--formula-border);}
+  .ftag.gap::before{content:none;}
+  .ftag.extra{background:var(--example-bg); color:var(--subtopic); border:1px dashed var(--subtopic);}
+  .ftag.extra::before{content:none;}
+  .fnote{font-size:9.5pt; color:var(--ink-soft); margin:4px 0 14px;}
 </style>
 </head>
 <body>
@@ -208,10 +242,13 @@ footer{margin-top:50px; padding-top:14px; border-top:1px solid var(--rule); font
   <div class="subtitle">Cambridge International A Level Physics (9702) · organised from class notes, checked against the 9702 syllabus (2025–2027)</div>
   <nav class="toc">
     <a href="#topic12">12 · Motion in a Circle</a>
+    <a href="#topic13">13 · Gravitational Fields</a>
     <a href="#topic14">14 · Temperature</a>
     <a href="#topic15">15 · Ideal Gases</a>
     <a href="#topic16">16 · Thermodynamics</a>
+    <a href="#topic18">18 · Electric Fields</a>
     <a href="#practical">Practical Skills (P3/5)</a>
+    <a href="#formulas">Formula Summary</a>
   </nav>
 </header>
 
@@ -235,9 +272,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Formula</span>
         <div class="expr">s = rθ</div>
-        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
-          distance travelled = radius × angular displacement (radians)
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>s</b> = arc length — distance travelled round the circle (m) · <b>r</b> = radius of the circle (m) · <b>θ</b> = angular displacement (rad)</div>
       </div>
       <div class="def box">
         <span class="label">Definition — the radian</span>
@@ -248,6 +284,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         π rad = 180°<br>
         Degrees → radians: <code>× π</code> then <code>÷ 180</code><br>
         Radians → degrees: <code>× 180</code> then <code>÷ π</code>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>π</b> ≈ 3.14159 — the ratio of a circle's circumference to its diameter · <b>rad</b> = radian, the SI unit of angle · <b>°</b> = degree (360° = one full turn)</div>
       </div>
       <div class="table-wrap">
       <table class="filetable">
@@ -291,6 +329,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Speed around a circular path</span>
         <div class="expr">v = 2πr / t &nbsp;(m s⁻¹)</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>v</b> = speed round the circle (m s⁻¹) · <b>2πr</b> = circumference — distance for one full lap (m) · <b>r</b> = radius (m) · <b>t</b> = time for one lap, i.e. the period (s)</div>
       </div>
       <div class="def box">
         <span class="label">Definition — angular velocity (ω, omega)</span>
@@ -299,9 +339,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Formula</span>
         <div class="expr">ω = dθ/dt = 2π / T &nbsp;(rad s⁻¹)</div>
-        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
-          2π = angle of one full rotation · T = time for one rotation (the period)
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>ω</b> = angular velocity (rad s⁻¹) · <b>θ</b> = angular displacement (rad) · <b>t</b> = time (s) · <b>dθ/dt</b> = rate of change of angle · <b>2π</b> = angle of one full rotation (rad) · <b>T</b> = period — time for one rotation (s)</div>
       </div>
       <div class="def box">
         <span class="label">Definition — tangential (linear) velocity</span>
@@ -310,6 +349,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Deriving v = rω</span>
         <div class="expr">s = rθ &nbsp;→&nbsp; ds/dt = r · dθ/dt &nbsp;→&nbsp; v = rω &nbsp;⇔&nbsp; ω = v/r</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>s</b> = arc length (m) · <b>r</b> = radius (m) · <b>θ</b> = angle (rad) · <b>t</b> = time (s) · <b>ds/dt</b> = rate of change of arc length = linear speed v (m s⁻¹) · <b>v</b> = linear (tangential) speed (m s⁻¹) · <b>ω</b> = angular velocity (rad s⁻¹)</div>
       </div>
     </div>
     <div class="margin">
@@ -338,10 +379,14 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         <span class="label">Centripetal acceleration</span>
         <div class="expr">a = v²/r &nbsp;&nbsp;=&nbsp;&nbsp; ω²r</div>
         <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">(substituting v = ωr)</p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>a</b> = centripetal acceleration, directed towards the centre (m s⁻²) · <b>v</b> = linear speed (m s⁻¹) · <b>ω</b> = angular velocity (rad s⁻¹) · <b>r</b> = radius of the circular path (m)</div>
       </div>
       <div class="formula box">
         <span class="label">Centripetal force (F = ma)</span>
         <div class="expr">F = mv²/r &nbsp;&nbsp;=&nbsp;&nbsp; mω²r</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = centripetal force — the resultant force towards the centre (N) · <b>m</b> = mass of the object (kg) · <b>v</b> = linear speed (m s⁻¹) · <b>ω</b> = angular velocity (rad s⁻¹) · <b>r</b> = radius (m)</div>
       </div>
       <p>Use <code>v²/r</code> when you know the linear speed, and <code>ω²r</code> when you know the angular velocity (e.g. from a period).</p>
 
@@ -391,6 +436,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         Energy conservation: mgh = ½mv² &nbsp;→&nbsp; v² = 2gh = 2×9.81×5.2 = 102.0 &nbsp;→&nbsp; <strong>v = 10.1 m s⁻¹</strong><br>
         a = v²/r = 102.0/16 = <strong>6.38 m s⁻²</strong> (directed upward, towards the centre of curvature)<br>
         Contact force R: at the bottom of the dip, <code>R − mg = ma</code>, so <strong>R = m(g + a) = 70 × (9.81 + 6.38) ≈ 1130 N</strong>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>g</b> = acceleration of free fall, 9.81 m s⁻² · <b>h</b> = vertical drop (m) · <b>v</b> = speed at the bottom (m s⁻¹) · <b>R</b> = contact (normal) force from the ground (N) · <b>m</b> = mass (kg) · <b>a</b> = centripetal acceleration (m s⁻²)</div>
       </div>
       <div class="warn box">
         <span class="label">Corrected</span>
@@ -400,6 +447,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="example box">
         <span class="label">Banked car — m = 820 kg, v = 32 m s⁻¹, banked at 20°</span>
         Vertical equilibrium: <code>R cos 20° = mg</code> &nbsp;→&nbsp; R = (820×9.81)/cos 20° = <strong>8.56 kN</strong> ✓ (as given)
+      
+        <div class="vars"><span class="vlabel">Where</span><b>R</b> = contact force from the track, perpendicular to the track surface (N) · <b>m</b> = mass of the car (kg) · <b>g</b> = 9.81 m s⁻² · <b>20°</b> = angle of the banking to the horizontal</div>
       </div>
     </div>
     <div class="margin">
@@ -421,6 +470,196 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
     <details class="quiz-item"><summary>3. Why is a satellite in circular orbit accelerating even though its speed is constant?</summary><div class="qanswer">Its velocity's direction is constantly changing, and acceleration is the rate of change of velocity (a vector) — a constant-magnitude, always-perpendicular force (gravity) causes this.</div></details>
     <details class="quiz-item"><summary>4. A ball on a string is swung in a vertical circle. At the top of the circle, what two forces provide the centripetal force?</summary><div class="qanswer">Tension in the string and the ball's weight — both act towards the centre at the top of the circle, so T + mg = mv²/r there.</div></details>
     <details class="quiz-item"><summary>5. Double the radius of a circular path while keeping speed v constant. What happens to the centripetal acceleration?</summary><div class="qanswer">It halves (a = v²/r, so a is inversely proportional to r).</div></details>
+  </div>
+</section>
+
+<!-- ======================================================= TOPIC 13 ======================================================= -->
+<section class="topictitle" id="topic13">
+  <h1 class="topicnum">Topic 13 · Gravitational Fields</h1>
+  <div class="topicsub">Syllabus 13.1 Gravitational field · 13.2 Gravitational force between point masses · 13.3 Gravitational field of a point mass · 13.4 Gravitational potential (not covered in your notes yet)</div>
+</section>
+
+<section class="module" id="grav-field">
+  <h2>13.1 Gravitational Field &amp; Field Lines</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition — gravitational field &amp; field strength</span>
+        A <strong>gravitational field</strong> is a region of space in which a mass experiences a force. The <strong>gravitational field strength</strong>, <em>g</em>, at a point is the <strong>force per unit mass</strong> acting on an object placed at that point.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">g = F / m &nbsp;&nbsp;(N kg⁻¹)</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>g</b> = gravitational field strength (N kg⁻¹) · <b>F</b> = gravitational force on the mass (N) · <b>m</b> = the small mass placed in the field (kg)</div>
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">Your notes had these as two separate definitions — merged into one here, as your margin note asked.</p>
+
+      <h3 class="subtopic">Representing fields with field lines</h3>
+      <ul style="margin:4px 0 0 18px; padding:0;">
+        <li>The <strong>arrow</strong> shows the direction of the force on a mass placed in the field.</li>
+        <li>The <strong>closer</strong> the field lines, the <strong>stronger</strong> the field.</li>
+      </ul>
+      <div class="fig"><svg viewBox="0 0 460 195" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gravitational field lines: radial on a large scale, parallel near the surface"><circle cx="110" cy="90" r="26" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="110" y="94" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400">Earth</text><line x1="182.1" y1="119.8" x2="138.6" y2="101.9" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="156.5,109.2 164.6,109.7 162.6,114.7" style="fill:var(--module); stroke:none"/><line x1="139.8" y1="162.1" x2="121.9" y2="118.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="129.2,136.5 134.7,142.6 129.7,144.6" style="fill:var(--module); stroke:none"/><line x1="80.2" y1="162.1" x2="98.1" y2="118.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="90.8,136.5 90.3,144.6 85.3,142.6" style="fill:var(--module); stroke:none"/><line x1="37.9" y1="119.8" x2="81.4" y2="101.9" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="63.5,109.2 57.4,114.7 55.4,109.7" style="fill:var(--module); stroke:none"/><line x1="37.9" y1="60.2" x2="81.4" y2="78.1" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="63.5,70.8 55.4,70.3 57.4,65.3" style="fill:var(--module); stroke:none"/><line x1="80.2" y1="17.9" x2="98.1" y2="61.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="90.8,43.5 85.3,37.4 90.3,35.4" style="fill:var(--module); stroke:none"/><line x1="139.8" y1="17.9" x2="121.9" y2="61.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="129.2,43.5 129.7,35.4 134.7,37.4" style="fill:var(--module); stroke:none"/><line x1="182.1" y1="60.2" x2="138.6" y2="78.1" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="156.5,70.8 162.6,65.3 164.6,70.3" style="fill:var(--module); stroke:none"/><text x="110" y="180" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:400">Large scale: radial, towards the centre</text><line x1="270.0" y1="30.0" x2="270.0" y2="112.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="270.0,75.2 267.3,67.5 272.7,67.5" style="fill:var(--module); stroke:none"/><line x1="305.0" y1="30.0" x2="305.0" y2="112.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="305.0,75.2 302.3,67.5 307.7,67.5" style="fill:var(--module); stroke:none"/><line x1="340.0" y1="30.0" x2="340.0" y2="112.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="340.0,75.2 337.3,67.5 342.7,67.5" style="fill:var(--module); stroke:none"/><line x1="375.0" y1="30.0" x2="375.0" y2="112.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="375.0,75.2 372.3,67.5 377.7,67.5" style="fill:var(--module); stroke:none"/><line x1="410.0" y1="30.0" x2="410.0" y2="112.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="410.0,75.2 407.3,67.5 412.7,67.5" style="fill:var(--module); stroke:none"/><line x1="245" y1="116" x2="435" y2="116" style="stroke:var(--ink); stroke-width:2.2"/><text x="340" y="134" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400">Earth's surface</text><text x="340" y="180" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:400">Small scale: parallel, equally spaced = uniform</text></svg><div class="cap">Large scale (a whole planet): lines are radial and spread out with distance, so the field weakens. Small scale (near the surface): parallel and equally spaced, so g is uniform.</div></div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Near Earth's surface the field lines are parallel and equally spaced. What does that tell you about g?</summary>
+        <div class="answer">The field is uniform — g is (effectively) constant over small distances.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which has the stronger field: a region where lines are close together, or far apart?</summary>
+        <div class="answer">Close together.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="newton-gravitation">
+  <h2>13.2 Gravitational Force Between Point Masses</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Newton's law of gravitation</span>
+        Every object attracts every other object with an attractive force which is <strong>directly proportional to the product of the masses</strong> and <strong>inversely proportional to the square of the separation</strong> between them.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">F = G m₁ m₂ / r²</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = gravitational force between the two masses (N) · <b>G</b> = universal gravitational constant, 6.67×10⁻¹¹ N m² kg⁻² · <b>m₁, m₂</b> = the two masses (kg) · <b>r</b> = separation of the two objects, centre to centre (m)<span class="vnote">The minus sign in your notes, F = −Gm₁m₂/r², only says the force is <em>attractive</em> — directed towards the other mass. The syllabus uses the magnitude.</span></div>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        You wrote G = 6.67×10<sup>11</sup> N m² kg<sup>2</sup>. It should be <strong>6.67×10<sup>−11</sup> N m² kg<sup>−2</sup></strong> — the exponent is negative (G is tiny, which is why gravity only becomes noticeable when at least one mass is planet-sized) and the unit has kg<sup>−2</sup>. You can check the unit by rearranging G = Fr²/(m₁m₂): N m² / kg².
+      </div>
+
+      <div class="gap box">
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Spheres act like point masses</span>
+          For a point <strong>outside</strong> a uniform sphere, the mass of the sphere can be treated as a <strong>point mass at its centre</strong>. That's why <em>r</em> is always measured to the centre — e.g. for a satellite, r = radius of Earth + height above the surface.
+        </div>
+      </div>
+
+      <h3 class="subtopic">Circular orbits</h3>
+      <div class="gap box">
+        Your notes stop before orbits. In a circular orbit, gravity is the force that provides the centripetal force (Topic 12):
+        <div class="fig" style="max-width:260px; margin:10px auto;"><svg viewBox="0 0 250 195" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circular orbit: gravitational force towards the centre, velocity along the tangent"><circle cx="120" cy="100" r="68" style="fill:none; stroke:var(--ink-soft); stroke-width:1.2; stroke-dasharray:4 4"/><circle cx="120" cy="100" r="22" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="120" y="104" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">M</text><rect x="114" y="26" width="12" height="12" style="fill:var(--accent)"/><line x1="120" y1="40" x2="120" y2="66" style="stroke:var(--accent); stroke-width:2.2"/><polygon points="120,74 115,64 125,64" style="fill:var(--accent)"/><text x="130" y="62" text-anchor="start" class="fig-label" style="font-size:11px; font-weight:700">F</text><line x1="129" y1="32" x2="172" y2="32" style="stroke:var(--module); stroke-width:2.2"/><polygon points="180,32 170,27 170,37" style="fill:var(--module)"/><text x="154" y="22" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">v</text><line x1="120" y1="100" x2="120.0" y2="100" /><line x1="142" y1="100" x2="188" y2="100" style="stroke:var(--ink-soft); stroke-width:1; stroke-dasharray:2 3"/><text x="166.0" y="95" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">r</text></svg><div class="cap">F (gravity) acts towards the centre; v is along the tangent — always at 90°.</div></div>
+        <ol class="steps">
+          <li><strong>Gravity = centripetal force:</strong> GMm/r² = mv²/r</li>
+          <li><strong>Cancel m and one r:</strong> v² = GM/r, so <code>v = √(GM/r)</code> — the orbital speed doesn't depend on the satellite's mass.</li>
+          <li><strong>Use v = 2πr/T:</strong> (2πr/T)² = GM/r, so <code>T² = 4π²r³ / (GM)</code> — i.e. T² ∝ r³.</li>
+        </ol>
+      <div class="vars"><span class="vlabel">Where</span><b>G</b> = gravitational constant (N m² kg⁻²) · <b>M</b> = mass of the body being orbited (kg) · <b>m</b> = mass of the satellite (kg) · <b>r</b> = orbital radius, centre to centre (m) · <b>v</b> = orbital speed (m s⁻¹) · <b>T</b> = orbital period (s)</div>
+        <div class="def box">
+          <span class="label">Geostationary orbit</span>
+          A satellite in geostationary orbit stays above the <strong>same point</strong> on the Earth's surface. It has an <strong>orbital period of 24 hours</strong>, orbits <strong>from west to east</strong>, directly above the <strong>Equator</strong>.
+        </div>
+        <div class="example box">
+          <span class="label">Worked example — radius of a geostationary orbit (M = 6.02×10²⁴ kg, from your Q1)</span>
+          T = 24 h = 86 400 s. From T² = 4π²r³/(GM): r³ = GMT² / 4π² = (6.67×10⁻¹¹ × 6.02×10²⁴ × 86 400²) / 4π² = 7.59×10²² m³<br>
+          r = <strong>4.23×10⁷ m</strong>, which is about 3.6×10⁷ m above the surface (subtract Earth's radius, 6.4×10⁶ m).
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>The distance between two masses doubles. What happens to the force?</summary>
+        <div class="answer">It falls to ¼ (inverse-square law).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why must a geostationary satellite orbit above the Equator?</summary>
+        <div class="answer">Gravity acts towards the Earth's centre, so the orbit must be centred on it; to stay above one point it has to move in the same plane as that point — the equatorial plane — with the same 24 h period.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="g-point-mass">
+  <h2>13.3 Gravitational Field of a Point Mass</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="formula box">
+        <span class="label">Deriving g = GM/r²</span>
+        <ol class="steps">
+          <li>The force on a small mass m in the field of mass M is F = GMm/r² (Newton's law).</li>
+          <li>The same force is its weight: F = mg.</li>
+          <li>Equate and cancel m: mg = GMm/r² → <strong>g = GM / r²</strong></li>
+        </ol>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>g</b> = gravitational field strength (N kg⁻¹) · <b>G</b> = gravitational constant (N m² kg⁻²) · <b>M</b> = mass of the body <em>creating</em> the field (kg) · <b>m</b> = small test mass in the field (kg) · <b>F</b> = force on the test mass (N) · <b>r</b> = distance from the centre of M (m)<span class="vnote">Field strength depends only on M and r — not on the mass you put in the field.</span></div>
+      </div>
+      <div class="warn box">
+        <span class="label">Clarified</span>
+        Your final line was g = Gm/r². The "m" there must be the mass of the <em>source</em> (call it M) — the small test mass has already cancelled. Using the same letter for both is a classic way to lose marks.
+      </div>
+      <div class="gap box">
+        Why is g approximately constant for small changes in height near the surface? Because r ≈ R<sub>Earth</sub> = 6.4×10⁶ m, so a change of a few km barely changes r and g ∝ 1/r². Going up 1 km changes g by only about 2h/R = 0.03%.
+      </div>
+
+      <h3 class="subtopic">Worked examples (Gravitational Fields — practice)</h3>
+      <div class="example box">
+        <span class="label">1 — Mass of the Earth (r = 6.4×10⁶ m, g = 9.81 N kg⁻¹)</span>
+        g = GM/r² → M = gr²/G = 9.81 × (6.4×10⁶)² / 6.67×10⁻¹¹ = <strong>6.02×10²⁴ kg</strong>
+      </div>
+      <div class="example box">
+        <span class="label">2 — g on the Moon (r = 1.7×10⁶ m, average density 3.4×10³ kg m⁻³)</span>
+        M = density × volume = ρ·⁴⁄₃πr³, so g = GM/r² = ⁴⁄₃πGρr<br>
+        g = ⁴⁄₃ × π × 6.67×10⁻¹¹ × 3.4×10³ × 1.7×10⁶ = <strong>1.61 N kg⁻¹</strong>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>M</b> = mass of the Moon (kg) · <b>ρ</b> = average density (kg m⁻³) · <b>r</b> = radius of the Moon (m) · <b>g</b> = surface field strength (N kg⁻¹) · <b>G</b> = 6.67×10⁻¹¹ N m² kg⁻²</div>
+      </div>
+      <div class="example box">
+        <span class="label">3 — Weight of a 400 kg satellite orbiting at twice Earth's radius</span>
+        r = 2 × 6.4×10⁶ = 1.28×10⁷ m → g = GM/r² = 6.67×10⁻¹¹ × 6.02×10²⁴ / (1.28×10⁷)² = 2.45 N kg⁻¹<br>
+        Weight = mg = 400 × 2.45 = <strong>980 N</strong> &nbsp;(sanity check: at 2R, g is ¼ of 9.81 ≈ 2.45 ✓)
+      </div>
+      <div class="example box">
+        <span class="label">4 — Planet and moon (planet radius 1.0×10⁶ m; moon mass 2.0×10²⁰ kg; force 3.0×10¹⁸ N; orbit radius 4.0×10⁶ m)</span>
+        a) F = GMm/r² → M = Fr² / (G m<sub>moon</sub>) = 3.0×10¹⁸ × (4.0×10⁶)² / (6.67×10⁻¹¹ × 2.0×10²⁰) = <strong>3.6×10²¹ kg</strong><br>
+        b) Volume = ⁴⁄₃πR³ = ⁴⁄₃π(1.0×10⁶)³ = 4.19×10¹⁸ m³ → density = M / V = 3.6×10²¹ / 4.19×10¹⁸ = <strong>8.6×10² kg m⁻³</strong>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>M</b> = mass of the planet (kg) · <b>m<sub>moon</sub></b> = mass of the moon (kg) · <b>F</b> = force of attraction (N) · <b>r</b> = orbit radius, centre to centre (m) · <b>R</b> = radius of the planet (m) · <b>V</b> = volume of the planet (m³) · <b>ρ</b> = average density (kg m⁻³)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected / completed</span>
+        Your answer to 4(a) was 3.56×10²², but the numbers on the slide give 3.6×10²¹ kg — it's worth re-checking you haven't dropped a power of ten when rearranging to M = Fr²/(Gm). Part (b) was blank — completed above. Remember: use the <em>orbit</em> radius (centre to centre) in Newton's law, but the <em>planet's own</em> radius for its volume.
+      </div>
+
+      <div class="extra box">
+        <span class="label">Apparent weight on a rotating planet</span>
+        <strong>Not rotating:</strong> F<sub>G</sub> = F<sub>R</sub> (F<sub>R</sub> = normal contact/reaction force on the object), so no resultant force.<br>
+        <strong>Rotating:</strong> the object moves in a circle, so a resultant force towards the centre of rotation is needed → F<sub>G</sub> &gt; F<sub>R</sub> and <strong>F<sub>R</sub> = F<sub>G</sub> − F<sub>C</sub></strong> (F<sub>C</sub> = mω²r). Some of the gravitational force is used up providing the centripetal force, so the object's "apparent weight" (what a scale reads, F<sub>R</sub>) is slightly less than mg — biggest effect at the equator, none at the poles.
+      
+        <div class="vars"><span class="vlabel">Where</span><b>F<sub>G</sub></b> = gravitational force on the object (N) · <b>F<sub>R</sub></b> = normal contact (reaction) force on the object — the apparent weight (N) · <b>F<sub>C</sub></b> = centripetal force needed, = mω²r (N) · <b>m</b> = mass (kg) · <b>ω</b> = angular velocity of the planet's rotation (rad s⁻¹) · <b>r</b> = distance from the axis of rotation (m)</div>
+      </div>
+
+      <div class="gap box">
+        <strong>13.4 Gravitational potential</strong> (φ = −GM/r and E<sub>p</sub> = −GMm/r) isn't in your notes yet — nothing has been written for it here; add it once it's taught.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>If you double the mass of the planet, what happens to g at the surface (same radius)?</summary>
+        <div class="answer">g doubles (g ∝ M).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which radius do you use for the volume in a density calculation — the orbit radius or the planet radius?</summary>
+        <div class="answer">The planet's own radius.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Topic 13</h4>
+    <details class="quiz-item"><summary>1. Define gravitational field strength.</summary><div class="qanswer">The force per unit mass acting on an object placed at that point in the field (g = F/m, units N kg⁻¹).</div></details>
+    <details class="quiz-item"><summary>2. A satellite moves from orbit radius r to 3r. By what factor does the gravitational force on it change?</summary><div class="qanswer">It falls to 1/9 (F ∝ 1/r²).</div></details>
+    <details class="quiz-item"><summary>3. Find the gravitational field strength at a height equal to Earth's radius above the surface (surface g = 9.81 N kg⁻¹).</summary><div class="qanswer">r = 2R, so g = 9.81 / 2² = 2.45 N kg⁻¹.</div></details>
+    <details class="quiz-item"><summary>4. A satellite orbits Earth (M = 6.0×10²⁴ kg) at r = 7.0×10⁶ m. Find its orbital speed.</summary><div class="qanswer">v = √(GM/r) = √(6.67×10⁻¹¹ × 6.0×10²⁴ / 7.0×10⁶) ≈ 7.6×10³ m s⁻¹.</div></details>
+    <details class="quiz-item"><summary>5. State three features of a geostationary orbit.</summary><div class="qanswer">Period 24 h; above the Equator; orbits west to east (so it stays above the same point on the surface).</div></details>
   </div>
 </section>
 
@@ -455,6 +694,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Kelvin ⇄ Celsius</span>
         <div class="expr">T / K = θ / °C + 273.15</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>T</b> = thermodynamic (absolute) temperature (K) · <b>θ</b> = Celsius temperature (°C)</div>
       </div>
       <div class="warn box">
         <span class="label">Corrected</span>
@@ -541,9 +782,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Formula</span>
         <div class="expr">c = ΔQ / (mΔT)</div>
-        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
-          units: J kg⁻¹ K⁻¹ &nbsp;·&nbsp; ΔT = T<sub>final</sub> − T<sub>initial</sub>
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>c</b> = specific heat capacity (J kg⁻¹ K⁻¹) · <b>ΔQ</b> = energy transferred as heat (J) · <b>m</b> = mass (kg) · <b>ΔT</b> = temperature change = T<sub>final</sub> − T<sub>initial</sub> (K or °C)</div>
       </div>
 
       <h3 class="subtopic">Mixing materials</h3>
@@ -554,6 +794,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Conservation of energy</span>
         <div class="expr">−ΔE<sub>hot</sub> = ΔE<sub>cold</sub></div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>ΔE<sub>hot</sub></b> = energy change of the hotter object (J) — negative, since it loses energy · <b>ΔE<sub>cold</sub></b> = energy change of the colder object (J) — positive, since it gains energy<span class="vnote">For each object, ΔE = mcΔT.</span></div>
       </div>
 
       <div class="example box">
@@ -561,6 +803,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         c<sub>water</sub> = 4200 J kg⁻¹K⁻¹, c<sub>copper</sub> = 385 J kg⁻¹K⁻¹. Find the mass of the copper ball.<br>
         −(m<sub>c</sub> × 385 × (80 − 700)) = 0.7 × 4200 × (80 − 20)<br>
         m<sub>c</sub> × 385 × 620 = 176 400 &nbsp;→&nbsp; <strong>m<sub>c</sub> ≈ 0.74 kg</strong>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>m<sub>c</sub></b> = mass of the copper ball (kg) · <b>385, 4200</b> = specific heat capacities of copper and water (J kg⁻¹ K⁻¹) · <b>0.7</b> = mass of the water (kg) · <b>(80 − 700), (80 − 20)</b> = ΔT = final − initial temperature (°C)</div>
       </div>
 
       <div class="def box">
@@ -662,6 +906,7 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         <tr><td><strong>Pressure law</strong></td><td>Volume</td><td>P ∝ T &nbsp;→&nbsp; P₁/T₁ = P₂/T₂</td></tr>
       </table>
       </div>
+      <div class="vars"><span class="vlabel">Where</span><b>p</b> = pressure (Pa) · <b>V</b> = volume (m³) · <b>T</b> = thermodynamic temperature (K) — never °C · <b>subscripts 1, 2</b> = the initial and final states of the gas</div>
 
       <div class="warn box">
         <span class="label">Corrected</span>
@@ -676,12 +921,13 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Ideal gas equation</span>
         <div class="expr">pV = nRT &nbsp;&nbsp;=&nbsp;&nbsp; pV = NkT</div>
-        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
-          n = number of moles · R = molar gas constant = 8.31 J K⁻¹ mol⁻¹ · N = number of molecules · k = Boltzmann constant
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>p</b> = pressure (Pa) · <b>V</b> = volume (m³) · <b>n</b> = amount of gas (mol) · <b>R</b> = molar gas constant, 8.31 J K⁻¹ mol⁻¹ · <b>T</b> = thermodynamic temperature (K) · <b>N</b> = number of molecules · <b>k</b> = Boltzmann constant, 1.38×10⁻²³ J K⁻¹</div>
       </div>
       <div class="gap box">
         The relationship between the two constants: <strong>k = R / N<sub>A</sub></strong> = 8.31 / 6.02×10²³ = 1.38×10⁻²³ J K⁻¹. Don't mix this <em>k</em> (Boltzmann constant) up with the generic "constant" used for the three gas laws above — same letter, different meaning.
+      
+        <div class="vars"><span class="vlabel">Where</span><b>k</b> = Boltzmann constant (J K⁻¹) · <b>R</b> = molar gas constant, 8.31 J K⁻¹ mol⁻¹ · <b>N<sub>A</sub></b> = Avogadro constant, 6.02×10²³ mol⁻¹</div>
       </div>
 
       <h3 class="subtopic">Types of change</h3>
@@ -743,19 +989,22 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         </ol>
         Substituting into step 5:
         <div class="expr">p = ⅓Nm⟨c²⟩ / V &nbsp;&nbsp;⇔&nbsp;&nbsp; pV = ⅓Nm⟨c²⟩</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>N</b> = number of molecules · <b>m</b> = mass of one molecule (kg) · <b>L</b> = side length of the cube (m) · <b>V</b> = L³, the volume of the cube (m³) · <b>c<sub>x</sub></b> = x-component of a molecule's velocity (m s⁻¹) · <b>⟨c<sub>x</sub>²⟩</b> = mean-square x-velocity (m² s⁻²) · <b>⟨c²⟩</b> = mean-square speed (m² s⁻²) · <b>p</b> = pressure (Pa)</div>
       </div>
       <div class="formula box">
         <span class="label">Pressure of an ideal gas</span>
         <div class="expr">pV = ⅓Nm⟨c²⟩</div>
-        <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
-          N = number of molecules · m = mass of one molecule · ⟨c²⟩ = mean-square speed
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>p</b> = pressure of the gas (Pa) · <b>V</b> = volume of the gas (m³) · <b>N</b> = number of molecules · <b>m</b> = mass of one molecule (kg) · <b>⟨c²⟩</b> = mean-square speed of the molecules (m² s⁻²)</div>
       </div>
       <div class="example box">
         <span class="label">Worked example — finding c.r.m.s.</span>
         N = 3.0×10²³ molecules, m = 5.0×10⁻²⁶ kg each, V = 2.0×10⁻³ m³, p = 1.5×10⁵ Pa.<br>
         ⟨c²⟩ = 3pV / (Nm) = (3 × 1.5×10⁵ × 2.0×10⁻³) / (3.0×10²³ × 5.0×10⁻²⁶) = 900 / 0.015 = 6.0×10⁴ m² s⁻²<br>
         c<sub>r.m.s.</sub> = √(6.0×10⁴) ≈ <strong>245 m s⁻¹</strong>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>N</b> = number of molecules · <b>m</b> = mass of one molecule (kg) · <b>V</b> = volume (m³) · <b>p</b> = pressure (Pa) · <b>⟨c²⟩</b> = mean-square speed (m² s⁻²) · <b>c<sub>r.m.s.</sub></b> = root-mean-square speed (m s⁻¹)</div>
       </div>
 
       <div class="gap box">
@@ -764,13 +1013,17 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
           <span class="label">Root-mean-square speed</span>
           <div class="expr">c<sub>r.m.s.</sub> = √⟨c²⟩</div>
           <p style="font-size:9.5pt; color:var(--ink-soft);">— the square root of the <em>mean</em> of the squared speeds (not the mean speed itself, and not the square of the mean speed).</p>
-        </div>
+        
+        <div class="vars"><span class="vlabel">Where</span><b>c<sub>r.m.s.</sub></b> = root-mean-square speed (m s⁻¹) · <b>⟨c²⟩</b> = mean of the squared speeds of all the molecules (m² s⁻²)</div>
+      </div>
         <div class="formula box">
           <span class="label">Average kinetic energy of a molecule</span>
           Comparing pV = ⅓Nm⟨c²⟩ with pV = NkT gives:
           <div class="expr">½m⟨c²⟩ = <sup>3</sup>⁄<sub>2</sub>kT &nbsp;&nbsp;=&nbsp;&nbsp; <sup>3</sup>⁄<sub>2</sub> · <sup>RT</sup>⁄<sub>N<sub>A</sub></sub></div>
           <p style="font-size:9.5pt; color:var(--ink-soft);">(the second form just substitutes k = R/N<sub>A</sub> — useful if you're given R and N<sub>A</sub> rather than k directly). This is a key result: average molecular KE depends only on <strong>thermodynamic temperature</strong>, nothing else.</p>
-        </div>
+        
+        <div class="vars"><span class="vlabel">Where</span><b>½m⟨c²⟩</b> = average translational kinetic energy of <em>one</em> molecule (J) · <b>m</b> = mass of one molecule (kg) · <b>⟨c²⟩</b> = mean-square speed (m² s⁻²) · <b>k</b> = Boltzmann constant, 1.38×10⁻²³ J K⁻¹ · <b>T</b> = thermodynamic temperature (K) · <b>R</b> = molar gas constant, 8.31 J K⁻¹ mol⁻¹ · <b>N<sub>A</sub></b> = Avogadro constant, 6.02×10²³ mol⁻¹</div>
+      </div>
       </div>
     </div>
     <div class="margin">
@@ -817,6 +1070,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">Putting it together</span>
         <div class="expr">Internal energy = (KE of molecules) + (PE of bonds)</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>Internal energy</b> = total energy stored in the system (J) · <b>KE of molecules</b> = sum of the random kinetic energies of all the particles (J) · <b>PE of bonds</b> = sum of the potential energies from intermolecular forces/bonds (J)</div>
       </div>
 
       <h3 class="subtopic">The heating curve</h3>
@@ -875,6 +1130,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         <div class="expr">W = pAs</div>
         <p style="text-align:center; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">A × s = the volume swept out by the piston, ΔV, so:</p>
         <div class="expr" style="font-size:15pt;"><strong>W = pΔV</strong></div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>W</b> = work done (J) · <b>F</b> = force (N) · <b>s</b> = distance the piston moves (m) · <b>p</b> = gas pressure (Pa) · <b>A</b> = piston cross-sectional area (m²) · <b>ΔV</b> = A × s, the change in volume (m³)</div>
       </div>
       <div class="def box">
         <span class="label">Sign convention</span>
@@ -884,9 +1141,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="formula box">
         <span class="label">First law of thermodynamics</span>
         <div class="expr">ΔU = q + W</div>
-        <p style="font-size:9.5pt; color:var(--ink-soft);">
-          ΔU = the increase in internal energy of the gas · q = energy transferred to the system via heating · W = work done <strong>on</strong> the system (see sign convention above).
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>ΔU</b> = increase in the internal energy of the gas (J) · <b>q</b> = energy transferred to the system by heating (J) · <b>W</b> = work done <em>on</em> the system (J) — positive for compression, negative for expansion</div>
       </div>
       <div class="example box">
         <span class="label">Worked example</span>
@@ -912,6 +1168,471 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
   </div>
 </section>
 
+<!-- ======================================================= TOPIC 18 ======================================================= -->
+<section class="topictitle" id="topic18">
+  <h1 class="topicnum">Topic 18 · Electric Fields</h1>
+  <div class="topicsub">Syllabus 18.1 Electric fields and field lines · 18.2 Uniform electric fields · 18.3 Electric force between point charges (Coulomb's law) · 18.4 Electric field of a point charge · 18.5 Electric potential</div>
+</section>
+
+<section class="module" id="e-fields">
+  <h2>18.1 Electric Fields &amp; Field Lines</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition — electric field strength</span>
+        The electric field strength at a point is the <strong>force per unit (positive) charge</strong> exerted on a positive charge placed at that point.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">E = F / q &nbsp;&nbsp;(N C⁻¹)</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = electric field strength (N C⁻¹) · <b>F</b> = force on the test charge (N) · <b>q</b> = the small positive test charge (C)</div>
+      </div>
+      <div class="gap box">
+        Rearranged, this gives the <strong>force on a charge in a field</strong>: <code>F = qE</code>. The force is in the direction of E for a positive charge, and opposite to E for a negative charge.
+      
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = force on the charge (N) · <b>q</b> = the charge (C) — negative for an electron · <b>E</b> = electric field strength (N C⁻¹)</div>
+      </div>
+
+      <h3 class="subtopic">Electric field lines</h3>
+      <p>Electric fields are drawn in a similar way to gravitational and magnetic fields — but with positive <em>and</em> negative charges, so electric forces can <strong>attract or repel</strong> (gravity only attracts).</p>
+      <ul style="margin:4px 0 0 18px; padding:0;">
+        <li>Arrows show the <strong>direction</strong> of the force on a positive charge: lines run from <strong>+ to −</strong>.</li>
+        <li>Lines can also end on a <strong>neutral (e.g. earthed) object</strong>.</li>
+        <li>The <strong>closer</strong> the lines, the <strong>stronger</strong> the field.</li>
+      </ul>
+      <div class="warn box">
+        <span class="label">Incomplete in the original</span>
+        Your numbered list had points 1 and 2 left blank (only 3 and 4 were written), so they're not included here rather than guessed at.
+      </div>
+      <div class="gap box">
+        Two standard rules your diagrams already follow but your notes don't state: field lines <strong>never cross</strong> (the field has only one direction at each point), and they meet a charged conductor's surface at <strong>right angles</strong>.
+      </div>
+
+      <div class="fig"><svg viewBox="0 0 460 185" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Doubling the charge doubles the number of field lines drawn"><circle cx="80" cy="85" r="9" style="fill:var(--accent); stroke:none"/><text x="80" y="89.5" text-anchor="middle" style="fill:#fff; font:700 14px Helvetica,Arial,sans-serif">+</text><line x1="92.7" y1="97.7" x2="122.4" y2="127.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="112.0,117.0 104.7,113.5 108.5,109.7" style="fill:var(--module); stroke:none"/><line x1="67.3" y1="97.7" x2="37.6" y2="127.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="48.0,117.0 51.5,109.7 55.3,113.5" style="fill:var(--module); stroke:none"/><line x1="67.3" y1="72.3" x2="37.6" y2="42.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="48.0,53.0 55.3,56.5 51.5,60.3" style="fill:var(--module); stroke:none"/><line x1="92.7" y1="72.3" x2="122.4" y2="42.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="112.0,53.0 108.5,60.3 104.7,56.5" style="fill:var(--module); stroke:none"/><text x="80" y="170" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:400">charge 2+  →  4 lines</text><circle cx="230" cy="85" r="9" style="fill:var(--accent); stroke:none"/><text x="230" y="89.5" text-anchor="middle" style="fill:#fff; font:700 14px Helvetica,Arial,sans-serif">+</text><line x1="248.0" y1="85.0" x2="290.0" y2="85.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="275.3,85.0 267.6,87.7 267.6,82.3" style="fill:var(--module); stroke:none"/><line x1="242.7" y1="97.7" x2="272.4" y2="127.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="262.0,117.0 254.7,113.5 258.5,109.7" style="fill:var(--module); stroke:none"/><line x1="230.0" y1="103.0" x2="230.0" y2="145.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="230.0,130.3 227.3,122.6 232.7,122.6" style="fill:var(--module); stroke:none"/><line x1="217.3" y1="97.7" x2="187.6" y2="127.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="198.0,117.0 201.5,109.7 205.3,113.5" style="fill:var(--module); stroke:none"/><line x1="212.0" y1="85.0" x2="170.0" y2="85.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="184.7,85.0 192.4,82.3 192.4,87.7" style="fill:var(--module); stroke:none"/><line x1="217.3" y1="72.3" x2="187.6" y2="42.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="198.0,53.0 205.3,56.5 201.5,60.3" style="fill:var(--module); stroke:none"/><line x1="230.0" y1="67.0" x2="230.0" y2="25.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="230.0,39.7 232.7,47.4 227.3,47.4" style="fill:var(--module); stroke:none"/><line x1="242.7" y1="72.3" x2="272.4" y2="42.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="262.0,53.0 258.5,60.3 254.7,56.5" style="fill:var(--module); stroke:none"/><text x="230" y="170" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:400">charge 4+  →  8 lines</text><circle cx="380" cy="85" r="9" style="fill:var(--accent); stroke:none"/><text x="380" y="89.5" text-anchor="middle" style="fill:#fff; font:700 14px Helvetica,Arial,sans-serif">+</text><line x1="398.0" y1="85.0" x2="440.0" y2="85.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="425.3,85.0 417.6,87.7 417.6,82.3" style="fill:var(--module); stroke:none"/><line x1="396.6" y1="91.9" x2="435.4" y2="108.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="421.9,102.3 413.7,101.8 415.8,96.9" style="fill:var(--module); stroke:none"/><line x1="392.7" y1="97.7" x2="422.4" y2="127.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="412.0,117.0 404.7,113.5 408.5,109.7" style="fill:var(--module); stroke:none"/><line x1="386.9" y1="101.6" x2="403.0" y2="140.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="397.3,126.9 391.9,120.8 396.8,118.7" style="fill:var(--module); stroke:none"/><line x1="380.0" y1="103.0" x2="380.0" y2="145.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="380.0,130.3 377.3,122.6 382.7,122.6" style="fill:var(--module); stroke:none"/><line x1="373.1" y1="101.6" x2="357.0" y2="140.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="362.7,126.9 363.2,118.7 368.1,120.8" style="fill:var(--module); stroke:none"/><line x1="367.3" y1="97.7" x2="337.6" y2="127.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="348.0,117.0 351.5,109.7 355.3,113.5" style="fill:var(--module); stroke:none"/><line x1="363.4" y1="91.9" x2="324.6" y2="108.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="338.1,102.3 344.2,96.9 346.3,101.8" style="fill:var(--module); stroke:none"/><line x1="362.0" y1="85.0" x2="320.0" y2="85.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="334.7,85.0 342.4,82.3 342.4,87.7" style="fill:var(--module); stroke:none"/><line x1="363.4" y1="78.1" x2="324.6" y2="62.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="338.1,67.7 346.3,68.2 344.2,73.1" style="fill:var(--module); stroke:none"/><line x1="367.3" y1="72.3" x2="337.6" y2="42.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="348.0,53.0 355.3,56.5 351.5,60.3" style="fill:var(--module); stroke:none"/><line x1="373.1" y1="68.4" x2="357.0" y2="29.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="362.7,43.1 368.1,49.2 363.2,51.3" style="fill:var(--module); stroke:none"/><line x1="380.0" y1="67.0" x2="380.0" y2="25.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="380.0,39.7 382.7,47.4 377.3,47.4" style="fill:var(--module); stroke:none"/><line x1="386.9" y1="68.4" x2="403.0" y2="29.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="397.3,43.1 396.8,51.3 391.9,49.2" style="fill:var(--module); stroke:none"/><line x1="392.7" y1="72.3" x2="422.4" y2="42.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="412.0,53.0 408.5,60.3 404.7,56.5" style="fill:var(--module); stroke:none"/><line x1="396.6" y1="78.1" x2="435.4" y2="62.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="421.9,67.7 415.8,73.1 413.7,68.2" style="fill:var(--module); stroke:none"/><text x="380" y="170" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:400">charge 8+  →  16 lines</text></svg><div class="cap">Doubling the charge doubles the number of lines drawn (the number of lines is proportional to the charge).</div></div>
+      <div class="figgrid">
+        <div class="fig"><svg viewBox="0 0 260 195" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Electric field lines between a positive and a negative charge"><line x1="81.0" y1="90.0" x2="179.0" y2="90.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="134.2,90.0 126.5,92.7 126.5,87.3" style="fill:var(--module); stroke:none"/><path d="M79.0,83.0 C95.0,50.0 165.0,50.0 181.0,83.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="134.2,58.2 126.5,60.9 126.5,55.6" style="fill:var(--module); stroke:none"/><path d="M79.0,97.0 C95.0,130.0 165.0,130.0 181.0,97.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="134.2,121.8 126.5,124.4 126.5,119.1" style="fill:var(--module); stroke:none"/><path d="M75.0,80.0 C75.0,15.0 185.0,15.0 185.0,80.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="134.2,31.2 126.5,33.9 126.5,28.6" style="fill:var(--module); stroke:none"/><path d="M75.0,100.0 C75.0,165.0 185.0,165.0 185.0,100.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="134.2,148.8 126.5,151.4 126.5,146.1" style="fill:var(--module); stroke:none"/><line x1="56.0" y1="90.0" x2="22.0" y2="90.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="31.4,90.0 39.1,87.3 39.1,92.7" style="fill:var(--module); stroke:none"/><line x1="57.9" y1="97.0" x2="28.4" y2="114.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="36.6,109.3 41.9,103.1 44.6,107.8" style="fill:var(--module); stroke:none"/><line x1="57.9" y1="83.0" x2="28.4" y2="66.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="36.6,70.7 44.6,72.2 41.9,76.9" style="fill:var(--module); stroke:none"/><line x1="63.0" y1="102.1" x2="46.0" y2="131.6" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="50.7,123.4 52.2,115.4 56.9,118.1" style="fill:var(--module); stroke:none"/><line x1="63.0" y1="77.9" x2="46.0" y2="48.4" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="50.7,56.6 56.9,61.9 52.2,64.6" style="fill:var(--module); stroke:none"/><line x1="238.0" y1="90.0" x2="204.0" y2="90.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="216.8,90.0 224.5,87.3 224.5,92.7" style="fill:var(--module); stroke:none"/><line x1="231.6" y1="114.0" x2="202.1" y2="97.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="213.2,103.4 221.2,104.9 218.5,109.6" style="fill:var(--module); stroke:none"/><line x1="231.6" y1="66.0" x2="202.1" y2="83.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="213.2,76.6 218.5,70.4 221.2,75.1" style="fill:var(--module); stroke:none"/><line x1="214.0" y1="131.6" x2="197.0" y2="102.1" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="203.4,113.2 209.6,118.5 204.9,121.2" style="fill:var(--module); stroke:none"/><line x1="214.0" y1="48.4" x2="197.0" y2="77.9" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="203.4,66.8 204.9,58.8 209.6,61.5" style="fill:var(--module); stroke:none"/><circle cx="70" cy="90" r="11" style="fill:var(--accent); stroke:none"/><text x="70" y="94.5" text-anchor="middle" style="fill:#fff; font:700 14px Helvetica,Arial,sans-serif">+</text><circle cx="190" cy="90" r="11" style="fill:var(--ink-soft); stroke:none"/><text x="190" y="94.5" text-anchor="middle" style="fill:#fff; font:700 14px Helvetica,Arial,sans-serif">−</text></svg><div class="cap">Opposite charges: lines run from + to −</div></div>
+        <div class="fig"><svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Field lines from a positive charge ending perpendicular on a neutral earthed plate"><line x1="20" y1="148" x2="240" y2="148" style="stroke:var(--ink); stroke-width:2.6"/><text x="130" y="166" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400">earthed / neutral conductor</text><path d="M130.0,60.0 Q60.0,112.0 60.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="71.7,115.1 74.1,107.4 78.4,110.5" style="fill:var(--module); stroke:none"/><path d="M130.0,60.0 Q92.0,112.0 92.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="98.1,115.6 98.5,107.5 103.5,109.5" style="fill:var(--module); stroke:none"/><path d="M130.0,60.0 Q130.0,112.0 130.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="130.0,116.0 127.3,108.3 132.7,108.3" style="fill:var(--module); stroke:none"/><path d="M130.0,60.0 Q168.0,112.0 168.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="161.9,115.6 156.5,109.5 161.5,107.5" style="fill:var(--module); stroke:none"/><path d="M130.0,60.0 Q200.0,112.0 200.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="188.3,115.1 181.6,110.5 185.9,107.4" style="fill:var(--module); stroke:none"/><path d="M130.0,54.0 Q22.0,52.0 22.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="45.8,78.7 49.9,71.7 53.4,75.8" style="fill:var(--module); stroke:none"/><path d="M130.0,54.0 Q238.0,52.0 238.0,146.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="214.2,78.7 206.6,75.8 210.1,71.7" style="fill:var(--module); stroke:none"/><line x1="130.0" y1="37.0" x2="130.0" y2="-2.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="130.0,9.4 132.7,17.1 127.3,17.1" style="fill:var(--module); stroke:none"/><line x1="119.6" y1="42.2" x2="88.4" y2="18.8" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="97.5,25.6 105.3,28.1 102.1,32.4" style="fill:var(--module); stroke:none"/><line x1="140.4" y1="42.2" x2="171.6" y2="18.8" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="162.5,25.6 157.9,32.4 154.7,28.1" style="fill:var(--module); stroke:none"/><circle cx="130" cy="50" r="11" style="fill:var(--accent); stroke:none"/><text x="130" y="54.5" text-anchor="middle" style="fill:#fff; font:700 14px Helvetica,Arial,sans-serif">+</text></svg><div class="cap">+ charge above a neutral (earthed) plate</div></div>
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">Also in your notes (pages not redrawn here): a + charge near a − plate (lines curve from the charge to the plate); a pointed conductor on a charged plate (lines bunch together at the point, so the field is strongest there); and four charges (+ − / − +) at the corners of a rectangle — lines run from each + to the neighbouring −.</p>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which way do electric field lines point?</summary>
+        <div class="answer">From positive to negative — the direction of the force on a positive test charge.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A negative charge sits in a field E. Which way is the force on it?</summary>
+        <div class="answer">Opposite to the field direction (F = qE, with q negative).</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="uniform-e-field">
+  <h2>18.2 Uniform Electric Fields</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="fig" style="max-width:340px; margin:0 auto 12px;"><svg viewBox="0 0 285 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Uniform electric field between two parallel plates"><line x1="40" y1="40" x2="220" y2="40" style="stroke:var(--accent); stroke-width:4"/><line x1="40" y1="140" x2="220" y2="140" style="stroke:var(--ink-soft); stroke-width:4"/><text x="26" y="44" text-anchor="middle" class="fig-label" style="font-size:16px; font-weight:700">+</text><text x="26" y="144" text-anchor="middle" class="fig-label" style="font-size:16px; font-weight:700">−</text><line x1="60.0" y1="43.0" x2="60.0" y2="137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="60.0,98.9 57.3,91.2 62.7,91.2" style="fill:var(--module); stroke:none"/><line x1="90.0" y1="43.0" x2="90.0" y2="137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="90.0,98.9 87.3,91.2 92.7,91.2" style="fill:var(--module); stroke:none"/><line x1="120.0" y1="43.0" x2="120.0" y2="137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="120.0,98.9 117.3,91.2 122.7,91.2" style="fill:var(--module); stroke:none"/><line x1="150.0" y1="43.0" x2="150.0" y2="137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="150.0,98.9 147.3,91.2 152.7,91.2" style="fill:var(--module); stroke:none"/><line x1="180.0" y1="43.0" x2="180.0" y2="137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="180.0,98.9 177.3,91.2 182.7,91.2" style="fill:var(--module); stroke:none"/><line x1="210.0" y1="43.0" x2="210.0" y2="137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="210.0,98.9 207.3,91.2 212.7,91.2" style="fill:var(--module); stroke:none"/><path d="M44.0,43.0 Q18.0,90.0 44.0,137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="31.0,94.2 28.3,86.5 33.7,86.5" style="fill:var(--module); stroke:none"/><path d="M216.0,43.0 Q242.0,90.0 216.0,137.0" style="stroke:var(--module); fill:none; stroke-width:1.6"/><polygon points="229.0,94.2 226.3,86.5 231.7,86.5" style="fill:var(--module); stroke:none"/><line x1="250" y1="40" x2="250" y2="140" style="stroke:var(--ink-soft); stroke-width:1"/><line x1="246" y1="40" x2="254" y2="40" style="stroke:var(--ink-soft); stroke-width:1"/><line x1="246" y1="140" x2="254" y2="140" style="stroke:var(--ink-soft); stroke-width:1"/><text x="264" y="94" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">d</text><text x="130" y="175" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:400">Uniform field: parallel, equally spaced</text></svg><div class="cap">Between two charged parallel plates the field is uniform (the lines bow out only at the edges).</div></div>
+      <div class="formula box">
+        <span class="label">Field strength between parallel plates</span>
+        <div class="expr">E = ΔV / Δd</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = field strength (V m⁻¹, same as N C⁻¹) · <b>ΔV</b> = potential difference between the plates (V) · <b>Δd</b> = separation of the plates (m)</div>
+      </div>
+      <div class="example box">
+        <span class="label">Deriving E = ΔV/Δd (from your notes)</span>
+        <ol class="steps">
+          <li>Work done moving a charge q through a potential difference ΔV: <code>W = qΔV</code></li>
+          <li>The same work is force × distance across the plates: <code>W = Fd</code></li>
+          <li>Equate: Fd = qΔV, so <code>F = qΔV/d</code> (your boxed result — it only works for parallel plates, where the field is uniform)</li>
+          <li>E = F/q = ΔV/d. So E ∝ ΔV and E ∝ 1/d.</li>
+        </ol>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>W</b> = work done on the charge (J) · <b>q</b> = charge (C) · <b>ΔV</b> = potential difference (V) · <b>F</b> = force on the charge (N) · <b>d</b> = plate separation (m) · <b>E</b> = field strength (V m⁻¹)</div>
+      </div>
+
+      <h3 class="subtopic">Charged particles in a uniform field</h3>
+      <div class="gap box">
+        The force on a charge is constant (F = qE), so the acceleration is constant: <code>a = F/m = qE/m</code>, along the field for a positive charge and against it for a negative charge. A particle entering <strong>along</strong> the field speeds up or slows down in a straight line; one entering <strong>at right angles</strong> follows a parabola (like a projectile under gravity).
+      
+        <div class="vars"><span class="vlabel">Where</span><b>a</b> = acceleration of the particle (m s⁻²) · <b>F</b> = force (N) · <b>m</b> = mass of the particle (kg) · <b>q</b> = its charge (C) · <b>E</b> = field strength (N C⁻¹)</div>
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — electron between plates (3.6×10³ V across 1.2×10⁻² m)</span>
+        E = ΔV/d = 3.6×10³ / 1.2×10⁻² = 3.0×10⁵ V m⁻¹<br>
+        F = QΔV/d = 1.6×10⁻¹⁹ × 3.6×10³ / 1.2×10⁻² = <strong>4.8×10⁻¹⁴ N</strong><br>
+        a = F/m = 4.8×10⁻¹⁴ / 9.11×10⁻³¹ = <strong>5.3×10¹⁶ m s⁻²</strong>, directed towards the <em>positive</em> plate (opposite to E, since the electron is negative).
+      
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = field strength (V m⁻¹) · <b>Q</b> = charge of the electron, e = 1.60×10⁻¹⁹ C · <b>ΔV</b> = p.d. across the plates, 3.6×10³ V · <b>d</b> = plate separation, 1.2×10⁻² m · <b>F</b> = force on the electron (N) · <b>m</b> = electron mass, 9.11×10⁻³¹ kg · <b>a</b> = acceleration (m s⁻²)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Completed</span>
+        Your working stopped at a = 4.8×10⁻¹⁴ / 9.×10⁻³¹ (and "Q =" was left blank). Finished above — use the data-sheet value m<sub>e</sub> = 9.11×10⁻³¹ kg and Q = e = 1.60×10⁻¹⁹ C. The electron's weight (~9×10⁻³⁰ N) is about 10¹⁵ times smaller than this force, so gravity is ignored.
+      </div>
+
+      <div class="extra box">
+        <span class="label">Relative permittivity &amp; dielectrics (from your slide)</span>
+        The permittivity of free space ε₀ = 8.85×10⁻¹² F m⁻¹ shows how easily electric fields pass through a vacuum (ε₀ itself <em>is</em> needed later, in Coulomb's law). With an insulator (a <strong>dielectric</strong>) between capacitor plates, ε = ε<sub>r</sub>ε₀, where ε<sub>r</sub> is the relative permittivity: vacuum 1 · air 1.0006 · perspex 3.3 · paper 4.0 · mica 7.0 · barium titanate 1200. The idea of relative permittivity goes beyond the syllabus wording.
+      
+        <div class="vars"><span class="vlabel">Where</span><b>ε</b> = permittivity of the dielectric (F m⁻¹) · <b>ε<sub>r</sub></b> = relative permittivity (no unit) · <b>ε₀</b> = permittivity of free space, 8.85×10⁻¹² F m⁻¹</div>
+      </div>
+
+
+      <div class="example box">
+        <span class="label">Worked example — proton between plates (2.5×10³ V across 2.0 cm, from rest, 4.0×10⁻⁹ s)</span>
+        F = QΔV/d = 1.60×10⁻¹⁹ × 2.5×10³ / 2.0×10⁻² = <strong>2.0×10⁻¹⁴ N</strong><br>
+        a = F/m = 2.0×10⁻¹⁴ / 1.67×10⁻²⁷ = <strong>1.2×10¹³ m s⁻²</strong><br>
+        v = u + at = 0 + (1.197×10¹³)(4.0×10⁻⁹) = <strong>4.8×10⁴ m s⁻¹</strong>
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = force on the proton (N) · <b>Q</b> = proton charge, 1.60×10⁻¹⁹ C · <b>ΔV</b> = p.d. across the plates (V) · <b>d</b> = plate separation (m) · <b>a</b> = acceleration (m s⁻²) · <b>m</b> = proton mass, 1.67×10⁻²⁷ kg · <b>u</b> = initial speed, 0 (m s⁻¹) · <b>v</b> = final speed (m s⁻¹) · <b>t</b> = time (s)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Clarified</span>
+        The question wording isn't in your notes, only the working, so I've rebuilt the setup from your numbers (proton: m = 1.67×10⁻²⁷ kg and Q = 1.6×10⁻¹⁹ C; 2.5×10³ V; d = 0.02 m; t = 4×10⁻⁹ s). Check the data against your original question. Your a = 1.197×10¹³ and v ≈ 4.8×10⁴ m s⁻¹ are both right.
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — dust particle between plates (worksheet Q2: 5000 V, E = 400 kN C⁻¹, charge 1.6×10⁻¹⁹ C)</span>
+        a) E = ΔV/d → d = ΔV/E = 5000 / 4.0×10⁵ = <strong>1.25×10⁻² m</strong> (1.3 cm)<br>
+        b) F = EQ = 4.0×10⁵ × 1.6×10⁻¹⁹ = <strong>6.4×10⁻¹⁴ N</strong>
+        <div class="vars"><span class="vlabel">Where</span><b>d</b> = plate separation (m) · <b>ΔV</b> = p.d. (V) · <b>E</b> = field strength, 400 kN C⁻¹ = 4.0×10⁵ N C⁻¹ · <b>F</b> = force on the particle (N) · <b>Q</b> = charge on the particle (C)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        You wrote d = 1/80 = 0.0121. 1/80 is <strong>0.0125</strong>, so d = 1.25×10⁻² m — a slip in the last digits. Your force, 6.4×10⁻¹⁴ N, was right.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>The plate separation is halved at the same p.d. What happens to E?</summary>
+        <div class="answer">It doubles (E = ΔV/d, so E ∝ 1/d).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why is F = QΔV/d only valid between parallel plates?</summary>
+        <div class="answer">It assumes the field is uniform (constant over the distance d); for other arrangements the field strength changes with position.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<section class="module" id="coulomb">
+  <h2>18.3 Electric Force Between Point Charges (Coulomb's Law)</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition — Coulomb's law</span>
+        The electric force between two point charges is <strong>directly proportional to the product of the charges</strong> and <strong>inversely proportional to the square of the distance between them</strong>.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">F = Q₁Q₂ / (4πε₀r²) = kQ₁Q₂ / r²<br><span style="font-size:11pt">k = 1/(4πε₀) ≈ 9.0×10⁹ N m² C⁻²</span></div>
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = electric force on each charge (N) · <b>Q₁, Q₂</b> = the two point charges (C) · <b>r</b> = separation of the charges, centre to centre (m) · <b>ε₀</b> = permittivity of free space, 8.85×10⁻¹² F m⁻¹ · <b>k</b> = 1/(4πε₀) (N m² C⁻²)</div>
+      </div>
+      <div class="example box">
+        <span class="label">Where it comes from (your notes)</span>
+        <ol class="steps">
+          <li>F ∝ Qq (product of the charges)</li>
+          <li>F ∝ 1/r² (inverse square of the separation)</li>
+          <li>Combine: F = k·Qq/r², where k is the constant of proportionality</li>
+          <li>In SI units k = 1/(4πε₀), so <code>F = Qq / (4πε₀r²)</code> (your boxed result)</li>
+        </ol>
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = force (N) · <b>Q, q</b> = the two charges (C) · <b>r</b> = separation (m) · <b>k</b> = constant of proportionality (N m² C⁻²) · <b>ε₀</b> = permittivity of free space (F m⁻¹)</div>
+      </div>
+      <div class="gap box">
+        <strong>Direction.</strong> Like charges repel, unlike charges attract. The two forces are an equal-and-opposite pair (Newton's third law), <em>whatever</em> the sizes of the charges — a big charge pulls a small one exactly as hard as the small one pulls back.<br>
+        <strong>Inverse square.</strong> Double r → force ÷ 4. Triple r → force ÷ 9.<br>
+        <strong>Charged spheres.</strong> For a point <em>outside</em> a charged spherical conductor, treat all the charge as a point charge at the sphere's <strong>centre</strong>, so r is always measured to the centre, not to the surface.
+        <div class="vars"><span class="vlabel">Where</span><b>r</b> = distance from the charge to the point (m), measured from the centre of a sphere</div>
+      </div>
+
+      <div class="fig" style="max-width:360px; margin:12px auto;"><svg viewBox="0 0 320 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Forces between two negative charges and between a positive and a negative charge"><circle cx="100" cy="52" r="14" style="fill:var(--ink-soft); stroke:none"/><text x="100" y="56.8" text-anchor="middle" style="fill:#fff; font:700 15px Helvetica,Arial,sans-serif">−</text><circle cx="220" cy="52" r="14" style="fill:var(--ink-soft); stroke:none"/><text x="220" y="56.8" text-anchor="middle" style="fill:#fff; font:700 15px Helvetica,Arial,sans-serif">−</text><line x1="84.0" y1="52.0" x2="36.0" y2="52.0" style="stroke:var(--accent); stroke-width:3; fill:none"/><polygon points="24.0,52.0 36.0,46.0 36.0,58.0" style="fill:var(--accent); stroke:none"/><line x1="236.0" y1="52.0" x2="284.0" y2="52.0" style="stroke:var(--accent); stroke-width:3; fill:none"/><polygon points="296.0,52.0 284.0,58.0 284.0,46.0" style="fill:var(--accent); stroke:none"/><text x="54" y="40" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">F</text><text x="266" y="40" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">F</text><text x="160" y="95" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:700">like charges repel</text><text x="160" y="111" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400">equal size, opposite directions</text><circle cx="100" cy="160" r="14" style="fill:var(--accent); stroke:none"/><text x="100" y="164.8" text-anchor="middle" style="fill:#fff; font:700 15px Helvetica,Arial,sans-serif">+</text><circle cx="220" cy="160" r="14" style="fill:var(--ink-soft); stroke:none"/><text x="220" y="164.8" text-anchor="middle" style="fill:#fff; font:700 15px Helvetica,Arial,sans-serif">−</text><line x1="118.0" y1="160.0" x2="138.0" y2="160.0" style="stroke:var(--accent); stroke-width:3; fill:none"/><polygon points="150.0,160.0 138.0,166.0 138.0,154.0" style="fill:var(--accent); stroke:none"/><line x1="202.0" y1="160.0" x2="182.0" y2="160.0" style="stroke:var(--accent); stroke-width:3; fill:none"/><polygon points="170.0,160.0 182.0,154.0 182.0,166.0" style="fill:var(--accent); stroke:none"/><text x="134" y="148" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">F</text><text x="186" y="148" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">F</text><text x="160" y="203" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:700">unlike charges attract</text><text x="160" y="219" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400">equal size, opposite directions</text></svg><div class="cap">Quick check Q1 redrawn: the force each charge exerts on the other — equal size, opposite directions.</div></div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your sketch for quick check Q1 drew <em>field lines pointing out of</em> both negative charges. Field lines show the force on a <strong>positive</strong> test charge, so they point <strong>into</strong> a negative charge. The question also asked for <strong>force arrows</strong>: one on each charge, pointing apart, equal in length (the charges repel).
+      </div>
+
+      <h3 class="subtopic">Investigating Coulomb's law (4-mark question)</h3>
+      <div class="fig" style="max-width:420px; margin:0 auto 12px;"><svg viewBox="0 0 400 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Apparatus for investigating Coulomb's law: two charged spheres on insulating rods, one on a top-pan balance"><line x1="350" y1="28" x2="350" y2="232" style="stroke:var(--ink); stroke-width:4; fill:none"/><line x1="320" y1="232" x2="380" y2="232" style="stroke:var(--ink); stroke-width:5; fill:none"/><line x1="350" y1="36" x2="190" y2="36" style="stroke:var(--ink); stroke-width:4; fill:none"/><line x1="190" y1="36" x2="190" y2="62" style="stroke:var(--ink-soft); stroke-width:4; fill:none"/><circle cx="190" cy="78" r="14" style="fill:var(--accent); stroke:none"/><text x="190" y="82.8" text-anchor="middle" style="fill:#fff; font:700 15px Helvetica,Arial,sans-serif">+</text><circle cx="190" cy="168" r="14" style="fill:var(--accent); stroke:none"/><text x="190" y="172.8" text-anchor="middle" style="fill:#fff; font:700 15px Helvetica,Arial,sans-serif">+</text><line x1="190" y1="182" x2="190" y2="206" style="stroke:var(--ink-soft); stroke-width:4; fill:none"/><line x1="120" y1="206" x2="260" y2="206" style="stroke:var(--ink); stroke-width:3.5; fill:none"/><rect x="105" y="208" width="170" height="38" rx="3" style="fill:var(--panel); stroke:var(--ink); stroke-width:1.6"/><rect x="125" y="217" width="70" height="20" rx="2" style="fill:var(--formula-bg); stroke:var(--rule); stroke-width:1.2"/><text x="160" y="232" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:700">m / g</text><line x1="228" y1="78" x2="228" y2="168" style="stroke:var(--ink-soft); stroke-width:1.2; fill:none"/><line x1="222" y1="78" x2="234" y2="78" style="stroke:var(--ink-soft); stroke-width:1.2; fill:none"/><line x1="222" y1="168" x2="234" y2="168" style="stroke:var(--ink-soft); stroke-width:1.2; fill:none"/><text x="244" y="128" text-anchor="start" class="fig-label" style="font-size:14px; font-weight:700">r</text><text x="200" y="22" text-anchor="start" class="fig-label" style="font-size:13px; font-weight:400">insulating rod, clamped</text><text x="150" y="62" text-anchor="end" class="fig-label" style="font-size:13px; font-weight:400">charged sphere (+)</text><text x="150" y="172" text-anchor="end" class="fig-label" style="font-size:13px; font-weight:400">charged sphere (+)</text><text x="122" y="200" text-anchor="end" class="fig-label" style="font-size:13px; font-weight:400">pan</text><text x="190" y="262" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400">top-pan balance (tared to 0 with the lower rod on it)</text></svg><div class="cap">Apparatus: both spheres are charged positively, so the top one pushes the lower one down and the balance reading rises.</div></div>
+      <p style="font-size:10pt;">Question: <em>describe an experiment to show the relationship between the distance between two charged rods and the force between them.</em> Your plan was: equipment → process → observe → conclusions (equation or graph) → limitation. Model answer in your wording:</p>
+      <div class="example box">
+        <span class="label">Model answer</span>
+        <ol class="steps">
+          <li><strong>Equipment.</strong> A sensitive top-pan balance and two positively charged point masses (small spheres), each on an insulating rod. One rod stands on the balance; the other is held directly above it by a clamp.</li>
+          <li><strong>Process.</strong> Put the lower rod on the balance <em>first</em>, then set the balance to zero (tare), so a zero error cannot affect the readings. Charge both spheres. Move the top sphere to a measured distance r above the lower one and record the balance reading m.</li>
+          <li><strong>Repeat</strong> at least 5 times, changing only the distance r each time.</li>
+          <li><strong>Observation.</strong> The reading <strong>increases as r decreases</strong> (the like charges repel, so the force on the lower sphere is downwards).</li>
+          <li><strong>Conclusion.</strong> The force is F = mg (your note W = mg). Plot F against 1/r². A straight line through the origin shows F ∝ 1/r².</li>
+          <li><strong>Limitation.</strong> Charge leaks to the air and surroundings, so the charges (and the readings) fall over time. The results are inaccurate.</li>
+        </ol>
+        <div class="vars"><span class="vlabel">Where</span><b>m</b> = balance reading after taring (kg) · <b>g</b> = 9.81 m s⁻² · <b>F</b> = electric force on the lower sphere (N) · <b>r</b> = distance between the sphere centres (m)</div>
+      </div>
+      <div class="gap box">
+        <strong>Marks you'd miss without these.</strong> ⊕ Using <strong>F = mg</strong> to turn the reading into a force; ⊕ the <strong>graph test</strong> (F against 1/r² is a straight line through the origin; or ln F against ln r has gradient −2); ⊕ keeping the <strong>charges the same</strong> each time (recharge between readings, in dry air). Your "limitation" point (charge escaping) is right and fully worth a mark.
+      </div>
+
+      <h3 class="subtopic">Worked examples (Coulomb's law)</h3>
+      <div class="example box">
+        <span class="label">Two protons in a nucleus (quick check Q2) — 1.0×10⁻¹⁵ m apart</span>
+        F = Q₁Q₂ / (4πε₀r²) = (1.60×10⁻¹⁹)² / (4π × 8.85×10⁻¹² × (1.0×10⁻¹⁵)²) = <strong>2.3×10² N</strong>, repulsive.
+        <div class="vars"><span class="vlabel">Where</span><b>Q₁, Q₂</b> = proton charge, 1.60×10⁻¹⁹ C each · <b>ε₀</b> = 8.85×10⁻¹² F m⁻¹ · <b>r</b> = 1.0×10⁻¹⁵ m</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Clarified</span>
+        Your line stopped before the answer, and the separation was written as (10⁻¹⁵) without the square. Remember r is squared: (10⁻¹⁵)² = 10⁻³⁰. A force of about 230 N between two protons is huge, so something even stronger must hold the nucleus together — the strong nuclear force (not in 9702).
+      </div>
+
+      <div class="example box">
+        <span class="label">Worksheet Q4 — +q placed at B, C, D, E in the field of +Q (A is a distance R from +Q, force F)</span>
+        Same charges throughout, so F ∝ 1/r². Compare each distance with R:
+        <div class="table-wrap"><table class="keyline">
+          <tr><th>Point</th><th>Distance from +Q</th><th>r² (in R²)</th><th>Force</th></tr>
+          <tr><td>A</td><td>R</td><td>1</td><td>F</td></tr>
+          <tr><td>B</td><td>R (one square down)</td><td>1</td><td><strong>F</strong></td></tr>
+          <tr><td>C</td><td>2R (two squares left)</td><td>4</td><td><strong>F/4</strong></td></tr>
+          <tr><td>D</td><td>3R (three squares right)</td><td>9</td><td><strong>F/9</strong></td></tr>
+          <tr><td>E</td><td>√(2²+2²)R = 2√2 R (diagonal)</td><td>8</td><td><strong>F/8</strong></td></tr>
+        </table></div>
+        <div class="vars"><span class="vlabel">Where</span><b>F</b> = force at A (N) · <b>R</b> = one grid square (m) · <b>r</b> = distance from +Q to the point (m)</div>
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">Your answers (B = F, C = F/4, D = F/9, E = F/8) are all correct. Worksheet Q3 (k = 1/4πε₀ = 9.0×10⁹ N m² C⁻²) is correct too. For a 9-mark question, the explanation matters: say "F ∝ 1/r² and the charges are unchanged".</p>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Two charges are moved to 3 times their separation. What happens to the force?</summary>
+        <div class="answer">It falls to 1/9 of the original (F ∝ 1/r²).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>+2Q exerts a force F on +Q. What force does +Q exert on +2Q?</summary>
+        <div class="answer">Also F, in the opposite direction (Newton's third law).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>From where is r measured for a charged sphere?</summary>
+        <div class="answer">From its centre — outside the sphere, it acts like a point charge at the centre.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why does the balance reading rise as the spheres get closer?</summary>
+        <div class="answer">The repulsive force on the lower sphere increases (F ∝ 1/r²) and pushes down on the pan.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="point-charge-field">
+  <h2>18.4 Electric Field of a Point Charge</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="formula box">
+        <span class="label">Formula — field strength due to a point charge</span>
+        <div class="expr">E = Q / (4πε₀r²) &nbsp;&nbsp;= kQ / r²</div>
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = electric field strength (N C⁻¹) · <b>Q</b> = the charge creating the field (C) · <b>r</b> = distance from the centre of the charge (m) · <b>ε₀</b> = 8.85×10⁻¹² F m⁻¹ · <b>k</b> = 1/(4πε₀) ≈ 9.0×10⁹ N m² C⁻²</div>
+      </div>
+      <div class="example box">
+        <span class="label">Deriving it (from your notes)</span>
+        <ol class="steps">
+          <li>Start from the definition: <code>E = F/q</code></li>
+          <li>Put in Coulomb's law: <code>E = [Qq / (4πε₀r²)] / q</code></li>
+          <li>The test charge q cancels: <code>E = Q / (4πε₀r²)</code></li>
+        </ol>
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = field strength (N C⁻¹) · <b>F</b> = force on the test charge (N) · <b>q</b> = small positive test charge (C) · <b>Q</b> = source charge (C) · <b>r</b> = distance (m)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Clarified</span>
+        Capital <strong>Q</strong> is the charge <em>making</em> the field; small <strong>q</strong> is the test charge feeling it. The final E doesn't contain q. Mixing the two up is an easy way to lose marks (the same as M and m for gravity).
+      </div>
+      <div class="gap box">
+        <strong>Direction.</strong> The field is <strong>radial</strong>: away from a +Q, towards a −Q. <strong>E ∝ 1/r²</strong>: triple the distance, E ÷ 9.<br>
+        <strong>Which formula when?</strong> <code>E = ΔV/Δd</code> is only for a <em>uniform</em> field (parallel plates), where E is the same everywhere. <code>E = Q/(4πε₀r²)</code> is only for a point charge, where E changes with r.<br>
+        <strong>More than one charge:</strong> fields are vectors. Add them with direction: field pointing the same way adds, opposite directions subtract.
+      </div>
+
+      <h3 class="subtopic">Gravitational and electric fields compared (from your photo)</h3>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th></th><th>Gravitational field</th><th>Electric field</th></tr>
+        <tr><td>Property that creates the field</td><td>mass</td><td>charge</td></tr>
+        <tr><td>Type of force</td><td>always attractive (field towards the object)</td><td>+ charges repel (field away); − charges attract (field towards)</td></tr>
+        <tr><td>Field strength</td><td>force per unit mass, g = F/m</td><td>force per unit positive charge, E = F/q</td></tr>
+        <tr><td>Force between particles</td><td>∝ product of masses, ∝ 1/r²</td><td>∝ product of charges, ∝ 1/r²</td></tr>
+        <tr><td>Force and field equations</td><td>F = GMm/r², g = GM/r²</td><td>F = Qq/(4πε₀r²), E = Q/(4πε₀r²)</td></tr>
+        <tr><td>Field of a point source</td><td>radial</td><td>radial</td></tr>
+      </table></div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">The book's table writes F = −GMm/r² (a minus sign for "attractive"). Above, the equations give magnitudes only; the direction is described in words.</p>
+
+      <h3 class="subtopic">Worked examples (field of a point charge)</h3>
+      <div class="example box">
+        <span class="label">Charged sphere (quick check Q3) — radius 5.0 cm, charge 40 mC; field 1.0 cm from the surface</span>
+        r = 5.0 + 1.0 = 6.0 cm = 0.060 m (from the <em>centre</em>)<br>
+        E = kQ/r² = (9.0×10⁹ × 40×10⁻³) / (0.060)² = <strong>1.0×10¹¹ N C⁻¹</strong>
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = field strength (N C⁻¹) · <b>k</b> = 9.0×10⁹ N m² C⁻² · <b>Q</b> = 40 mC = 40×10⁻³ C · <b>r</b> = distance from the centre of the sphere (m)</div>
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">Your answer is right, and so is your decision to measure from the centre (the book's hint).</p>
+
+      <div class="example box">
+        <span class="label">Worksheet Q5 — metal dome, radius 15 cm, charge +2.5 μC</span>
+        a) At the surface, r = 0.15 m: E = kQ/r² = (9.0×10⁹ × 2.5×10⁻⁶) / (0.15)² = <strong>1.0×10⁶ N C⁻¹</strong><br>
+        b) At 30 cm <em>from the surface</em>, r = 15 + 30 = 45 cm = 3 × the original. E ∝ 1/r², so E falls to <strong>1/9</strong>: E = 1.1×10⁵ N C⁻¹.
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = field strength (N C⁻¹) · <b>k</b> = 9.0×10⁹ N m² C⁻² · <b>Q</b> = 2.5 μC = 2.5×10⁻⁶ C · <b>r</b> = distance from the centre of the dome (m)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Part (a) is right (1×10⁶ N C⁻¹; your line "0.15" needs to be squared). In part (b) you wrote <em>"decrease by half"</em>. That is wrong: E follows an <strong>inverse-square</strong> law, not an inverse law. Even if "30 cm" meant 30 cm from the centre (r doubles), E would fall to ¼, never ½. Measured from the surface, r triples, so E falls to <strong>1/9</strong>.
+      </div>
+
+      <div class="example box">
+        <span class="label">Worksheet Q6 — +20 μC and +40 μC, 80 cm apart; point X midway</span>
+        X is 40 cm = 0.40 m from each charge.<br>
+        i) E₁ = kQ/r² = (9.0×10⁹ × 20×10⁻⁶) / (0.40)² = <strong>1.1×10⁶ N C⁻¹</strong> (1.125×10⁶), towards the +40 μC charge<br>
+        ii) E₂ = (9.0×10⁹ × 40×10⁻⁶) / (0.40)² = <strong>2.3×10⁶ N C⁻¹</strong> (2.25×10⁶), towards the +20 μC charge<br>
+        b) Both charges are positive, so at X the two fields point in <strong>opposite directions</strong>: E = E₂ − E₁ = 2.25×10⁶ − 1.125×10⁶ = <strong>1.1×10⁶ N C⁻¹</strong>, towards the +20 μC charge.
+        <div class="vars"><span class="vlabel">Where</span><b>E₁, E₂</b> = field strength at X due to the +20 μC and +40 μC charges (N C⁻¹) · <b>k</b> = 9.0×10⁹ N m² C⁻² · <b>Q</b> = charge (C) · <b>r</b> = 0.40 m</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your (a) answers (1.1×10⁶ and 2.3×10⁶) are right, but (b) was 1.2×10⁶. That comes from subtracting the <em>rounded</em> values (2.3 − 1.1). Subtract the unrounded values first, then round: 1.125×10⁶ → <strong>1.1×10⁶</strong>. Also check your line (i): the denominator shows (40×10⁻⁹)², but 40 cm is 40×10⁻² m.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Distance from a point charge is tripled. E changes by what factor?</summary>
+        <div class="answer">E ÷ 9 (E ∝ 1/r²).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What is E at the midpoint of two equal positive charges?</summary>
+        <div class="answer">Zero — the two equal fields point in opposite directions and cancel.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why doesn't the test charge q appear in E = Q/(4πε₀r²)?</summary>
+        <div class="answer">It cancels: E = F/q and F is proportional to q, so E depends only on the source charge Q and the distance.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which equation gives E between parallel plates, and why not Q/(4πε₀r²)?</summary>
+        <div class="answer">E = ΔV/d. Between plates the field is uniform (the same at every point); Q/(4πε₀r²) is for the radial field of a point charge.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="module" id="electric-potential">
+  <h2>18.5 Electric Potential</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition — electric potential</span>
+        The electric potential at a point is the <strong>work done per unit positive charge</strong> in bringing a small positive test charge <strong>from infinity to that point</strong>.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">V = W / q &nbsp;&nbsp;(volt, V = J C⁻¹)</div>
+        <div class="vars"><span class="vlabel">Where</span><b>V</b> = electric potential at the point (V) · <b>W</b> = work done bringing the test charge from infinity (J) · <b>q</b> = test charge (C). The potential at infinity is defined as zero.</div>
+      </div>
+      <div class="gap box">
+        Your notes say "electric potential = voltage" and "bring an object from infinity to a point" (that's the definition). Your worksheet Q1(b) was left blank; the answer above is the 1-mark answer. Electric <em>field strength</em> (Q1a) is "force per unit positive charge"; the potential is the <em>work</em> per unit positive charge. Don't mix them up.
+      </div>
+
+      <h3 class="subtopic">Potential of a point charge</h3>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">V = Q / (4πε₀r)</div>
+        <div class="vars"><span class="vlabel">Where</span><b>V</b> = potential at distance r from the charge (V) · <b>Q</b> = the charge creating the field (C), with its sign · <b>r</b> = distance from its centre (m) · <b>ε₀</b> = 8.85×10⁻¹² F m⁻¹</div>
+      </div>
+      <div class="gap box">
+        <strong>Sign.</strong> V is positive near a +Q and negative near a −Q, rising to 0 at infinity. <strong>V is a scalar</strong>: for several charges, add the potentials as numbers (with signs). Fields (E) are vectors; potentials are not.<br>
+        ⊕ <strong>Link to E:</strong> for a point charge, V = Er (compare V = Q/4πε₀r with E = Q/4πε₀r²). So V ∝ 1/r, but E ∝ 1/r².
+      </div>
+
+      <h3 class="subtopic">Field strength = −potential gradient</h3>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">E = −ΔV / Δr &nbsp;&nbsp;(E = −dV/dr)</div>
+        <div class="vars"><span class="vlabel">Where</span><b>E</b> = field strength at the point (V m⁻¹ = N C⁻¹) · <b>ΔV</b> = change in potential (V) · <b>Δr</b> = small change in distance (m) · <b>ΔV/Δr</b> = gradient of the V–r graph at the point (V m⁻¹)</div>
+      </div>
+      <div class="gap box">
+        This point isn't in your notes. The magnitude of the field at a point is the <strong>gradient of the V–r graph</strong> there; the minus sign means the field points in the direction in which V <em>falls</em>. It also matches 18.2: between plates V falls steadily, so |E| = ΔV/Δd is the (constant) gradient.
+      </div>
+      <div class="fig"><svg viewBox="0 0 480 205" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Graphs of electric potential V and field strength E against distance r for a positive point charge"><line x1="50.0" y1="150.0" x2="216.0" y2="150.0" style="stroke:var(--ink); stroke-width:1.5; fill:none"/><polygon points="224.0,150.0 216.0,153.5 216.0,146.5" style="fill:var(--ink); stroke:none"/><line x1="50.0" y1="150.0" x2="50.0" y2="28.0" style="stroke:var(--ink); stroke-width:1.5; fill:none"/><polygon points="50.0,20.0 53.5,28.0 46.5,28.0" style="fill:var(--ink); stroke:none"/><polyline points="66.0,37.9 69.6,58.5 73.2,72.7 76.8,83.1 80.4,91.0 84.0,97.2 87.6,102.3 91.2,106.5 94.8,110.0 98.4,112.9 102.0,115.5 105.6,117.7 109.2,119.7 112.8,121.4 116.4,123.0 120.0,124.4 123.6,125.6 127.2,126.8 130.8,127.8 134.4,128.7 138.0,129.6 141.6,130.4 145.2,131.2 148.8,131.8 152.4,132.5 156.0,133.1 159.6,133.6 163.2,134.2 166.8,134.6 170.4,135.1 174.0,135.5 177.6,135.9 181.2,136.3 184.8,136.7 188.4,137.0 192.0,137.4 195.6,137.7 199.2,138.0 202.8,138.3 206.4,138.5 210.0,138.8" style="stroke:var(--module); stroke-width:2.2; fill:none"/><line x1="72.0" y1="92.39305555555555" x2="124.0" y2="132.8736111111111" style="stroke:var(--accent); stroke-width:1.6; fill:none; stroke-dasharray:4 3"/><text x="42" y="28" text-anchor="end" class="fig-label" style="font-size:16px; font-weight:700">V</text><text x="226" y="168" text-anchor="end" class="fig-label" style="font-size:16px; font-weight:700">r</text><text x="134" y="58" text-anchor="start" class="fig-label" style="font-size:15px; font-weight:700">V ∝ 1/r</text><text x="134" y="88" text-anchor="start" class="fig-label" style="font-size:13px; font-weight:400">tangent gradient</text><text x="134" y="105" text-anchor="start" class="fig-label" style="font-size:13px; font-weight:400">= −E</text><text x="130" y="186" text-anchor="middle" class="fig-label" style="font-size:14px; font-weight:400">potential</text><line x1="280.0" y1="150.0" x2="446.0" y2="150.0" style="stroke:var(--ink); stroke-width:1.5; fill:none"/><polygon points="454.0,150.0 446.0,153.5 446.0,146.5" style="fill:var(--ink); stroke:none"/><line x1="280.0" y1="150.0" x2="280.0" y2="28.0" style="stroke:var(--ink); stroke-width:1.5; fill:none"/><polygon points="280.0,20.0 283.5,28.0 276.5,28.0" style="fill:var(--ink); stroke:none"/><polyline points="296.0,37.9 299.6,75.3 303.2,96.7 306.8,110.0 310.4,118.9 314.0,125.2 317.6,129.7 321.2,133.1 324.8,135.7 328.4,137.7 332.0,139.4 335.6,140.7 339.2,141.8 342.8,142.7 346.4,143.5 350.0,144.1 353.6,144.7 357.2,145.2 360.8,145.6 364.4,146.0 368.0,146.3 371.6,146.6 375.2,146.8 378.8,147.1 382.4,147.3 386.0,147.4 389.6,147.6 393.2,147.8 396.8,147.9 400.4,148.0 404.0,148.1 407.6,148.2 411.2,148.3 414.8,148.4 418.4,148.5 422.0,148.6 425.6,148.6 429.2,148.7 432.8,148.8 436.4,148.8 440.0,148.9" style="stroke:var(--module); stroke-width:2.2; fill:none"/><text x="272" y="28" text-anchor="end" class="fig-label" style="font-size:16px; font-weight:700">E</text><text x="456" y="168" text-anchor="end" class="fig-label" style="font-size:16px; font-weight:700">r</text><text x="364" y="58" text-anchor="start" class="fig-label" style="font-size:15px; font-weight:700">E ∝ 1/r²</text><text x="360" y="186" text-anchor="middle" class="fig-label" style="font-size:14px; font-weight:400">field strength</text></svg><div class="cap">Positive point charge: V ∝ 1/r and E ∝ 1/r². The gradient of the V–r graph at any r equals −E there.</div></div>
+
+      <h3 class="subtopic">Electric potential energy</h3>
+      <div class="formula box">
+        <span class="label">Formula — potential energy of two point charges</span>
+        <div class="expr">E<sub>P</sub> = Qq / (4πε₀r) &nbsp;&nbsp;= qV</div>
+        <div class="vars"><span class="vlabel">Where</span><b>E<sub>P</sub></b> = electric potential energy of the pair (J) · <b>Q, q</b> = the two charges (C), with their signs · <b>r</b> = their separation (m) · <b>V</b> = potential at q's position due to Q (V)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Clarified</span>
+        Your notes label this "work done is positive/negative". It is the pair's <strong>potential energy</strong> (the work done to bring the charges from infinity to separation r). <strong>Like charges</strong> (+ +, − −): E<sub>P</sub> is <strong>positive</strong> — you do work against the repulsion. <strong>Unlike charges</strong> (+ −): E<sub>P</sub> is <strong>negative</strong> — they attract, so the field does the work and the energy ends below its zero at infinity.
+      </div>
+      <p style="font-size:10pt;">Potential <em>V</em> is energy per unit charge: <code>V = E<sub>P</sub>/q</code>, and moving a charge q through a potential difference ΔV takes (or gives) energy <code>W = qΔV</code> (this is the step used in the E = ΔV/d derivation in 18.2).</p>
+
+      <h3 class="subtopic">Worked examples (potential)</h3>
+      <div class="example box">
+        <span class="label">Potential energy of two charges (your example) — assuming two charges of magnitude e, 9.4×10⁻¹⁰ m apart</span>
+        E<sub>P</sub> = Qq / (4πε₀r) = (1.60×10⁻¹⁹)² / (4π × 8.85×10⁻¹² × 9.4×10⁻¹⁰) = <strong>2.4×10⁻¹⁹ J</strong><br>
+        In electronvolts: 2.4×10⁻¹⁹ ÷ 1.60×10⁻¹⁹ = <strong>1.5 eV</strong><br>
+        The value is positive if both charges have the same sign, and negative if they're opposite.
+        <div class="vars"><span class="vlabel">Where</span><b>E<sub>P</sub></b> = potential energy (J) · <b>Q, q</b> = charges, 1.60×10⁻¹⁹ C each · <b>r</b> = 9.4×10⁻¹⁰ m · <b>ε₀</b> = 8.85×10⁻¹² F m⁻¹ · <b>eV</b> = electronvolt, 1 eV = 1.60×10⁻¹⁹ J</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Completed</span>
+        Your working stopped at "= J." The question text isn't in your notes, so I've assumed two elementary charges from your numbers; check the charges against your question. Your note "electronvolt = J/Q" means: to convert joules to eV, divide by the charge e = 1.60×10⁻¹⁹ C. The eV isn't listed under Topic 18 on the syllabus (➕ extra here).
+      </div>
+
+      <div class="example box">
+        <span class="label">Worksheet Q7 — Van de Graaff dome, diameter 30 cm, potential +20 000 V</span>
+        r = 15 cm = 0.15 m, V = 2.0×10⁴ V<br>
+        a) V = Q/(4πε₀r) → Q = 4πε₀rV = (0.15 × 2.0×10⁴) / (9.0×10⁹) = <strong>3.3×10⁻⁷ C</strong><br>
+        b) E = Q/(4πε₀r²) = (9.0×10⁹ × 3.3×10⁻⁷) / (0.15)² = <strong>1.3×10⁵ N C⁻¹</strong> (check: V/r = 2.0×10⁴ / 0.15)<br>
+        c) F = eE = 1.60×10⁻¹⁹ × 1.3×10⁵ = <strong>2.1×10⁻¹⁴ N</strong>, directed <em>away</em> from the dome (a proton is repelled by a positive dome).
+        <div class="vars"><span class="vlabel">Where</span><b>Q</b> = charge on the dome (C) · <b>V</b> = potential at its surface, 2.0×10⁴ V · <b>r</b> = radius of the dome, 0.15 m (the diameter is 30 cm) · <b>E</b> = field strength at the surface (N C⁻¹) · <b>e</b> = proton charge, 1.60×10⁻¹⁹ C · <b>F</b> = force on the proton (N)</div>
+      </div>
+      <div class="warn box">
+        <span class="label">Completed</span>
+        Q7 was left blank after "a)". Watch the radius: the question gives the <strong>diameter</strong> (30 cm), so r = 15 cm.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Define electric potential at a point.</summary>
+        <div class="answer">The work done per unit positive charge in bringing a small positive test charge from infinity to that point.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Is the potential energy of a + and a − charge positive or negative?</summary>
+        <div class="answer">Negative. They attract, so the field does the work as they come together from infinity.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What does the gradient of a V–r graph give?</summary>
+        <div class="answer">The field strength E at that point, with a minus sign: E = −ΔV/Δr.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why do you add potentials as numbers but fields as vectors?</summary>
+        <div class="answer">Potential is a scalar (energy per charge); field strength is a vector with a direction.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — Topic 18</h4>
+    <details class="quiz-item"><summary>1. Define electric field strength.</summary><div class="qanswer">The force per unit positive charge exerted on a positive charge placed at that point (E = F/q, units N C⁻¹).</div></details>
+    <details class="quiz-item"><summary>2. A 2.0 μC charge sits in a field of 5.0×10³ N C⁻¹. What force acts on it?</summary><div class="qanswer">F = qE = 2.0×10⁻⁶ × 5.0×10³ = 1.0×10⁻² N.</div></details>
+    <details class="quiz-item"><summary>3. Two parallel plates 4.0 cm apart have a p.d. of 200 V across them. Find the field strength between them.</summary><div class="qanswer">E = ΔV/Δd = 200 / 0.040 = 5.0×10³ V m⁻¹.</div></details>
+    <details class="quiz-item"><summary>4. An electron enters the uniform field between two plates. Which way does it accelerate, relative to the field lines?</summary><div class="qanswer">Opposite to the field direction (towards the positive plate), because its charge is negative: F = qE with q &lt; 0.</div></details>
+    <details class="quiz-item"><summary>5. Why can field lines never cross?</summary><div class="qanswer">The field has only one direction at any point — crossing lines would mean two different force directions at the same point.</div></details>
+    <details class="quiz-item"><summary>6. State Coulomb's law.</summary><div class="qanswer">The force between two point charges is proportional to the product of the charges and inversely proportional to the square of their separation: F = Q₁Q₂/(4πε₀r²).</div></details>
+    <details class="quiz-item"><summary>7. Two +3.0 nC charges are 5.0 cm apart in free space. Find the force between them.</summary><div class="qanswer">F = kQ₁Q₂/r² = (9.0×10⁹ × (3.0×10⁻⁹)²) / (0.050)² = <strong>3.2×10⁻⁵ N</strong>, repulsive.</div></details>
+    <details class="quiz-item"><summary>8. The separation of two point charges is tripled. By what factor does the force change?</summary><div class="qanswer">It falls to 1/9 (F ∝ 1/r²).</div></details>
+    <details class="quiz-item"><summary>9. Find the field strength 0.30 m from a +6.0 nC point charge, and give its direction.</summary><div class="qanswer">E = kQ/r² = (9.0×10⁹ × 6.0×10⁻⁹) / (0.30)² = <strong>6.0×10² N C⁻¹</strong>, directed radially away from the charge.</div></details>
+    <details class="quiz-item"><summary>10. Why can a charged metal sphere be treated as a point charge at its centre?</summary><div class="qanswer">Outside the sphere the charge is spread symmetrically, so the field there is identical to that of all the charge placed at the centre. r is measured from the centre.</div></details>
+    <details class="quiz-item"><summary>11. Define electric potential at a point.</summary><div class="qanswer">The work done per unit positive charge in bringing a small positive test charge from infinity to that point (V = W/q).</div></details>
+    <details class="quiz-item"><summary>12. Find the potential 0.30 m from a +6.0 nC point charge.</summary><div class="qanswer">V = Q/(4πε₀r) = (9.0×10⁹ × 6.0×10⁻⁹) / 0.30 = <strong>1.8×10² V</strong>.</div></details>
+    <details class="quiz-item"><summary>13. A V–r graph has a gradient of −200 V m⁻¹ at a point. What is E there?</summary><div class="qanswer">E = −gradient = +200 V m⁻¹ (N C⁻¹), in the direction of increasing r (away from a positive source).</div></details>
+    <details class="quiz-item"><summary>14. Is the electric potential energy of a proton and an electron positive or negative? Explain.</summary><div class="qanswer">Negative. The charges attract, so the field does positive work as they come together from infinity; E<sub>P</sub> = Qq/(4πε₀r) is negative because Q and q have opposite signs.</div></details>
+    <details class="quiz-item"><summary>15. Why is E = ΔV/d not used for a point charge?</summary><div class="qanswer">It only applies to a uniform field (parallel plates). A point charge's field is radial and gets weaker with distance (E ∝ 1/r²), so use E = Q/(4πε₀r²) or the gradient of the V–r graph.</div></details>
+  </div>
+</section>
+
 <!-- ======================================================= PRACTICAL SKILLS ======================================================= -->
 <section class="topictitle" id="practical">
   <h1 class="topicnum">Practical Skills — Capacitor Discharge</h1>
@@ -930,20 +1651,23 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         <span class="label">Golden rule</span>
         There is always an equation to rearrange. Since you need a <strong>straight-line</strong> graph, rearrange it into the form:
         <div class="expr">y = mx + c</div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>y</b> = quantity plotted on the vertical axis · <b>x</b> = quantity plotted on the horizontal axis · <b>m</b> = gradient of the line · <b>c</b> = y-intercept</div>
       </div>
 
       <span class="priority">high-yield</span>
       <div class="formula box">
         <span class="label">Discharge equation</span>
         <div class="expr">I = I<sub>0</sub> e<sup>−t/RC</sup></div>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>I</b> = current at time t (A) · <b>I<sub>0</sub></b> = initial current at t = 0 (A) · <b>e</b> = base of natural logarithms, ≈ 2.718 · <b>t</b> = time (s) · <b>R</b> = resistance (Ω) · <b>C</b> = capacitance (F)</div>
       </div>
       <p>This is exponential, not linear — take <code>ln</code> of both sides:</p>
       <div class="formula box">
         <span class="label">Linearised form</span>
         <div class="expr">ln I &nbsp;=&nbsp; ln I<sub>0</sub> &nbsp;+&nbsp; ( −1/RC ) t</div>
-        <p style="text-align:center; margin-top:8px; font-family:'Helvetica Neue',sans-serif; font-size:9.5pt; color:var(--ink-soft);">
-          y = ln I &nbsp;·&nbsp; x = t &nbsp;·&nbsp; gradient m = −1/RC &nbsp;·&nbsp; intercept c = ln I₀
-        </p>
+      
+        <div class="vars"><span class="vlabel">Where</span><b>ln</b> = natural logarithm · <b>y = ln I</b> = the vertical-axis quantity · <b>x = t</b> = the horizontal-axis quantity (s) · <b>m = −1/RC</b> = gradient (s⁻¹) · <b>c = ln I<sub>0</sub></b> = y-intercept</div>
       </div>
 
       <div class="table-wrap">
@@ -996,6 +1720,8 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
         <span class="label">Extracting R, C, I₀ — gradient from (0, 5.29) and (90, 3.47)</span>
         gradient = (3.47 − 5.29)/(90 − 0) = −0.0202 s⁻¹ &nbsp;=&nbsp; −1/RC &nbsp;→&nbsp; <strong>RC ≈ 49.5 s</strong><br>
         y-intercept = ln I₀ = 5.29 &nbsp;→&nbsp; I₀ = e<sup>5.29</sup> ≈ <strong>198</strong> (matches the measured value at t = 0 ✓)
+      
+        <div class="vars"><span class="vlabel">Where</span><b>gradient</b> = Δ(ln I)/Δt (s⁻¹) · <b>RC</b> = the time constant (s) · <b>I<sub>0</sub></b> = initial current (A) · <b>e<sup>5.29</sup></b> = the inverse of ln, since ln I<sub>0</sub> = 5.29</div>
       </div>
     </div>
     <div class="margin">
@@ -1019,9 +1745,44 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
   </div>
 </section>
 
+<!-- ======================================================= FORMULA SUMMARY ======================================================= -->
+<section class="topictitle" id="formulas">
+  <h1 class="topicnum">Formula Summary</h1>
+  <div class="topicsub">Every formula from the topics above, organised by topic — with what each symbol means and its unit. <span class="ftag gap" style="margin-left:0">⊕ not in your notes</span> = a syllabus formula I added; <span class="ftag extra" style="margin-left:0">➕ extra</span> = beyond the syllabus wording.</div>
+</section>
+
+<section class="module" id="formula-summary">
+  <h3 class="subtopic">Topic 12 · Motion in a Circle</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Arc length</td><td class="fx">s = rθ</td><td class="fv"><b>s</b> = arc length — distance round the circle (m) · <b>r</b> = radius (m) · <b>θ</b> = angle (rad)</td></tr><tr><td class="fname">Degrees ⇄ radians</td><td class="fx">θ<sub>rad</sub> = θ° × π/180<br>θ° = θ<sub>rad</sub> × 180/π</td><td class="fv"><b>π rad</b> = 180° (half a turn) · <b>π</b> ≈ 3.14159</td></tr><tr><td class="fname">Speed round a circle</td><td class="fx">v = 2πr / t</td><td class="fv"><b>v</b> = speed (m s⁻¹) · <b>r</b> = radius (m) · <b>t</b> = time for one lap — the period (s)</td></tr><tr><td class="fname">Angular velocity</td><td class="fx">ω = dθ/dt = 2π / T</td><td class="fv"><b>ω</b> = angular velocity (rad s⁻¹) · <b>θ</b> = angle (rad) · <b>t</b> = time (s) · <b>T</b> = period (s)</td></tr><tr><td class="fname">Linear (tangential) velocity</td><td class="fx">v = rω &nbsp;(ω = v/r)</td><td class="fv"><b>v</b> = linear speed (m s⁻¹) · <b>r</b> = radius (m) · <b>ω</b> = angular velocity (rad s⁻¹)</td></tr><tr><td class="fname">Centripetal acceleration</td><td class="fx">a = v²/r = ω²r</td><td class="fv"><b>a</b> = acceleration towards the centre (m s⁻²) · <b>v</b> = speed (m s⁻¹) · <b>ω</b> = angular velocity (rad s⁻¹) · <b>r</b> = radius (m)</td></tr><tr><td class="fname">Centripetal force</td><td class="fx">F = mv²/r = mω²r</td><td class="fv"><b>F</b> = resultant force towards the centre (N) · <b>m</b> = mass (kg) · <b>v</b> = speed (m s⁻¹) · <b>ω</b> = angular velocity (rad s⁻¹) · <b>r</b> = radius (m)</td></tr></table></div><h3 class="subtopic">Topic 13 · Gravitational Fields</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Gravitational field strength</td><td class="fx">g = F / m</td><td class="fv"><b>g</b> = field strength (N kg⁻¹) · <b>F</b> = gravitational force (N) · <b>m</b> = mass in the field (kg)</td></tr><tr><td class="fname">Newton's law of gravitation</td><td class="fx">F = Gm₁m₂ / r²</td><td class="fv"><b>F</b> = force (N) · <b>G</b> = gravitational constant (N m² kg⁻²) · <b>m₁, m₂</b> = the two masses (kg) · <b>r</b> = separation, centre to centre (m)</td></tr><tr><td class="fname">Field of a point mass</td><td class="fx">g = GM / r²</td><td class="fv"><b>g</b> = field strength (N kg⁻¹) · <b>G</b> = gravitational constant · <b>M</b> = mass creating the field (kg) · <b>r</b> = distance from its centre (m)</td></tr><tr><td class="fname">Orbital speed <span class="ftag gap">⊕ not in your notes</span></td><td class="fx">v = √(GM / r)</td><td class="fv"><b>v</b> = orbital speed (m s⁻¹) · <b>G</b> = gravitational constant · <b>M</b> = mass of the body being orbited (kg) · <b>r</b> = orbital radius (m)</td></tr><tr><td class="fname">Orbital period <span class="ftag gap">⊕ not in your notes</span></td><td class="fx">T² = 4π²r³ / (GM)</td><td class="fv"><b>T</b> = period (s) · <b>r</b> = orbital radius (m) · <b>G</b> = gravitational constant · <b>M</b> = mass of the body being orbited (kg)</td></tr><tr><td class="fname">Apparent weight (rotating planet) <span class="ftag extra">➕ extra</span></td><td class="fx">F<sub>R</sub> = F<sub>G</sub> − F<sub>C</sub><br>F<sub>C</sub> = mω²r</td><td class="fv"><b>F<sub>R</sub></b> = normal reaction force = apparent weight (N) · <b>F<sub>G</sub></b> = gravitational force (N) · <b>F<sub>C</sub></b> = centripetal force needed (N) · <b>m</b> = mass (kg) · <b>ω</b> = angular velocity of rotation (rad s⁻¹) · <b>r</b> = distance from the axis (m)</td></tr></table></div><p class="fnote">13.4 Gravitational potential (φ = −GM/r, E<sub>p</sub> = −GMm/r) isn't in your notes yet, so no formulas are listed for it.</p><h3 class="subtopic">Topic 14 · Temperature</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Kelvin ⇄ Celsius</td><td class="fx">T / K = θ / °C + 273.15</td><td class="fv"><b>T</b> = thermodynamic temperature (K) · <b>θ</b> = Celsius temperature (°C)</td></tr><tr><td class="fname">Specific heat capacity</td><td class="fx">c = ΔQ / (mΔT)<br>ΔQ = mcΔT</td><td class="fv"><b>c</b> = specific heat capacity (J kg⁻¹ K⁻¹) · <b>ΔQ</b> = energy transferred as heat (J) · <b>m</b> = mass (kg) · <b>ΔT</b> = T<sub>final</sub> − T<sub>initial</sub> (K or °C)</td></tr><tr><td class="fname">Mixing (conservation of energy)</td><td class="fx">−ΔE<sub>hot</sub> = ΔE<sub>cold</sub></td><td class="fv"><b>ΔE<sub>hot</sub></b> = energy change of the hotter object (J), negative · <b>ΔE<sub>cold</sub></b> = energy change of the colder object (J), positive</td></tr><tr><td class="fname">Specific latent heat <span class="ftag gap">⊕ not in your notes</span></td><td class="fx">Q = mL</td><td class="fv"><b>Q</b> = energy to change state (J) · <b>m</b> = mass (kg) · <b>L</b> = specific latent heat of fusion or vaporisation (J kg⁻¹)</td></tr></table></div><h3 class="subtopic">Topic 15 · Ideal Gases</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Amount of substance</td><td class="fx">n = N / N<sub>A</sub><br>n = mass ÷ molar mass</td><td class="fv"><b>n</b> = amount of substance (mol) · <b>N</b> = number of particles · <b>N<sub>A</sub></b> = Avogadro constant (mol⁻¹) · <b>mass</b> = (g) · <b>molar mass</b> = (g mol⁻¹)</td></tr><tr><td class="fname">Boyle's law (constant T)</td><td class="fx">p₁V₁ = p₂V₂</td><td class="fv"><b>p</b> = pressure (Pa) · <b>V</b> = volume (m³) · <b>1, 2</b> = initial and final states</td></tr><tr><td class="fname">Charles' law (constant p)</td><td class="fx">V₁/T₁ = V₂/T₂</td><td class="fv"><b>V</b> = volume (m³) · <b>T</b> = thermodynamic temperature (K)</td></tr><tr><td class="fname">Pressure law (constant V)</td><td class="fx">p₁/T₁ = p₂/T₂</td><td class="fv"><b>p</b> = pressure (Pa) · <b>T</b> = thermodynamic temperature (K)</td></tr><tr><td class="fname">Combined gas law</td><td class="fx">p₁V₁/T₁ = p₂V₂/T₂</td><td class="fv"><b>p</b> = pressure (Pa) · <b>V</b> = volume (m³) · <b>T</b> = temperature (K)</td></tr><tr><td class="fname">Ideal gas equation</td><td class="fx">pV = nRT</td><td class="fv"><b>p</b> = pressure (Pa) · <b>V</b> = volume (m³) · <b>n</b> = amount of gas (mol) · <b>R</b> = molar gas constant (J K⁻¹ mol⁻¹) · <b>T</b> = temperature (K)</td></tr><tr><td class="fname">Ideal gas equation (molecules)</td><td class="fx">pV = NkT</td><td class="fv"><b>N</b> = number of molecules · <b>k</b> = Boltzmann constant (J K⁻¹) · <b>p, V, T</b> = as above</td></tr><tr><td class="fname">Boltzmann constant</td><td class="fx">k = R / N<sub>A</sub></td><td class="fv"><b>k</b> = Boltzmann constant (J K⁻¹) · <b>R</b> = molar gas constant (J K⁻¹ mol⁻¹) · <b>N<sub>A</sub></b> = Avogadro constant (mol⁻¹)</td></tr><tr><td class="fname">Pressure of an ideal gas</td><td class="fx">pV = ⅓Nm⟨c²⟩</td><td class="fv"><b>N</b> = number of molecules · <b>m</b> = mass of one molecule (kg) · <b>⟨c²⟩</b> = mean-square speed (m² s⁻²)</td></tr><tr><td class="fname">Root-mean-square speed</td><td class="fx">c<sub>r.m.s.</sub> = √⟨c²⟩</td><td class="fv"><b>c<sub>r.m.s.</sub></b> = r.m.s. speed (m s⁻¹) · <b>⟨c²⟩</b> = mean-square speed (m² s⁻²)</td></tr><tr><td class="fname">Mean KE of a molecule</td><td class="fx">½m⟨c²⟩ = ³⁄₂kT<br>= 3RT / (2N<sub>A</sub>)</td><td class="fv"><b>½m⟨c²⟩</b> = mean translational KE of one molecule (J) · <b>k</b> = Boltzmann constant (J K⁻¹) · <b>T</b> = temperature (K) · <b>R</b> = molar gas constant · <b>N<sub>A</sub></b> = Avogadro constant</td></tr></table></div><h3 class="subtopic">Topic 16 · Thermodynamics</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Internal energy</td><td class="fx">U = Σ KE + Σ PE</td><td class="fv"><b>U</b> = internal energy (J) · <b>Σ KE</b> = sum of the random kinetic energies of all particles (J) · <b>Σ PE</b> = sum of the intermolecular potential energies (J)</td></tr><tr><td class="fname">Work done at constant pressure</td><td class="fx">W = pΔV</td><td class="fv"><b>W</b> = work done (J) · <b>p</b> = pressure (Pa) · <b>ΔV</b> = change in volume (m³)</td></tr><tr><td class="fname">First law of thermodynamics</td><td class="fx">ΔU = q + W</td><td class="fv"><b>ΔU</b> = increase in internal energy (J) · <b>q</b> = energy transferred to the system by heating (J) · <b>W</b> = work done <em>on</em> the system (J): + compression, − expansion</td></tr></table></div><h3 class="subtopic">Topic 18 · Electric Fields</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Electric field strength</td><td class="fx">E = F / q</td><td class="fv"><b>E</b> = field strength (N C⁻¹) · <b>F</b> = force (N) · <b>q</b> = positive test charge (C)</td></tr><tr><td class="fname">Force on a charge <span class="ftag gap">⊕ not in your notes</span></td><td class="fx">F = qE</td><td class="fv"><b>F</b> = force (N) · <b>q</b> = charge (C) · <b>E</b> = field strength (N C⁻¹)</td></tr><tr><td class="fname">Uniform field between plates</td><td class="fx">E = ΔV / Δd</td><td class="fv"><b>E</b> = field strength (V m⁻¹) · <b>ΔV</b> = potential difference (V) · <b>Δd</b> = plate separation (m)</td></tr><tr><td class="fname">Force between parallel plates</td><td class="fx">F = qΔV / d</td><td class="fv"><b>F</b> = force (N) · <b>q</b> = charge (C) · <b>ΔV</b> = p.d. (V) · <b>d</b> = separation (m)</td></tr><tr><td class="fname">Acceleration of a charged particle <span class="ftag gap">⊕ not in your notes</span></td><td class="fx">a = F/m = qE / m</td><td class="fv"><b>a</b> = acceleration (m s⁻²) · <b>m</b> = particle mass (kg) · <b>q</b> = charge (C) · <b>E</b> = field strength (N C⁻¹)</td></tr><tr><td class="fname">Permittivity of a dielectric <span class="ftag extra">➕ extra</span></td><td class="fx">ε = ε<sub>r</sub>ε₀</td><td class="fv"><b>ε</b> = permittivity (F m⁻¹) · <b>ε<sub>r</sub></b> = relative permittivity (no unit) · <b>ε₀</b> = permittivity of free space (F m⁻¹)</td></tr><tr><td class="fname">Coulomb's law</td><td class="fx">F = Q₁Q₂ / (4πε₀r²)<br>= kQ₁Q₂ / r²</td><td class="fv"><b>F</b> = force between the charges (N) · <b>Q₁, Q₂</b> = point charges (C) · <b>r</b> = separation, centre to centre (m) · <b>ε₀</b> = permittivity of free space (F m⁻¹) · <b>k</b> = 1/(4πε₀) ≈ 9.0×10⁹ N m² C⁻²</td></tr><tr><td class="fname">Field of a point charge</td><td class="fx">E = Q / (4πε₀r²)</td><td class="fv"><b>E</b> = field strength (N C⁻¹) · <b>Q</b> = charge creating the field (C) · <b>r</b> = distance from its centre (m)</td></tr><tr><td class="fname">Electric potential (definition)</td><td class="fx">V = W / q</td><td class="fv"><b>V</b> = potential (V, J C⁻¹) · <b>W</b> = work done bringing the test charge from infinity (J) · <b>q</b> = test charge (C)</td></tr><tr><td class="fname">Potential of a point charge</td><td class="fx">V = Q / (4πε₀r)</td><td class="fv"><b>V</b> = potential (V) · <b>Q</b> = charge creating the field, with sign (C) · <b>r</b> = distance (m)</td></tr><tr><td class="fname">Field = −potential gradient</td><td class="fx">E = −ΔV / Δr</td><td class="fv"><b>E</b> = field strength (V m⁻¹) · <b>ΔV</b> = change in potential (V) · <b>Δr</b> = change in distance (m)</td></tr><tr><td class="fname">Electric potential energy of two charges</td><td class="fx">E<sub>P</sub> = Qq / (4πε₀r)<br>= qV</td><td class="fv"><b>E<sub>P</sub></b> = potential energy of the pair (J) · <b>Q, q</b> = the two charges, with signs (C) · <b>r</b> = separation (m) · <b>V</b> = potential at q due to Q (V)</td></tr><tr><td class="fname">Point charge: V and E <span class="ftag gap">⊕ not in your notes</span></td><td class="fx">V = Er</td><td class="fv"><b>V</b> = potential (V) · <b>E</b> = field strength (V m⁻¹) · <b>r</b> = distance from the point charge (m)</td></tr></table></div><h3 class="subtopic">Practical Skills · Capacitor Discharge</h3><div class="table-wrap"><table class="ftable"><tr><th>Name</th><th>Formula</th><th>Variables &amp; units</th></tr><tr><td class="fname">Straight-line form</td><td class="fx">y = mx + c</td><td class="fv"><b>y</b> = vertical-axis quantity · <b>x</b> = horizontal-axis quantity · <b>m</b> = gradient · <b>c</b> = y-intercept</td></tr><tr><td class="fname">Capacitor discharge</td><td class="fx">I = I₀e<sup>−t/RC</sup></td><td class="fv"><b>I</b> = current at time t (A) · <b>I₀</b> = initial current (A) · <b>e</b> ≈ 2.718 · <b>t</b> = time (s) · <b>R</b> = resistance (Ω) · <b>C</b> = capacitance (F)</td></tr><tr><td class="fname">Linearised form</td><td class="fx">ln I = ln I₀ − t/(RC)</td><td class="fv"><b>ln</b> = natural logarithm · <b>gradient</b> = −1/RC (s⁻¹) · <b>y-intercept</b> = ln I₀</td></tr><tr><td class="fname">Time constant from the graph</td><td class="fx">RC = −1 / gradient</td><td class="fv"><b>RC</b> = time constant (s) · <b>gradient</b> = of the ln I against t graph (s⁻¹)</td></tr></table></div><h3 class="subtopic">Constants used in these notes</h3><div class="table-wrap"><table class="ftable" style="min-width:420px;"><tr><th>Quantity</th><th>Symbol</th><th>Value</th></tr><tr><td class="fname" style="width:auto">Acceleration of free fall</td><td class="fx" style="width:auto">g</td><td class="fv" style="font-size:10pt">9.81 m s⁻²</td></tr><tr><td class="fname" style="width:auto">Universal gravitational constant</td><td class="fx" style="width:auto">G</td><td class="fv" style="font-size:10pt">6.67×10⁻¹¹ N m² kg⁻²</td></tr><tr><td class="fname" style="width:auto">Avogadro constant</td><td class="fx" style="width:auto">N<sub>A</sub></td><td class="fv" style="font-size:10pt">6.02×10²³ mol⁻¹</td></tr><tr><td class="fname" style="width:auto">Molar gas constant</td><td class="fx" style="width:auto">R</td><td class="fv" style="font-size:10pt">8.31 J K⁻¹ mol⁻¹</td></tr><tr><td class="fname" style="width:auto">Boltzmann constant</td><td class="fx" style="width:auto">k</td><td class="fv" style="font-size:10pt">1.38×10⁻²³ J K⁻¹ (= R/N<sub>A</sub>)</td></tr><tr><td class="fname" style="width:auto">Elementary charge</td><td class="fx" style="width:auto">e</td><td class="fv" style="font-size:10pt">1.60×10⁻¹⁹ C</td></tr><tr><td class="fname" style="width:auto">Electron mass</td><td class="fx" style="width:auto">m<sub>e</sub></td><td class="fv" style="font-size:10pt">9.11×10⁻³¹ kg</td></tr><tr><td class="fname" style="width:auto">Permittivity of free space</td><td class="fx" style="width:auto">ε₀</td><td class="fv" style="font-size:10pt">8.85×10⁻¹² F m⁻¹</td></tr><tr><td class="fname" style="width:auto">Coulomb constant</td><td class="fx" style="width:auto">k</td><td class="fv" style="font-size:10pt">1/(4πε₀) ≈ 9.0×10⁹ N m² C⁻²</td></tr><tr><td class="fname" style="width:auto">Proton mass</td><td class="fx" style="width:auto">m<sub>p</sub></td><td class="fv" style="font-size:10pt">1.67×10⁻²⁷ kg</td></tr><tr><td class="fname" style="width:auto">Unified atomic mass unit</td><td class="fx" style="width:auto">u</td><td class="fv" style="font-size:10pt">1 u = 1.66×10⁻²⁷ kg</td></tr><tr><td class="fname" style="width:auto">Temperature conversion</td><td class="fx" style="width:auto">0 °C</td><td class="fv" style="font-size:10pt">= 273.15 K</td></tr></table></div>
+</section>
+
 <footer>
   Organised from handwritten class notes — Cambridge 9702, checked against the 9702 syllabus for 2025–2027. Rough working has been stripped; only checked/verified examples are kept.
 </footer>
 
+<button class="totop" id="totop" type="button" aria-label="Back to contents">↑ Contents</button>
+<script>
+(function(){
+  var hdr=document.querySelector('header'), btn=document.getElementById('totop');
+  function offset(){ return (hdr && getComputedStyle(hdr).position==='sticky') ? hdr.offsetHeight : 0; }
+  function goTo(y){
+    try{ window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }catch(e){ window.scrollTo(0,Math.max(0,y)); }
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id=decodeURIComponent(a.getAttribute('href').slice(1));
+    var t=id ? document.getElementById(id) : null;
+    if(!t) return;
+    e.preventDefault();
+    goTo(t.getBoundingClientRect().top + window.pageYOffset - offset() - 8);
+    try{ history.replaceState(null,'','#'+id); }catch(err){}
+  });
+  if(btn){
+    btn.addEventListener('click',function(){ goTo(0); });
+    function toggle(){ btn.classList.toggle('show', window.pageYOffset>700); }
+    window.addEventListener('scroll',toggle,{passive:true}); toggle();
+  }
+})();
+</script>
 </body>
 </html>
