@@ -3,48 +3,626 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Computer Science Notes</title>
+<title>Computer Science Notes — 9618</title>
 <style>
 :root{
-  --bg:#faf9f6; --panel:#ffffff; --ink:#1c1c1c; --ink-soft:#52524f;
-  --rule:#ddd8cc; --accent:#1f3a5f; --accent-ink:#ffffff;
+  --bg: #faf9f6;
+  --panel: #ffffff;
+  --ink: #1c1c1c;
+  --ink-soft: #52524f;
+  --rule: #ddd8cc;
+  --module: #1f3a5f;
+  --subtopic: #0f5c4a;
+  --accent: #b8452f;
+  --accent-bg: #fbeae5;
+  --formula-bg: #eef2f7;
+  --formula-border: #b7c6dd;
+  --example-bg: #f4f7ee;
+  --example-border: #c3d1a8;
+  --priority-bg: #fff3d6;
+  --priority-border: #e2b23c;
+  --priority-ink: #7a5300;
+  --recall-bg: #f2f0fb;
+  --recall-border: #cabde8;
+  --mono-bg: #f0efe9;
+  --warn-bg: #fdeceb;
+  --warn-border: #d98f85;
+  --warn-ink: #8a2f24;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#181a17; --panel:#20231f; --ink:#eae7dd; --ink-soft:#b7b3a4;
-    --rule:#3a3d35; --accent:#8fb4e0; --accent-ink:#181a17;
+    --rule:#3a3d35; --module:#8fb4e0; --subtopic:#6fd4ae; --accent:#e59379;
+    --accent-bg:#3a2620; --formula-bg:#20293a; --formula-border:#3c5578;
+    --example-bg:#232a1e; --example-border:#4c5f34; --priority-bg:#3a2f10;
+    --priority-border:#8a6a1f; --priority-ink:#f0c569; --recall-bg:#251f34;
+    --recall-border:#4d3f6b; --mono-bg:#26281f;
+    --warn-bg:#3a201c; --warn-border:#8a453a; --warn-ink:#f0a99a;
   }
 }
 :root[data-theme="dark"]{
   --bg:#181a17; --panel:#20231f; --ink:#eae7dd; --ink-soft:#b7b3a4;
-  --rule:#3a3d35; --accent:#8fb4e0; --accent-ink:#181a17;
+  --rule:#3a3d35; --module:#8fb4e0; --subtopic:#6fd4ae; --accent:#e59379;
+  --accent-bg:#3a2620; --formula-bg:#20293a; --formula-border:#3c5578;
+  --example-bg:#232a1e; --example-border:#4c5f34; --priority-bg:#3a2f10;
+  --priority-border:#8a6a1f; --priority-ink:#f0c569; --recall-bg:#251f34;
+  --recall-border:#4d3f6b; --mono-bg:#26281f;
+  --warn-bg:#3a201c; --warn-border:#8a453a; --warn-ink:#f0a99a;
 }
-*{box-sizing:border-box}
+
+*{box-sizing:border-box;}
 body{
-  margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-  background:var(--bg); color:var(--ink);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; padding:16px;
+  background:var(--bg);
+  color:var(--ink);
+  font-family: "Georgia","Iowan Old Style", serif;
+  font-size:11pt;
+  line-height:1.55;
+  max-width:1100px;
+  margin:0 auto;
+  padding:0 20px 80px;
+  overflow-x:hidden;
 }
-main{
-  width:100%; max-width:420px; text-align:center; background:var(--panel);
-  border:1px solid var(--rule); border-radius:12px; padding:40px 24px;
+h1,h2,h3,h4{font-family:"Helvetica Neue",Arial,sans-serif; color:var(--module); margin:0;}
+
+header{
+  position:sticky; top:0; z-index:20;
+  background:var(--bg);
+  padding:18px 0 10px;
+  border-bottom:2px solid var(--module);
 }
-h1{margin:0 0 8px; font-size:1.75rem}
-p{margin:0 0 28px; color:var(--ink-soft)}
-.buttons{display:flex; flex-direction:column; gap:14px}
-.btn{
-  display:block; padding:14px 36px; border-radius:8px;
-  background:var(--accent); color:var(--accent-ink); text-decoration:none;
-  font-weight:600; font-size:1.1rem; transition:opacity .15s;
+header h1{font-size:19pt; letter-spacing:.2px;}
+header .subtitle{color:var(--ink-soft); font-size:10.5pt; margin-top:2px;}
+header .back{
+  display:inline-block; margin-top:8px; font-family:"Helvetica Neue",Arial,sans-serif;
+  font-size:9pt; color:var(--module); text-decoration:none; border:1px solid var(--rule);
+  padding:3px 10px; border-radius:20px;
 }
-.btn:hover,.btn:focus-visible{opacity:.85}
+nav.toc{ margin-top:12px; display:flex; flex-wrap:wrap; gap:6px 10px; }
+nav.toc a{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:9pt; color:var(--module);
+  text-decoration:none; background:var(--panel); border:1px solid var(--rule);
+  padding:4px 10px; border-radius:20px; white-space:nowrap;
+}
+nav.toc a:hover{border-color:var(--module);}
+html{scroll-behavior:smooth;}
+.totop{position:fixed; right:14px; bottom:14px; z-index:30; display:none; font-family:"Helvetica Neue",Arial,sans-serif; font-size:10pt; font-weight:600; color:#fff; background:var(--module); border:none; border-radius:22px; padding:9px 16px; box-shadow:0 2px 8px rgba(0,0,0,.25); cursor:pointer;}
+.totop.show{display:block;}
+@media (max-width:760px){
+  header{position:static;}
+  nav.toc a{padding:7px 12px;}
+}
+@media print{.totop{display:none !important;}}
+
+section.module{ margin-top:38px; padding-top:6px; }
+section.module > h2{ font-size:16pt; padding-bottom:6px; border-bottom:1px solid var(--rule); margin-bottom:14px; }
+.cornell{ display:grid; grid-template-columns: 1fr 230px; gap:22px; align-items:start; }
+.cornell .main{min-width:0;}
+.cornell .margin{ border-left:2px dashed var(--rule); padding-left:16px; }
+@media (max-width:760px){
+  .cornell{grid-template-columns:1fr;}
+  .cornell .margin{border-left:none; border-top:2px dashed var(--rule); padding-left:0; padding-top:12px;}
+}
+
+h3.subtopic{font-size:14pt; color:var(--subtopic); margin:22px 0 8px;}
+h3.subtopic:first-child{margin-top:0;}
+p{margin:8px 0;}
+
+.box{ border-radius:8px; padding:12px 14px; margin:12px 0; font-size:11pt; }
+.box > :first-child{margin-top:0;}
+.box > :last-child{margin-bottom:0;}
+.def{background:var(--panel); border:1px solid var(--rule); border-left:4px solid var(--module);}
+.def .label, .formula .label, .example .label, .warn .label{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.5pt; font-weight:700; letter-spacing:.6px;
+  text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:4px;
+}
+.formula{background:var(--formula-bg); border:1px solid var(--formula-border);}
+.formula .expr{font-size:13pt; font-family:"Cambria Math","Georgia",serif; text-align:center; margin:6px 0;}
+.example{background:var(--example-bg); border:1px solid var(--example-border);}
+.example .label{color:#5a7233;}
+.warn{background:var(--warn-bg); border:1px solid var(--warn-border);}
+.warn .label{color:var(--warn-ink);}
+.warn::before{content:"⚠ ";}
+.gap{background:var(--formula-bg); border:1px dashed var(--formula-border);}
+.gap::before{
+  content:"⊕ NOT IN YOUR NOTES — SYLLABUS POINT"; display:block;
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.5pt; font-weight:700; letter-spacing:.6px;
+  color:var(--module); margin-bottom:4px;
+}
+.extra{background:var(--example-bg); border:1px dashed var(--subtopic);}
+.extra::before{
+  content:"➕ EXTRA — BEYOND SYLLABUS WORDING"; display:block;
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8.5pt; font-weight:700; letter-spacing:.6px;
+  color:var(--subtopic); margin-bottom:4px;
+}
+
+.quiz{background:var(--panel); border:1px solid var(--rule); border-radius:10px; padding:16px 18px; margin:20px 0;}
+.quiz > h4{font-size:12pt; color:var(--module); margin:0 0 10px;}
+.quiz-item{border-top:1px solid var(--rule); padding:10px 0;}
+.quiz-item:first-of-type{border-top:none; padding-top:0;}
+.quiz-item summary{cursor:pointer; font-weight:600; font-size:10.5pt;}
+.quiz-item summary::marker{color:var(--module);}
+.quiz-item .qanswer{margin-top:8px; padding:8px 10px; background:var(--recall-bg); border:1px solid var(--recall-border); border-radius:6px; font-size:10pt;}
+code, .mono{
+  font-family:"SF Mono","Menlo",monospace; background:var(--mono-bg); padding:1px 5px;
+  border-radius:4px; font-size:10pt;
+}
+.steps{margin:6px 0 4px 0; padding-left:20px;}
+.steps li{margin:4px 0;}
+
+.table-wrap{overflow-x:auto; margin:10px 0; -webkit-overflow-scrolling:touch;}
+.table-wrap table{margin:0;}
+table.bits{border-collapse:collapse; margin:8px 0; font-family:"SF Mono",monospace; font-size:9.5pt;}
+table.bits td{border:1px solid var(--rule); padding:3px 6px; text-align:center;}
+table.range{border-collapse:collapse; width:100%; min-width:480px; font-size:9.5pt;}
+table.range th, table.range td{border:1px solid var(--rule); padding:6px 8px; text-align:left; white-space:nowrap;}
+table.range th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt; text-transform:uppercase; letter-spacing:.4px;}
+table.filetable{border-collapse:collapse; width:100%; min-width:420px; font-size:10pt;}
+table.filetable th, table.filetable td{border:1px solid var(--rule); padding:8px 10px; vertical-align:top; text-align:left;}
+table.filetable th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:9pt;}
+table.data{border-collapse:collapse; font-size:9.5pt; font-family:"SF Mono",monospace;}
+table.data th, table.data td{border:1px solid var(--rule); padding:4px 10px; text-align:center;}
+table.data th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt;}
+
+.priority{
+  display:inline-flex; align-items:center; gap:6px; background:var(--priority-bg);
+  border:1px solid var(--priority-border); color:var(--priority-ink);
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8pt; font-weight:700;
+  letter-spacing:.5px; text-transform:uppercase; padding:3px 9px; border-radius:20px; margin:0 0 10px 0;
+}
+.priority::before{content:"★"; font-size:9pt;}
+
+.recall{
+  background:var(--recall-bg); border:1px solid var(--recall-border); border-radius:8px;
+  padding:10px 12px; font-size:9.8pt; margin-bottom:14px;
+}
+.recall .label{
+  font-family:"Helvetica Neue",Arial,sans-serif; font-size:8pt; font-weight:700;
+  text-transform:uppercase; letter-spacing:.5px; color:#6b5a9c; display:block; margin-bottom:4px;
+}
+.recall summary{cursor:pointer; font-weight:600;}
+.recall .answer{margin-top:6px; padding-top:6px; border-top:1px dashed var(--recall-border); color:var(--ink-soft);}
+
+.indexcard{
+  display:block; background:var(--panel); border:1px solid var(--rule); border-left:4px solid var(--module);
+  border-radius:8px; padding:14px 16px; margin:12px 0; text-decoration:none; color:var(--ink);
+}
+.indexcard h3{font-family:"Helvetica Neue",Arial,sans-serif; color:var(--module); font-size:13pt; margin:0 0 4px;}
+.indexcard p{margin:0; color:var(--ink-soft); font-size:10pt;}
+.indexcard:hover{border-left-color:var(--accent);}
+
+footer{margin-top:50px; padding-top:14px; border-top:1px solid var(--rule); font-size:9pt; color:var(--ink-soft); font-family:"Helvetica Neue",sans-serif;}
+
+</style>
+<style>
+  section.topictitle{margin-top:56px; border-top:4px solid var(--module); padding-top:10px;}
+  section.topictitle h1.topicnum{font-size:20pt; margin:0;}
+  section.topictitle .topicsub{color:var(--ink-soft); font-family:"Helvetica Neue",sans-serif; font-size:10pt;}
+  .keyline{border-collapse:collapse; width:100%; font-size:10pt; margin:8px 0;}
+  .keyline th, .keyline td{border:1px solid var(--rule); padding:6px 9px; text-align:left; vertical-align:top;}
+  .keyline th{background:var(--formula-bg); font-family:"Helvetica Neue",sans-serif; font-size:8.5pt;}
 </style>
 </head>
 <body>
-<main>
-  <h1>Computer Science</h1>
-  <p>Notes coming soon.</p>
-  <a class="btn" href="index.html">Back</a>
-</main>
+
+<header>
+  <h1>Computer Science Notes</h1>
+  <div class="subtitle">Cambridge International A Level Computer Science (9618) · organised from class notes, checked against the 9618 syllabus (2027–2029)</div>
+  <nav class="toc">
+    <a href="#topic13-1">13.1 · User-Defined Data Types</a>
+    <a href="#topic13-2">13.2 · File Organisation &amp; Access</a>
+    <a href="#topic13-3">13.3 · Floating-Point Numbers</a>
+  </nav>
+</header>
+
+<p style="margin-top:18px; font-size:9.5pt; color:var(--ink-soft);">
+Key: <span class="priority" style="margin:0;">high-yield</span> = commonly examined &nbsp;·&nbsp;
+<span style="color:var(--warn-ink);">⚠ corrected</span> = a mistake in your original notes, fixed &nbsp;·&nbsp;
+<span style="color:var(--module);">⊕ not in your notes</span> = a syllabus point your notes missed, filled in here &nbsp;·&nbsp;
+<span style="color:var(--subtopic);">➕ extra</span> = in your notes but beyond the syllabus wording — good to know, won't be directly examined
+</p>
+
+<!-- ======================================================= TOPIC 13 ======================================================= -->
+<section class="topictitle" id="topic13">
+  <h1 class="topicnum">Topic 13 · Data Representation</h1>
+  <div class="topicsub">Syllabus 13.1 User-defined data types · 13.2 File organisation and access · 13.3 Floating-point numbers, representation and manipulation</div>
+</section>
+
+<!-- ---------------- 13.1 ---------------- -->
+<section class="module" id="topic13-1">
+  <h2>13.1 User-Defined Data Types</h2>
+  <div class="cornell">
+    <div class="main">
+      <div class="gap box">
+        Your notes don't explain <em>why</em> user-defined types exist — worth knowing since it's an explicit syllabus point:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Why user-defined types are necessary</span>
+          Built-in types (INTEGER, STRING, CHAR, etc.) don't always model real-world data well on their own. User-defined types let you combine or restrict them to match the actual problem — e.g. representing "one of four seasons" or "a book with several fields of different types" precisely, rather than working around it with generic types.
+        </div>
+      </div>
+
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Non-composite</th><th>Composite</th></tr>
+        <tr>
+          <td>Built from only <strong>one</strong> underlying data type.<br><em>e.g. enumerated, pointer</em></td>
+          <td>Built from <strong>other</strong> data types combined together.<br><em>e.g. set, record, class/object</em></td>
+        </tr>
+      </table></div>
+
+      <h3 class="subtopic">Enumerated types</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A user-defined, ordered list of named values. Useful when a variable can only take one of a small, fixed set of options.
+      </div>
+      <div class="example box">
+        <span class="label">Example</span>
+        <code>TYPE TSeason = (Spring, Summer, Autumn, Winter)</code>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your notes wrote <code>TYPE TSeason = Spring, Summer, Autumn, winter</code> — missing the <strong>parentheses</strong> around the value list (required syntax), and "winter" should be capitalised to match the others.
+      </div>
+
+      <h3 class="subtopic">Pointer data type</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A pointer stores the <strong>memory address</strong> of another variable, rather than a value directly. The caret (<code>^</code>) position relative to the variable name changes what you get:
+      </div>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Position</th><th>Meaning</th></tr>
+        <tr><td><code>^variable</code> — caret <strong>before</strong></td><td>References the location — gives you the <strong>memory address</strong></td></tr>
+        <tr><td><code>variable^</code> — caret <strong>after</strong></td><td><strong>Dereferences</strong> the pointer — gives you the data stored at that address</td></tr>
+      </table></div>
+
+      <h3 class="subtopic">Sets</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A collection of data that <strong>lacks any structure</strong> (unordered) and <strong>contains no duplicates</strong>. A fixed number of standard operations can be performed on it.
+      </div>
+      <div class="formula box">
+        <span class="label">Declaring a set type</span>
+        <code>TYPE &lt;set-identifier&gt; = SET OF &lt;base type&gt;</code>
+      </div>
+      <div class="example box">
+        <span class="label">Example</span>
+        <code>TYPE SLetter = SET OF CHAR</code><br>
+        <code>DEFINE vowel ('a','e','i','o','u') : SLetter</code>
+      </div>
+      <p>Using <code>DEFINE setA ('a','b','c') : SLetter</code> and <code>DEFINE setB ('b','c','d') : SLetter</code> as running examples:</p>
+      <div class="example box">
+        <span class="label">Union / Intersection / Difference / Membership</span>
+        <code>setA ∪ setB</code> → <code>{a,b,c,d}</code> &nbsp;·&nbsp;
+        <code>setA ∩ setB</code> → <code>{b,c}</code> &nbsp;·&nbsp;
+        <code>setA − setB</code> → <code>{a}</code> &nbsp;·&nbsp;
+        <code>IF 'a' IN setA THEN …</code> → <code>TRUE</code>
+      </div>
+      <div class="example box">
+        <span class="label">Adding / removing values</span>
+        Add one value: <code>setA ← setA ∪ {'d'}</code> &nbsp;·&nbsp;
+        Remove one value: <code>setA ← setA − {'a'}</code> &nbsp;·&nbsp;
+        Add a whole set: <code>setA ← setA ∪ setB</code>
+      </div>
+
+      <h3 class="subtopic">Records</h3>
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A composite type that groups together several fields, which can each be a <strong>different</strong> data type, under one named structure.
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — declaring and using a record</span>
+<pre style="white-space:pre-wrap; margin:4px 0; font-family:'SF Mono',monospace; font-size:9.5pt;">TYPE TJournalRecord
+  DECLARE Title : STRING
+  DECLARE Author : STRING
+  DECLARE Publisher : STRING
+  DECLARE NumberOfPages : INTEGER
+  DECLARE Season : TSeason
+ENDTYPE
+
+DECLARE Journal : TJournalRecord
+
+Journal.Title &larr; "Spring flowers"
+Journal.Author &larr; "H Williams"
+Journal.Publisher &larr; "XYZ Press"
+Journal.NumberOfPages &larr; 40
+Journal.Season &larr; Spring</pre>
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your record declared <code>Season : STRING</code>, but your own example then assigns <code>Journal.Season ← Spring</code> with <strong>no quotation marks</strong> — that only works if <code>Season</code> is the <code>TSeason</code> enumerated type from earlier, not a plain string (a real string assignment would need <code>← "Spring"</code>). Using the enumerated type here is also better practice — it stops the field ever holding an invalid value like "Purple".
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">Note: your notes had already self-corrected "Number of pages" (with spaces — not a valid identifier) to <code>NumberOfPages</code> — that fix is carried through above.</p>
+
+      <div class="gap box">
+        The syllabus also lists <strong>class/object</strong> as a composite type alongside set and record — not in your notes:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Class / object (brief)</span>
+          A class bundles data (attributes) <em>and</em> the procedures/functions that act on that data (methods) into one type. An object is a specific instance of a class. This is covered in full under Object-Oriented Programming (Topic 20) — for now, just know it's the third composite type alongside sets and records.
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Give one advantage of an enumerated type over just using integers 0/1/2.</summary>
+        <div class="answer">Self-documenting code — <code>Win</code> is clearer than <code>2</code>, and invalid values are easier to catch.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>You want the actual value a pointer points to, not its address. Caret before or after?</summary>
+        <div class="answer">After — dereferencing.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Can a record's fields be different data types from each other?</summary>
+        <div class="answer">Yes — that's the whole point of a record (unlike an array, where every element must be the same type).</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 13.1 User-Defined Data Types</h4>
+    <details class="quiz-item"><summary>1. Is a pointer a composite or non-composite type?</summary><div class="qanswer">Non-composite — it's built from only one underlying type (an address).</div></details>
+    <details class="quiz-item"><summary>2. setA = {1,3,5}, setB = {3,5,7}. What is setA − setB?</summary><div class="qanswer">{1} — the values in setA that are not in setB.</div></details>
+    <details class="quiz-item"><summary>3. Write the pseudocode to declare an enumerated type TColour with values Red, Green, Blue.</summary><div class="qanswer">TYPE TColour = (Red, Green, Blue)</div></details>
+    <details class="quiz-item"><summary>4. Why might a record be a better choice than several separate variables for storing one student's name, age, and grade?</summary><div class="qanswer">The related fields are grouped under one identifier, so they can be passed around and processed together (e.g. as one array element per student) instead of managing several parallel variables.</div></details>
+    <details class="quiz-item"><summary>5. What's the key difference between a record and a class?</summary><div class="qanswer">A record stores only data (fields); a class also bundles in the methods (procedures/functions) that operate on that data.</div></details>
+  </div>
+</section>
+
+<!-- ---------------- 13.2 ---------------- -->
+<section class="module" id="topic13-2">
+  <h2>13.2 File Organisation &amp; Access</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">File organisation — how records are stored</h3>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Serial</th><th>Sequential</th><th>Random</th></tr>
+        <tr>
+          <td>Records added one by one, in the order they arrive.</td>
+          <td>Records kept in order, based on a <strong>key field</strong>.</td>
+          <td>Records stored in any available position, located later using a <strong>record key</strong>.</td>
+        </tr>
+      </table></div>
+
+      <h3 class="subtopic">File access — how records are retrieved</h3>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Sequential access</th><th>Direct access</th></tr>
+        <tr>
+          <td>Travel through records one by one from the start, checking each one, until the target is found (or, for an ordered file, until the value checked exceeds the target — meaning it can't exist further on). Works for <strong>serial and sequential</strong> files.</td>
+          <td>Jump straight to the record without checking every one before it. Works for <strong>sequential (via an index) and random (via hashing)</strong> files.</td>
+        </tr>
+      </table></div>
+
+      <div class="example box">
+        <span class="label">Worksheet practice — matching organisation to access</span>
+        <table class="keyline">
+          <tr><th>Organisation</th><th>Valid access method(s)</th></tr>
+          <tr><td>Random</td><td>Direct (only)</td></tr>
+          <tr><td>Serial</td><td>Sequential (only)</td></tr>
+          <tr><td>Sequential</td><td>Sequential <em>or</em> Direct (via an index)</td></tr>
+        </table>
+      </div>
+      <div class="example box">
+        <span class="label">Worksheet practice — choosing an organisation for a scenario</span>
+        File A needs records read in arrival order only → <strong>Serial</strong>.<br>
+        File B needs records kept in a defined order → <strong>Sequential</strong>.<br>
+        File C needs the fastest possible access speed → <strong>Random</strong> (direct access).
+      </div>
+
+      <div class="gap box">
+        The syllabus explicitly wants you to <strong>describe and use</strong> a hashing algorithm — your notes only say "use a hashing algorithm" without one:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Hashing algorithm</span>
+          A calculation that converts a record's key directly into a storage address, so the record can be found without searching.
+        </div>
+        <div class="formula box">
+          <span class="label">Simplest method — division/remainder (modulo)</span>
+          <div class="expr">address = record key MOD number of storage locations</div>
+        </div>
+        <div class="example box">
+          <span class="label">Worked example</span>
+          10 storage locations (addresses 0–9). Record key = 1023.<br>
+          1023 MOD 10 = <strong>3</strong> → the record is stored at (or looked up from) address 3.
+        </div>
+        <div class="warn box" style="border-style:dashed;">
+          <span class="label">Collisions</span>
+          Two different keys can hash to the same address (e.g. 1013 MOD 10 = 3 too) — this is a <strong>collision</strong>. A common fix is to store the second record in the next free slot (linear probing) and search forward from the "expected" address if it's not there when retrieving.
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which organisation type must be used with direct access only?</summary>
+        <div class="answer">Random — sequential files can use direct access too, but only via an index.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why can sequential access stop early on an ordered file?</summary>
+        <div class="answer">Because the records are sorted — once you pass where the target would be, it can't appear later.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Key = 47, 10 storage locations. Find the hashed address.</summary>
+        <div class="answer">47 MOD 10 = 7</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 13.2 File Organisation &amp; Access</h4>
+    <details class="quiz-item"><summary>1. A file only ever needs its records read from start to end, never jumped into midway. Which organisation is simplest and sufficient?</summary><div class="qanswer">Serial.</div></details>
+    <details class="quiz-item"><summary>2. Using key MOD 8 with 8 storage locations, where does key = 29 hash to?</summary><div class="qanswer">29 MOD 8 = 5</div></details>
+    <details class="quiz-item"><summary>3. What is a collision in the context of hashing?</summary><div class="qanswer">When two different keys hash to the same storage address.</div></details>
+    <details class="quiz-item"><summary>4. Why does a sequential file need an index to support direct access, when a random file doesn't?</summary><div class="qanswer">A random file's address comes straight from hashing the key; a sequential file's physical position doesn't relate to the key directly, so a separate index (key → position) is needed to jump to it.</div></details>
+    <details class="quiz-item"><summary>5. Which is faster on average for finding one specific record: sequential access or direct access?</summary><div class="qanswer">Direct access — it jumps straight to the record instead of checking records one by one.</div></details>
+  </div>
+</section>
+
+<!-- ---------------- 13.3 ---------------- -->
+<section class="module" id="topic13-3">
+  <h2>13.3 Floating-Point Numbers</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A floating-point number is stored as two parts: the <strong>mantissa (M)</strong>, which holds the significant digits, and the <strong>exponent (E)</strong>, which says how far to shift the binary point. Both are stored as fixed-length two's complement binary strings.
+      </div>
+      <div class="formula box">
+        <span class="label">Formula</span>
+        <div class="expr">value = M × 2<sup>E</sup></div>
+      </div>
+
+      <h3 class="subtopic">Binary → Decimal</h3>
+      <p>Shift the mantissa's point <strong>right</strong> by <em>E</em> places if E is positive (left if E is negative), then convert to decimal.</p>
+      <div class="example box">
+        <span class="label">Worked example — positive number</span>
+        M = <span class="mono">0.1011010</span>, E = <span class="mono">00000100</span> (= 4)<br>
+        Shift right by 4: <span class="mono">1011.010</span> = 8+2+1+0.25 = <strong>11.25</strong>
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — negative mantissa</span>
+        M = <span class="mono">1.1110100</span> (MSB = 1, negative), E = <span class="mono">00000100</span> (= 4)<br>
+        Magnitude: invert + 1 → <span class="mono">0.0001100</span>, shift right 4: <span class="mono">0001.100</span> = 1.5 → <strong>−1.5</strong>
+      </div>
+      <div class="example box">
+        <span class="label">Worksheet practice — large positive exponent</span>
+        M = <span class="mono">0.1110010</span>, E = <span class="mono">00000111</span> (= 7)<br>
+        Shift right by 7: <span class="mono">01110010.</span> = 64+32+16+2 = <strong>114</strong>
+      </div>
+
+      <h3 class="subtopic">Decimal → Binary</h3>
+      <ol class="steps">
+        <li>Convert the whole-number part and fractional part to binary separately, and combine.</li>
+        <li>Normalise so the point sits in the required position — count how many places you shift it.</li>
+        <li>Adjust E by that many places, then write M and E as fixed-length two's complement binary.</li>
+      </ol>
+      <div class="example box">
+        <span class="label">Worked example — 4.5</span>
+        4 = <span class="mono">0100</span>, 0.5 = <span class="mono">.1</span> → <span class="mono">0100.1</span><br>
+        Normalise: move point left 3 → <span class="mono">0.1001</span>, E increases by 3<br>
+        <strong>M = 0.1001000, E = 00000011</strong>
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — pure fraction, 0.375</span>
+        0.375 = 3/8 = <span class="mono">0.011</span> = <span class="mono">0.11 × 2<sup>−1</sup></span><br>
+        <strong>M = 0.11, E = −1</strong> (two's complement <span class="mono">11111111</span>)
+      </div>
+
+      <div class="gap box">
+        This question was left unfinished in your notes (only "8 = 00001000, −8 = 11111000" was written, no final answer):
+        <div class="example box" style="margin-top:8px;">
+          <span class="label">Completed — encoding a negative number, −8.375</span>
+          Magnitude: 8.375 = <span class="mono">1000.011</span><br>
+          Normalise the <em>positive</em> magnitude first: move point left 4 → <span class="mono">0.1000011</span>, E = 4 (<span class="mono">00000100</span>)<br>
+          To negate, two's-complement the <strong>whole 8-bit mantissa</strong> (sign bit included, not just the fraction part): invert <span class="mono">01000011</span> → <span class="mono">10111100</span>, add 1 → <span class="mono">10111101</span><br>
+          <strong>M = 1.0111101, E = 00000100</strong>
+        </div>
+        <div class="warn box" style="border-style:dashed;">
+          <span class="label">The subtle bit</span>
+          It's tempting to two's-complement only the fractional digits and leave the leading bit as 0 — that gives a mantissa starting "0.1…", which looks like a <em>positive</em> pattern and is wrong. The sign bit must be included in the invert-and-add-1 step.
+        </div>
+      </div>
+
+      <h3 class="subtopic">Normalisation</h3>
+      <div class="def box">
+        <span class="label">Rule</span>
+        A mantissa is <strong>normalised</strong> when its first digit after the point differs from the sign bit:
+      </div>
+      <div class="table-wrap"><table class="bits">
+        <tr><td class="tag">Positive number</td><td>0</td><td style="border-color:var(--module);border-width:2px">1</td><td>…</td></tr>
+        <tr><td class="tag">Negative number</td><td>1</td><td style="border-color:var(--module);border-width:2px">0</td><td>…</td></tr>
+      </table></div>
+      <div class="formula box">
+        <span class="label">Shift rule</span>
+        Moving the point <strong>left</strong> one place → E <strong>increases</strong> by 1. Moving it <strong>right</strong> → E <strong>decreases</strong> by 1.
+      </div>
+      <div class="def box">
+        <span class="label">Why normalise? (two reasons)</span>
+        1. It gives every number exactly <strong>one</strong> valid representation — without it, the same value could be written many different ways, which is ambiguous.<br>
+        2. It <strong>maximises precision</strong>, using every available mantissa bit for significant digits instead of wasted leading 0s/1s.
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">Edge case worth knowing: zero itself cannot be written in strictly normalised form (0.0000000 doesn't satisfy either pattern above) — it's the one value systems must special-case.</p>
+
+      <h3 class="subtopic">Precision versus Range</h3>
+      <div class="def box">
+        <span class="label">Key trade-off</span>
+        <strong>More mantissa bits</strong> → greater <strong>precision</strong>. <strong>More exponent bits</strong> → greater <strong>range</strong>.
+      </div>
+      <p style="font-size:9.5pt; color:var(--ink-soft);">e.g. for high accuracy but low range: allocate a large mantissa and a small exponent (and vice versa for high range but low accuracy).</p>
+      <div class="table-wrap"><table class="range">
+        <tr><th>Case</th><th>Mantissa</th><th>Exponent</th></tr>
+        <tr><td>Largest positive number</td><td class="bitstring">0 1111111</td><td class="bitstring">01111111 (E = +127)</td></tr>
+        <tr><td>Smallest positive number</td><td class="bitstring">0 1000000</td><td class="bitstring">10000000 (E = −128)</td></tr>
+        <tr><td>Largest-magnitude negative number</td><td class="bitstring">1 0000000</td><td class="bitstring">01111111 (E = +127)</td></tr>
+        <tr><td>Smallest-magnitude negative number</td><td class="bitstring">1 0111111</td><td class="bitstring">10000000 (E = −128)</td></tr>
+      </table></div>
+
+      <div class="gap box">
+        Your notes don't cover the limitations of floating-point representation — a syllabus point on its own:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Approximation &amp; rounding errors</span>
+          Not every real number can be represented <em>exactly</em> in binary floating point — e.g. 0.1 in binary is a recurring fraction (0.0001100110011…). Since only a fixed number of mantissa bits are available, the stored value must be <strong>rounded</strong> to the nearest one that fits, creating a small <strong>rounding error</strong> between the true value and what's actually stored.
+        </div>
+        <div class="def box">
+          <span class="label">Overflow</span>
+          Occurs when a number's magnitude is too <strong>large</strong> to be represented, even using the largest available exponent.
+        </div>
+        <div class="def box">
+          <span class="label">Underflow</span>
+          Occurs when a number's magnitude is too <strong>small</strong> (too close to zero) to be represented, even using the smallest available exponent — it effectively rounds down to zero.
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why does E increase by 3 in the 4.5 example?</summary>
+        <div class="answer">Moving the point left makes M smaller, so E must rise to keep M × 2<sup>E</sup> equal to 4.5.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Name two reasons floating-point numbers need to be normalised.</summary>
+        <div class="answer">One unique representation per value, and maximum precision.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A calculation produces a number smaller than the smallest representable value. What's this called?</summary>
+        <div class="answer">Underflow.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 13.3 Floating-Point Numbers</h4>
+    <details class="quiz-item"><summary>1. M = 0.11, E = 00000010 (=2). Find the decimal value.</summary><div class="qanswer">Shift right 2: 11.0 = 3</div></details>
+    <details class="quiz-item"><summary>2. Why can't 0.1 (decimal) be stored exactly in binary floating point?</summary><div class="qanswer">Its binary representation is a recurring fraction, so a finite number of mantissa bits can only store an approximation, not the exact value.</div></details>
+    <details class="quiz-item"><summary>3. Is 0.0110100 (positive) normalised?</summary><div class="qanswer">No — the digit right after the point must be 1 for a positive number.</div></details>
+    <details class="quiz-item"><summary>4. You need to represent much bigger numbers with the same total bit budget. Which field should grow?</summary><div class="qanswer">The exponent (at the cost of precision, since the mantissa would need to shrink).</div></details>
+    <details class="quiz-item"><summary>5. A number is too large to fit even with the maximum exponent. What is this called?</summary><div class="qanswer">Overflow.</div></details>
+  </div>
+</section>
+
+<footer>
+  Organised from handwritten class notes — Cambridge 9618, checked against the 9618 syllabus for 2027–2029. Rough working has been stripped; only checked/verified examples are kept.
+</footer>
+
+<button class="totop" id="totop" type="button" aria-label="Back to contents">↑ Contents</button>
+<script>
+(function(){
+  var hdr=document.querySelector('header'), btn=document.getElementById('totop');
+  function offset(){ return (hdr && getComputedStyle(hdr).position==='sticky') ? hdr.offsetHeight : 0; }
+  function goTo(y){
+    try{ window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }catch(e){ window.scrollTo(0,Math.max(0,y)); }
+  }
+  document.addEventListener('click',function(e){
+    var a=e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if(!a) return;
+    var id=decodeURIComponent(a.getAttribute('href').slice(1));
+    var t=id ? document.getElementById(id) : null;
+    if(!t) return;
+    e.preventDefault();
+    goTo(t.getBoundingClientRect().top + window.pageYOffset - offset() - 8);
+    try{ history.replaceState(null,'','#'+id); }catch(err){}
+  });
+  if(btn){
+    btn.addEventListener('click',function(){ goTo(0); });
+    function toggle(){ btn.classList.toggle('show', window.pageYOffset>700); }
+    window.addEventListener('scroll',toggle,{passive:true}); toggle();
+  }
+})();
+</script>
 </body>
 </html>
