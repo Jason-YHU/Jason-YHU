@@ -31,8 +31,9 @@ main{
 }
 h1{margin:0 0 8px; font-size:1.75rem}
 p{margin:0 0 28px; color:var(--ink-soft)}
+.buttons{display:flex; flex-direction:column; gap:14px}
 .btn{
-  display:inline-block; padding:14px 36px; border-radius:8px;
+  display:block; padding:14px 36px; border-radius:8px;
   background:var(--accent); color:var(--accent-ink); text-decoration:none;
   font-weight:600; font-size:1.1rem; transition:opacity .15s;
 }
@@ -43,7 +44,10 @@ p{margin:0 0 28px; color:var(--ink-soft)}
 <main>
   <h1>Notes</h1>
   <p>Choose a subject</p>
-  <a class="btn" href="Physics_notes.html">Physics</a>
+  <nav class="buttons">
+    <a class="btn" href="Physics_notes.html">Physics</a>
+    <a class="btn" href="Computer_Science_notes.html">Computer Science</a>
+  </nav>
 </main>
 </body>
 </html>
