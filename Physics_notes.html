@@ -2085,9 +2085,25 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       <div class="table-wrap">
       <table class="range">
         <tr><th></th><th>Capacitor (Q and V<sub>C</sub>)</th><th>Circuit current I and resistor p.d. V<sub>R</sub></th></tr>
-        <tr><td><strong>Charging</strong></td><td>Q = Q₀(1 − e<sup>−t/RC</sup>)<br>V<sub>C</sub> = V₀(1 − e<sup>−t/RC</sup>)</td><td>I = I₀e<sup>−t/RC</sup><br>V<sub>R</sub> = V₀e<sup>−t/RC</sup></td></tr>
-        <tr><td><strong>Discharging</strong></td><td>Q = Q₀e<sup>−t/RC</sup><br>V<sub>C</sub> = V₀e<sup>−t/RC</sup></td><td>I = I₀e<sup>−t/RC</sup><br>V<sub>R</sub> = V<sub>C</sub> = V₀e<sup>−t/RC</sup></td></tr>
+        <tr><td><strong>Charging</strong><br><span class="ftag extra">➕ extra</span></td><td>Q = Q₀(1 − e<sup>−t/RC</sup>)<br>V<sub>C</sub> = V₀(1 − e<sup>−t/RC</sup>)</td><td>I = I₀e<sup>−t/RC</sup>, with I₀ = V₀/R<br>V<sub>R</sub> = V₀e<sup>−t/RC</sup><br>V<sub>C</sub> + V<sub>R</sub> = V₀<br><em>V₀ = supply p.d.</em><br><em>Why it decays: V<sub>C</sub> rises, so V<sub>R</sub> = V₀ − V<sub>C</sub> falls (Kirchhoff's 2nd law), and I = V<sub>R</sub>/R falls.</em></td></tr>
+        <tr><td><strong>Discharging</strong><br><span class="ftag gap" style="margin-left:0">syllabus</span></td><td>Q = Q₀e<sup>−t/RC</sup><br>V<sub>C</sub> = V₀e<sup>−t/RC</sup></td><td>I = I₀e<sup>−t/RC</sup>, with I₀ = V₀/R<br>V<sub>R</sub> = V<sub>C</sub> = V₀e<sup>−t/RC</sup><br><em>V₀ = the capacitor's starting p.d. (the supply is no longer in the circuit)</em><br><em>Current flows the <strong>opposite way</strong> to the charging current.</em><br><em>Why it decays: V<sub>C</sub> falls as charge leaves, so the p.d. driving the current falls.</em></td></tr>
       </table>
+      </div>
+      <div class="formula box">
+        <span class="label fname-line">Circuit current while discharging</span>
+        <div class="expr">I = I₀e<sup>−t/RC</sup> &nbsp;&nbsp; I₀ = V₀/R</div>
+        <div class="vars"><span class="vlabel">Where</span><ul class="varlist"><li><b>I</b> = current at time t (A)</li><li><b>I₀</b> = initial current (A)</li><li><b>V₀</b> = the capacitor's starting p.d. (V)</li><li><b>R</b> = resistance (Ω)</li><li><b>C</b> = capacitance (F)</li><li><b>t</b> = time (s)</li></ul></div>
+      </div>
+      <div class="formula box">
+        <span class="label fname-line">Circuit current while charging <span class="ftag extra">➕ extra</span></span>
+        <div class="expr">I = I₀e<sup>−t/RC</sup> &nbsp;&nbsp; I₀ = V₀/R &nbsp;&nbsp; V<sub>C</sub> + V<sub>R</sub> = V₀</div>
+        <div class="vars"><span class="vlabel">Where</span><ul class="varlist"><li><b>V₀</b> = supply p.d. (V)</li><li><b>V<sub>C</sub></b> = p.d. across the capacitor (V)</li><li><b>V<sub>R</sub></b> = p.d. across the resistor (V)</li></ul></div>
+        The current never has the (1 − e<sup>−t/RC</sup>) shape: it is largest at the start and always decays.
+      </div>
+      <div class="formula box">
+        <span class="label fname-line">Linearised current (for the practical)</span>
+        <div class="expr">ln I = ln I₀ − t/RC</div>
+        <div class="vars"><span class="vlabel">Where</span><ul class="varlist"><li><b>ln I</b> plotted against <b>t</b> gives a straight line</li><li><b>gradient</b> = −1/RC</li><li><b>y-intercept</b> = ln I₀</li></ul></div>
       </div>
       <details class="warn box"><summary><span class="label">Corrected: whiteboard table</span></summary>
         The photographed table listed <strong>I = I₀(1 − e<sup>−t/RC</sup>)</strong> and V = V₀(1 − e<sup>−t/RC</sup>) for the circuit while <em>discharging</em>. During discharge the current and the resistor p.d. both <strong>decay</strong> as e<sup>−t/RC</sup>. The table above is the corrected version.
@@ -2098,6 +2114,14 @@ Key: <span class="priority" style="margin:0;">high-yield</span> = commonly exami
       </div>
     </div>
     <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Charging: 12 V supply, 100 µF, 20 kΩ. Find I at t = 4.0 s.</summary>
+        <div class="answer">RC = 2.0 s, I₀ = 12/20 000 = 0.60 mA, so I = 0.60e<sup>−2</sup> = 0.081 mA.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Discharging: 470 µF at 9.0 V through 10 kΩ. Find I at t = 4.7 s.</summary>
+        <div class="answer">RC = 4.7 s, I₀ = 9.0/10 000 = 0.90 mA, so I = 0.90e<sup>−1</sup> = 0.33 mA.</div>
+      </details>
       <details class="recall">
         <summary><span class="label">Self-test</span>R = 10 kΩ, C = 470 µF. Find the time constant.</summary>
         <div class="answer">τ = RC = 10×10³ × 470×10⁻⁶ = 4.7 s</div>
