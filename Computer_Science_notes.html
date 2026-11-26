@@ -215,6 +215,12 @@ footer{margin-top:50px; padding-top:14px; border-top:1px solid var(--rule); font
     <a href="#topic13-1">13.1 · User-Defined Data Types</a>
     <a href="#topic13-2">13.2 · File Organisation &amp; Access</a>
     <a href="#topic13-3">13.3 · Floating-Point Numbers</a>
+    <a href="#topic15-1">15.1 · Processors &amp; Virtual Machines</a>
+    <a href="#topic15-2">15.2 · Boolean Algebra &amp; Logic Circuits</a>
+    <a href="#topic16-1">16.1 · Operating Systems</a>
+    <a href="#topic16-2">16.2 · Translation Software</a>
+    <a href="#topic19-1">19.1 · Algorithms</a>
+    <a href="#topic19-2">19.2 · Recursion</a>
   </nav>
 </header>
 
@@ -607,6 +613,724 @@ Journal.Season &larr; Spring</pre>
     <details class="quiz-item"><summary>3. Is 0.0110100 (positive) normalised?</summary><div class="qanswer">No — the digit right after the point must be 1 for a positive number.</div></details>
     <details class="quiz-item"><summary>4. You need to represent much bigger numbers with the same total bit budget. Which field should grow?</summary><div class="qanswer">The exponent (at the cost of precision, since the mantissa would need to shrink).</div></details>
     <details class="quiz-item"><summary>5. A number is too large to fit even with the maximum exponent. What is this called?</summary><div class="qanswer">Overflow.</div></details>
+  </div>
+</section>
+
+<!-- ===================== TOPIC 15 ===================== -->
+<section class="topictitle" id="topic15">
+  <h1 class="topicnum">Topic 15 · Hardware and Virtual Machines</h1>
+  <div class="topicsub">Syllabus 15.1 Processors, parallel processing and virtual machines · 15.2 Boolean algebra and logic circuits</div>
+</section>
+
+<section class="module" id="topic15-1">
+  <h2>15.1 Processors, Parallel Processing &amp; Virtual Machines</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">RISC versus CISC</h3>
+      <span class="priority">high-yield</span>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>CISC — Complex Instruction Set Computer</th><th>RISC — Reduced Instruction Set Computer</th></tr>
+        <tr>
+          <td>Emphasis on <strong>hardware</strong>. Aim: do a task in as few lines of assembly code as possible.</td>
+          <td>Emphasis on <strong>software</strong>. Aim: break the task into simpler instructions that each run very fast.</td>
+        </tr>
+        <tr>
+          <td>Large instruction set; many <strong>instruction formats</strong> and <strong>variable-length</strong> instructions; many addressing modes.</td>
+          <td>Small instruction set; <strong>fixed-length</strong> instructions; few formats.</td>
+        </tr>
+        <tr>
+          <td>Complex instructions are converted into <strong>sub-instructions</strong> and may take <strong>many clock cycles</strong>.</td>
+          <td>Each instruction takes <strong>one clock cycle</strong> — which makes <strong>pipelining</strong> easy.</td>
+        </tr>
+        <tr>
+          <td>Few general-purpose registers; uses cache more; <strong>microprogrammed</strong> control unit.</td>
+          <td><strong>Many registers</strong>; <strong>hard-wired</strong> control unit.</td>
+        </tr>
+      </table></div>
+      <div class="example box">
+        <span class="label">Mark scheme (from your notes)</span>
+        Questions typically ask for "any two" features of each. Safe picks — RISC: one clock cycle per instruction, fixed-length instructions, uses pipelining, many registers. CISC: variable-length instructions, many instruction formats, many addressing modes, instructions may need many clock cycles.
+      </div>
+      <div class="warn box">
+        <span class="label">Clarified</span>
+        Your RISC/CISC flowchart says CISC has a "small size of instructions" and RISC a "bigger size". That's about the <strong>program</strong>, not each instruction: CISC programs are <em>shorter</em> (fewer, more powerful instructions), RISC programs are <em>longer</em> (more, simpler instructions) — but each RISC instruction is quicker to decode and execute. Also, on page 15, "every ? takes one clock cycle" should read "every <strong>instruction</strong> takes one clock cycle".
+      </div>
+
+      <h3 class="subtopic">Pipelining</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        <strong>Pipelining</strong> lets several instructions be processed at the same time, each at a different stage of the fetch–execute cycle.
+      </div>
+      <p>RISC uses five stages: <strong>IF</strong> instruction fetch · <strong>ID</strong> instruction decode · <strong>OF</strong> operand fetch · <strong>IE</strong> instruction execute · <strong>WB</strong> write back result.</p>
+      <div class="fig"><svg viewBox="0 0 520 212" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five-stage pipeline: each instruction moves through IF, ID, OF, IE, WB, one cycle behind the previous one"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><text x="132.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">1</text><text x="176.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">2</text><text x="220.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">3</text><text x="264.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">4</text><text x="308.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">5</text><text x="352.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">6</text><text x="396.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">7</text><text x="440.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">8</text><text x="484.0" y="24" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">9</text><text x="100" y="24" text-anchor="end" class="fig-label" style="font-size:10px; font-weight:700">Clock cycle →</text><text x="100" y="51" text-anchor="end" class="fig-label" style="font-size:10.5px; font-weight:700">Instruction 1</text><rect x="111" y="34" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="132.0" y="50.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IF</text><rect x="155" y="34" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="176.0" y="50.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">ID</text><rect x="199" y="34" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="220.0" y="50.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">OF</text><rect x="243" y="34" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="264.0" y="50.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IE</text><rect x="287" y="34" width="42" height="26" rx="3" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="308.0" y="50.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">WB</text><text x="100" y="83" text-anchor="end" class="fig-label" style="font-size:10.5px; font-weight:700">Instruction 2</text><rect x="155" y="66" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="176.0" y="82.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IF</text><rect x="199" y="66" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="220.0" y="82.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">ID</text><rect x="243" y="66" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="264.0" y="82.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">OF</text><rect x="287" y="66" width="42" height="26" rx="3" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="308.0" y="82.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IE</text><rect x="331" y="66" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="352.0" y="82.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">WB</text><text x="100" y="115" text-anchor="end" class="fig-label" style="font-size:10.5px; font-weight:700">Instruction 3</text><rect x="199" y="98" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="220.0" y="114.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IF</text><rect x="243" y="98" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="264.0" y="114.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">ID</text><rect x="287" y="98" width="42" height="26" rx="3" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="308.0" y="114.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">OF</text><rect x="331" y="98" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="352.0" y="114.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IE</text><rect x="375" y="98" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="396.0" y="114.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">WB</text><text x="100" y="147" text-anchor="end" class="fig-label" style="font-size:10.5px; font-weight:700">Instruction 4</text><rect x="243" y="130" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="264.0" y="146.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IF</text><rect x="287" y="130" width="42" height="26" rx="3" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="308.0" y="146.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">ID</text><rect x="331" y="130" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="352.0" y="146.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">OF</text><rect x="375" y="130" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="396.0" y="146.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IE</text><rect x="419" y="130" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="440.0" y="146.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">WB</text><text x="100" y="179" text-anchor="end" class="fig-label" style="font-size:10.5px; font-weight:700">Instruction 5</text><rect x="287" y="162" width="42" height="26" rx="3" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="308.0" y="178.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IF</text><rect x="331" y="162" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="352.0" y="178.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">ID</text><rect x="375" y="162" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="396.0" y="178.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">OF</text><rect x="419" y="162" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="440.0" y="178.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">IE</text><rect x="463" y="162" width="42" height="26" rx="3" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="484.0" y="178.6" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:700">WB</text><text x="308.0" y="208" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--accent)">Cycle 5: all five stages busy at once — five instructions in progress</text></svg><div class="cap">Without pipelining, 5 instructions × 5 stages = 25 cycles. With pipelining they finish in 9 cycles: a new instruction completes every cycle once the pipe is full.</div></div>
+      <div class="gap box">
+        Syllabus wording: understand the importance of <strong>registers</strong> in RISC. Because RISC has many registers, operands are usually already in a register, so the OF stage doesn't have to wait on slow main memory. That's what keeps the pipeline flowing at one instruction per cycle.
+      </div>
+
+      <h3 class="subtopic">Interrupts in a pipeline</h3>
+      <p>When an interrupt arrives, up to five instructions are part-way through the pipe. Two options:</p>
+      <ol class="steps">
+        <li><strong>Flush</strong>: discard everything in the pipeline except the instruction in the WB stage, handle the interrupt, then restart from the next instruction in sequence.</li>
+        <li><strong>Save</strong>: store the contents of all five stages in registers, handle the interrupt, then restore the pipeline to exactly where it was.</li>
+      </ol>
+      <div class="gap box">
+        The syllabus asks for interrupt handling on <strong>CISC</strong> too: a CISC processor finishes the current (possibly multi-cycle) instruction first, then saves the registers and jumps to the interrupt service routine. It's simpler but responds more slowly, because one instruction can take many cycles.
+      </div>
+
+      <h3 class="subtopic">The four basic computer architectures</h3>
+      <div class="fig"><svg viewBox="0 0 510 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grid of Flynn's four architectures: SISD, SIMD, MISD, MIMD with examples"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><text x="200" y="18" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--ink-soft)">single data</text><text x="400" y="18" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--ink-soft)">multiple data</text><text x="60" y="72" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--ink-soft)">single</text><text x="60" y="86" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--ink-soft)">instruction</text><text x="60" y="162" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--ink-soft)">multiple</text><text x="60" y="176" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--ink-soft)">instruction</text><rect x="110" y="28" width="190" height="80" rx="6" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="205" y="60" text-anchor="middle" class="fig-label" style="font-size:16px; font-weight:700">SISD</text><text x="205" y="84" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">Early PCs</text><rect x="310" y="28" width="190" height="80" rx="6" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="405" y="60" text-anchor="middle" class="fig-label" style="font-size:16px; font-weight:700">SIMD</text><text x="405" y="84" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">Graphics cards (array processors)</text><rect x="110" y="118" width="190" height="80" rx="6" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="205" y="150" text-anchor="middle" class="fig-label" style="font-size:16px; font-weight:700">MISD</text><text x="205" y="174" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">Space Shuttle flight control</text><rect x="310" y="118" width="190" height="80" rx="6" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="405" y="150" text-anchor="middle" class="fig-label" style="font-size:16px; font-weight:700">MIMD</text><text x="405" y="174" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">Multicore CPUs, clusters</text></svg><div class="cap">Read the name as Single/Multiple Instruction, Single/Multiple Data. Highlighted: SIMD and MIMD are the ones most used in parallel systems.</div></div>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Architecture</th><th>How it works</th></tr>
+        <tr><td><strong>SISD</strong></td><td>One processor, one instruction on one data item at a time, in sequence. No parallel processing.</td></tr>
+        <tr><td><strong>SIMD</strong></td><td>Many processors all run the <strong>same instruction</strong> on <strong>different data</strong>. Also called array processors — e.g. brightening every pixel of an image at once.</td></tr>
+        <tr><td><strong>MISD</strong></td><td>Many processors, each running a <strong>different instruction</strong> on the <strong>same data</strong>. Rarely used.</td></tr>
+        <tr><td><strong>MIMD</strong></td><td>Many processors, each with its own instructions and its own data (memory may be partitioned). Used in multicore systems.</td></tr>
+      </table></div>
+
+      <h3 class="subtopic">Parallel processing &amp; massively parallel computers</h3>
+      <ul class="steps">
+        <li>Processors must <strong>communicate and share data</strong>, so dual core ≠ 2× performance.</li>
+        <li>Software (and the programming language) must be written to <strong>support</strong> parallel processing.</li>
+        <li>Faster for processing large volumes of <strong>independent</strong> data, but needs more expensive hardware.</li>
+        <li>Overcomes the <strong>Von Neumann bottleneck</strong> (one processor fetching one instruction at a time over one bus).</li>
+      </ul>
+      <div class="def box">
+        <span class="label">Massively parallel computers</span>
+        Many computers (often SIMD processors) linked together as a <strong>cluster</strong>, acting as one huge pseudo-parallel system — effectively a supercomputer with several thousand processors working on one problem at the same time.
+      </div>
+
+      <h3 class="subtopic">Virtual machines</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A <strong>virtual machine</strong> is an emulation of an existing computer system: a guest OS runs inside software on another computer's OS.
+      </div>
+      <div class="fig" style="max-width:560px; margin:12px auto;"><svg viewBox="0 0 500 194" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Layers: hardware, host OS, hypervisor, then two guest OSs inside virtual machines"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><rect x="20" y="150" width="460" height="34" rx="6" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1.6"/><text x="250.0" y="171.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Physical hardware (CPU, memory, disk)</text><rect x="20" y="110" width="460" height="34" rx="6" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="250.0" y="131.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Host OS — controls the real hardware</text><rect x="20" y="70" width="460" height="34" rx="6" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="250.0" y="90.8" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700">Hypervisor — creates VMs, maps virtual hardware onto real hardware</text><rect x="20" y="14" width="220" height="50" rx="6" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="130.0" y="43.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Guest OS 1 + apps</text><rect x="260" y="14" width="220" height="50" rx="6" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="370.0" y="43.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Guest OS 2 + apps</text></svg><div class="cap">Each guest OS thinks it owns a whole computer. The hypervisor sits between it and the real hardware, so a crash inside a VM can't reach the host.</div></div>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Emulation</td><td>Using an app/device to imitate the behaviour of another program or device.</td></tr>
+        <tr><td>Host OS</td><td>The normal OS of the physical computer; controls the real hardware and runs/monitors the VM software.</td></tr>
+        <tr><td>Guest OS</td><td>An OS running inside a virtual machine, under the control of the host.</td></tr>
+        <tr><td>Hypervisor</td><td>The VM software that creates and runs VMs; handles the virtual hardware (CPU, memory, HDD) and maps it onto the host's physical hardware.</td></tr>
+      </table></div>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Benefits</th><th>Limitations</th></tr>
+        <tr>
+          <td>A guest OS can be used without affecting anything outside its VM.<br>Run apps not compatible with the host OS.<br>Emulate old software on a new system.<br>Safe for testing a new OS/app — a crash won't take down the host.</td>
+          <td>Performance is worse than running the OS directly on real hardware.<br>Building an in-house VM can be expensive.<br>Complex to manage and maintain.</td>
+        </tr>
+      </table></div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why does RISC suit pipelining better than CISC?</summary>
+        <div class="answer">Every RISC instruction is the same length and takes one clock cycle, so each stage finishes in step. CISC instructions vary in length and cycle count, which stalls the pipe.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Name the five pipeline stages in order.</summary>
+        <div class="answer">IF, ID, OF, IE, WB.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A graphics card applies the same filter to every pixel. Which architecture?</summary>
+        <div class="answer">SIMD.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What does the hypervisor do?</summary>
+        <div class="answer">Creates and runs the VMs, and maps their virtual hardware onto the host's real hardware.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 15.1 Processors, Parallel Processing &amp; Virtual Machines</h4>
+    <details class="quiz-item"><summary>1. Give two features of a RISC processor and two of a CISC processor.</summary><div class="qanswer">RISC: one clock cycle per instruction; fixed-length instructions (also: many registers, pipelining, hard-wired CU). CISC: variable-length instructions; many addressing modes (also: many instruction formats, multi-cycle instructions, microprogrammed CU).</div></details>
+    <details class="quiz-item"><summary>2. With a 5-stage pipeline, how many clock cycles do 5 instructions take? Without pipelining?</summary><div class="qanswer">With: 5 + (5 − 1) = 9 cycles. Without: 5 × 5 = 25 cycles.</div></details>
+    <details class="quiz-item"><summary>3. Describe one way a pipelined processor can handle an interrupt.</summary><div class="qanswer">Either flush the pipeline (keep only the instruction in WB), service the interrupt, then restart at the next instruction; or save the contents of all five stages to registers and restore them afterwards.</div></details>
+    <details class="quiz-item"><summary>4. Why doesn't a dual-core processor run twice as fast as a single core?</summary><div class="qanswer">The cores must communicate and share data, and software must be written to split the work. Parts of a task that can't run in parallel still run one at a time.</div></details>
+    <details class="quiz-item"><summary>5. Give one benefit and one limitation of using a virtual machine to test a new OS.</summary><div class="qanswer">Benefit: if the new OS crashes, the host isn't affected. Limitation: it runs slower than on real hardware, so performance testing isn't realistic.</div></details>
+  </div>
+</section>
+
+<section class="module" id="topic15-2">
+  <h2>15.2 Boolean Algebra &amp; Logic Circuits</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">Notation</h3>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Written</th><th>Means</th></tr>
+        <tr><td><code>Ā</code></td><td>NOT A</td></tr>
+        <tr><td><code>A.B</code></td><td>A AND B</td></tr>
+        <tr><td><code>A + B</code></td><td>A OR B</td></tr>
+        <tr><td><code>A ⊕ B</code></td><td>A XOR B</td></tr>
+      </table></div>
+
+      <h3 class="subtopic">Boolean laws</h3>
+      <span class="priority">high-yield</span>
+      <div class="table-wrap"><table class="range">
+        <tr><th>Law</th><th>AND form</th><th>OR form</th></tr>
+        <tr><td>Commutative</td><td>A.B = B.A</td><td>A + B = B + A</td></tr>
+        <tr><td>Associative</td><td>A.(B.C) = (A.B).C</td><td>A + (B + C) = (A + B) + C</td></tr>
+        <tr><td>Distributive</td><td>A.(B + C) = A.B + A.C</td><td>A + B.C = (A + B).(A + C)</td></tr>
+        <tr><td>Idempotent</td><td>A.A = A</td><td>A + A = A</td></tr>
+        <tr><td>Identity</td><td>1.A = A</td><td>0 + A = A</td></tr>
+        <tr><td>Null</td><td>0.A = 0</td><td>1 + A = 1</td></tr>
+        <tr><td>Inverse</td><td>A.Ā = 0</td><td>A + Ā = 1</td></tr>
+        <tr><td>Absorption</td><td>A.(A + B) = A</td><td>A + A.B = A</td></tr>
+        <tr><td>De Morgan's</td><td>(A.B)‾ = Ā + B̄</td><td>(A + B)‾ = Ā.B̄</td></tr>
+      </table></div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your handwritten distributive law says <code>A.(B + C) = A + B.C</code>. That's wrong — AND distributes like multiplying out a bracket: <code>A.(B + C) = A.B + A.C</code>. Check: A = 0, B = 1, C = 1 gives 0 on the left but 1 on your right-hand side.
+      </div>
+      <div class="formula box">
+        <span class="label">De Morgan's laws — "break the bar, change the sign"</span>
+        <div class="expr">(A.B)‾ = Ā + B̄ &nbsp;&nbsp;&nbsp; (A + B)‾ = Ā.B̄</div>
+      </div>
+
+      <h3 class="subtopic">Simplifying expressions</h3>
+      <div class="example box">
+        <span class="label">Your worked answers (checked)</span>
+        <code>A + B.A + B.A.C = A</code> (absorption, twice) ✓<br>
+        <code>E.(E + 1) = E.1 = E</code> ✓<br>
+        <code>D̄ + D.0 = D̄ + 0 = D̄</code> ✓<br>
+        <code>A + A.Ā = A + 0 = A</code> ✓<br>
+        <code>C.A.B.(A.B + D) = C.A.B</code> (absorption) ✓<br>
+        <code>A.(A + B).0 = 0</code> (null law) ✓
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected — Q23 and Q24</span>
+        Q23: <code>(A.Ḡ + A.1).A</code>. You stopped at A.Ḡ. Keep going: A.1 = A, so the bracket is A.Ḡ + A = <strong>A</strong> (absorption), and A.A = <strong>A</strong>.<br>
+        Q24: <code>B.A + A</code> simplifies to <strong>A</strong> (absorption: A + A.B = A), not B.A.
+      </div>
+
+      <h3 class="subtopic">Flip-flops</h3>
+      <div class="def box">
+        <span class="label">Sequential circuit</span>
+        A circuit whose output depends on the inputs <strong>and</strong> on the previous output. Flip-flops (SR, JK) are the standard example.
+      </div>
+      <h3 class="subtopic" style="font-size:12pt;">SR flip-flop</h3>
+      <p>Two <strong>cross-coupled</strong> NOR gates (or NAND gates). Inputs S (set) and R (reset); outputs Q and Q̄.</p>
+      <div class="fig" style="max-width:520px; margin:12px auto;"><svg viewBox="0 0 420 212" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SR flip-flop built from two cross-coupled NOR gates, R on the top gate giving Q, S on the bottom gate giving Q-bar"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><path d="M150,30 Q165,50 150,70 Q185,70 200,50 Q185,30 150,30 Z" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><circle cx="205" cy="50" r="5" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><path d="M150,130 Q165,150 150,170 Q185,170 200,150 Q185,130 150,130 Z" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><circle cx="205" cy="150" r="5" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><line x1="40" y1="40" x2="155" y2="40" style="stroke:var(--ink); stroke-width:1.6; fill:none"/><text x="30" y="44" text-anchor="end" class="fig-label" style="font-size:13px; font-weight:700">R</text><line x1="40" y1="160" x2="155" y2="160" style="stroke:var(--ink); stroke-width:1.6; fill:none"/><text x="30" y="164" text-anchor="end" class="fig-label" style="font-size:13px; font-weight:700">S</text><line x1="210" y1="50" x2="360" y2="50" style="stroke:var(--ink); stroke-width:1.6; fill:none"/><text x="372" y="55" text-anchor="start" class="fig-label" style="font-size:13px; font-weight:700">Q</text><line x1="210" y1="150" x2="360" y2="150" style="stroke:var(--ink); stroke-width:1.6; fill:none"/><text x="372" y="155" text-anchor="start" class="fig-label" style="font-size:13px; font-weight:700">Q̄</text><polyline points="260,50 260,115 120,115 120,140 155,140" style="stroke:var(--accent); stroke-width:1.6; fill:none"/><polyline points="290,150 290,85 110,85 110,60 155,60" style="stroke:var(--accent); stroke-width:1.6; fill:none"/><circle cx="260" cy="50" r="3.5" style="fill:var(--accent)"/><circle cx="290" cy="150" r="3.5" style="fill:var(--accent)"/><text x="200" y="200" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--accent)">Outputs are fed back as inputs (cross-coupled) — this is what lets it remember</text></svg><div class="cap">NOR version (the one you drew): Q = NOT(R OR Q̄), Q̄ = NOT(S OR Q).</div></div>
+      <div class="table-wrap"><table class="data">
+        <tr><th>S</th><th>R</th><th>Q</th><th>Q̄</th><th>Meaning</th></tr>
+        <tr><td>0</td><td>0</td><td>Q</td><td>Q̄</td><td>no change (remembers)</td></tr>
+        <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>set</td></tr>
+        <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>reset</td></tr>
+        <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>invalid — Q and Q̄ can't both be 0</td></tr>
+      </table></div>
+      <div class="extra box">
+        Worth knowing: the invalid input depends on the gate type. With NOR gates (your diagram), S = R = 1 is invalid. With NAND gates the inputs are active-low, so S = R = 0 is the invalid one. Another problem: if S and R don't arrive at the same time, the output can become unstable.
+      </div>
+
+      <h3 class="subtopic" style="font-size:12pt;">JK flip-flop</h3>
+      <p>Adds a <strong>clock</strong> and extra gates to the SR design. The clock synchronises the inputs, and J = K = 1 becomes useful (toggle) instead of illegal.</p>
+      <div class="table-wrap"><table class="data">
+        <tr><th>J</th><th>K</th><th>Action on clock pulse</th></tr>
+        <tr><td>0</td><td>0</td><td>no change</td></tr>
+        <tr><td>1</td><td>0</td><td>Q = 1 ("Jump to 1")</td></tr>
+        <tr><td>0</td><td>1</td><td>Q = 0 ("Kill to 0")</td></tr>
+        <tr><td>1</td><td>1</td><td>toggle (Q changes state)</td></tr>
+      </table></div>
+      <div class="def box">
+        <span class="label">Flip-flops as data storage</span>
+        Each flip-flop stores <strong>one bit</strong>: one stable state means 1, the other means 0, and it keeps that state even after the input changes. Uses: counters, shift registers, traffic-light controllers (which light is next), digital clocks, computer memory.
+      </div>
+
+      <h3 class="subtopic">Karnaugh maps (K-maps)</h3>
+      <div class="fig" style="max-width:500px; margin:12px auto;"><svg viewBox="0 0 440 192" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Karnaugh map for C + BC + AC + AB + ABC: a group of four ones gives C, a pair gives AB"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><text x="230" y="22" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">BC</text><text x="80" y="42" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">A</text><text x="140.0" y="42" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400; fill:var(--ink-soft)">00</text><text x="200.0" y="42" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400; fill:var(--ink-soft)">01</text><text x="260.0" y="42" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400; fill:var(--ink-soft)">11</text><text x="320.0" y="42" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400; fill:var(--ink-soft)">10</text><text x="96" y="77" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400; fill:var(--ink-soft)">0</text><rect x="110" y="50" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="140.0" y="78" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:400">0</text><rect x="170" y="50" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="200.0" y="78" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">1</text><rect x="230" y="50" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="260.0" y="78" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">1</text><rect x="290" y="50" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="320.0" y="78" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:400">0</text><text x="96" y="121" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:400; fill:var(--ink-soft)">1</text><rect x="110" y="94" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="140.0" y="122" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:400">0</text><rect x="170" y="94" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="200.0" y="122" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">1</text><rect x="230" y="94" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="260.0" y="122" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">1</text><rect x="290" y="94" width="60" height="44" style="fill:var(--panel); stroke:var(--ink-soft); stroke-width:1"/><text x="320.0" y="122" text-anchor="middle" class="fig-label" style="font-size:15px; font-weight:700">1</text><rect x="175" y="55" width="110" height="78" rx="12" style="fill:none; stroke:var(--module); stroke-width:2.4"/><rect x="239" y="103" width="102" height="26" rx="10" style="fill:none; stroke:var(--accent); stroke-width:2.4"/><text x="230" y="160" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Group of 4 (blue) → C   ·   pair (red) → A.B</text><text x="230" y="180" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:700; fill:var(--accent)">C + BC + AC + AB + ABC  =  C + A.B</text></svg><div class="cap">Columns go 00, 01, 11, 10 (Gray code — only one bit changes between neighbours). Groups must be 1, 2, 4 or 8 cells, as big as possible.</div></div>
+      <div class="def box">
+        <span class="label">Benefits (mark scheme, max 1)</span>
+        Easier than Boolean algebra (no laws needed) · guaranteed to give the simplest (optimal) solution · turns a complex logic problem into a simpler one.
+      </div>
+
+      <div class="gap box">
+        Not in your notes but on the syllabus — <strong>half and full adders</strong>:
+        <div class="table-wrap"><table class="data" style="margin-top:8px;">
+          <tr><th>A</th><th>B</th><th>Sum</th><th>Carry</th></tr>
+          <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+          <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+        </table></div>
+        Half adder: <code>Sum = A ⊕ B</code>, <code>Carry = A.B</code> (one XOR + one AND gate). A <strong>full adder</strong> also takes a carry-in: <code>Sum = A ⊕ B ⊕ C<sub>in</sub></code>, <code>C<sub>out</sub> = A.B + C<sub>in</sub>.(A ⊕ B)</code> — built from two half adders and an OR gate.
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Apply De Morgan to (A + B)‾.</summary>
+        <div class="answer">Ā.B̄</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Simplify A + A.B.</summary>
+        <div class="answer">A (absorption).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What does J = K = 1 do in a JK flip-flop?</summary>
+        <div class="answer">Toggles Q on each clock pulse.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Why do K-map columns go 00, 01, 11, 10?</summary>
+        <div class="answer">Gray code: neighbouring cells differ by one bit, so grouping them cancels that variable.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 15.2 Boolean Algebra &amp; Logic Circuits</h4>
+    <details class="quiz-item"><summary>1. Simplify A.(A + B) + A.B̄.</summary><div class="qanswer">A.(A + B) = A (absorption), so A + A.B̄ = A (absorption again).</div></details>
+    <details class="quiz-item"><summary>2. Use De Morgan's law to rewrite (Ā + B)‾.</summary><div class="qanswer">A.B̄ — break the bar, change + to ., and NOT each term (NOT Ā = A).</div></details>
+    <details class="quiz-item"><summary>3. Which input combination is invalid for a NOR SR flip-flop, and how does the JK flip-flop fix it?</summary><div class="qanswer">S = R = 1. The JK adds a clock and feedback gates so J = K = 1 toggles the output instead of breaking it.</div></details>
+    <details class="quiz-item"><summary>4. Give two uses of flip-flops.</summary><div class="qanswer">Any two: storing one bit in memory/registers, counters, shift registers, digital clocks, traffic-light controllers.</div></details>
+    <details class="quiz-item"><summary>5. Write the Boolean expressions for a half adder.</summary><div class="qanswer">Sum = A ⊕ B; Carry = A.B.</div></details>
+  </div>
+</section>
+
+<!-- ===================== TOPIC 16 ===================== -->
+<section class="topictitle" id="topic16">
+  <h1 class="topicnum">Topic 16 · System Software</h1>
+  <div class="topicsub">Syllabus 16.1 Purposes of an operating system · 16.2 Translation software</div>
+</section>
+
+<section class="module" id="topic16-1">
+  <h2>16.1 Purposes of an Operating System</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">Hiding the complexity of the hardware</h3>
+      <ul class="steps">
+        <li>A <strong>GUI</strong> instead of a command line interface.</li>
+        <li><strong>Device drivers</strong> simplify the interface to hardware.</li>
+        <li>Simplifies saving and retrieving data from memory and storage devices.</li>
+        <li>Runs background utilities (e.g. virus scanning) that the user can leave to look after themselves.</li>
+      </ul>
+      <div class="gap box">
+        Also on the syllabus: <strong>how an OS maximises the use of resources</strong>. It keeps the CPU busy by switching to another process whenever one waits for I/O, allocates memory so as many processes as possible fit, and uses DMA so data transfers don't tie up the CPU.
+      </div>
+
+      <h3 class="subtopic">Process management</h3>
+      <div class="def box">
+        <span class="label">Multitasking</span>
+        Lets a computer appear to carry out more than one task/process at a time. A <strong>process</strong> is a program that has started executing.
+      </div>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Pre-emptive</th><th>Non-pre-emptive</th></tr>
+        <tr>
+          <td>Resources are given to a process for a limited time. A running process can be interrupted (e.g. a higher-priority process arrives). More flexible, but low-priority processes may be starved.</td>
+          <td>Once a process has the CPU it keeps it until it finishes its burst or blocks/voluntarily gives up control. More rigid; a long process can starve shorter ones.</td>
+        </tr>
+      </table></div>
+
+      <h3 class="subtopic">Process states</h3>
+      <span class="priority">high-yield</span>
+      <div class="fig" style="max-width:520px; margin:12px auto;"><svg viewBox="0 0 420 222" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Process state diagram: ready to running, running to ready, running to blocked, blocked to ready"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><circle cx="90" cy="60" r="36" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="90" y="64.32" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">Ready</text><circle cx="330" cy="60" r="36" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="330" y="64.32" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">Running</text><circle cx="210" cy="175" r="36" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="210" y="179.32" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700">Blocked</text><path d="M124,46 Q210,10 294,46" style="stroke:var(--module); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><text x="210" y="20" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400">scheduler gives it the CPU</text><path d="M294,74 Q210,104 124,74" style="stroke:var(--module); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><text x="210" y="104" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400">time slice ends / interrupt</text><line x1="312" y1="92" x2="240" y2="150" style="stroke:var(--module); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><text x="330" y="140" text-anchor="start" class="fig-label" style="font-size:10px; font-weight:400">waits for I/O</text><line x1="180" y1="150" x2="112" y2="92" style="stroke:var(--module); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><text x="92" y="140" text-anchor="end" class="fig-label" style="font-size:10px; font-weight:400">I/O finished</text></svg><div class="cap">There is no arrow from Blocked straight to Running: a process whose I/O has finished must queue in Ready first.</div></div>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Transition</th><th>When it happens</th></tr>
+        <tr><td>Running → Ready</td><td>Time slice ends; an interrupt occurs and the program moves back to the ready queue.</td></tr>
+        <tr><td>Ready → Running</td><td>The process's turn: the OS scheduler allocates it CPU time.</td></tr>
+        <tr><td>Running → Blocked</td><td>The process needs an I/O operation; it's placed in the blocked queue.</td></tr>
+        <tr><td>Blocked → Ready</td><td>The I/O it was waiting for has finished.</td></tr>
+      </table></div>
+
+      <h3 class="subtopic">Process control block (PCB)</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        A data structure holding all the data needed for a process to run. Each process has its own PCB, and the CPU registers (PC, MAR, MDR, ACC) are saved to it when the process stops running.
+      </div>
+      <p>It stores: current process state · process ID · privileges (resources it may access) · register values · priority and scheduling information · CPU time still needed.</p>
+      <p>A process's <strong>priority</strong> depends on: its category (batch, online, real-time) · whether it's <strong>CPU-bound</strong> (long CPU bursts, short I/O) or <strong>I/O-bound</strong> (short CPU bursts, long I/O) · resource requirements · turnaround, waiting and response time · whether it can be interrupted. After priority is set it can still be affected by deadlines, CPU time needed, wait time and memory requirements.</p>
+
+      <h3 class="subtopic">Scheduling routines</h3>
+      <span class="priority">high-yield</span>
+      <div class="formula box">
+        <span class="label">Calculations</span>
+        <div class="expr">turnaround time = completion time − arrival time</div>
+        <div class="expr">waiting time = turnaround time − burst time</div>
+        <div class="expr">average waiting time = total waiting time ÷ number of processes</div>
+      </div>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Routine</th><th>How it works</th><th>+</th><th>−</th></tr>
+        <tr><td><strong>Round robin</strong> (pre-emptive)</td><td>Each process gets an equal time slice (quantum, typically 10–100 ms). When it ends, state is saved and the process goes Running → Ready.</td><td>All processes treated equally; all guaranteed to finish.</td><td>High average waiting time.</td></tr>
+        <tr><td><strong>FCFS</strong> (non-pre-emptive)</td><td>First process into the queue is the first to be run (FIFO).</td><td>All processes processed eventually.</td><td>A long process holds everyone up (convoy effect); short jobs wait a long time.</td></tr>
+        <tr><td><strong>SJF</strong> (non-pre-emptive)</td><td>The process needing the least CPU time runs first. Burst times must be known in advance.</td><td>Lower average waiting time.</td><td>Must estimate burst times accurately; long processes can be starved.</td></tr>
+        <tr><td><strong>SRTF</strong> (pre-emptive)</td><td>Like SJF, but if a process with a shorter remaining time arrives, the running process is removed and the shorter one runs.</td><td>Lowest average waiting time.</td><td>Must estimate burst times; time spent calculating remaining times and switching tasks.</td></tr>
+      </table></div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        FCFS: your notes say smaller tasks "get starved". In FCFS every process <em>does</em> run eventually (your own advantage), so there's no starvation — short tasks just have a long <strong>wait</strong> behind big ones.<br>
+        SJF: the main drawback isn't priority inversion, it's <strong>starvation of long processes</strong> if short ones keep arriving.<br>
+        SRTF: remaining times are compared whenever a <strong>new process arrives in the ready queue</strong> — that's the moment pre-emption can happen.
+      </div>
+      <div class="example box">
+        <span class="label">Worked example — round robin (from your notes)</span>
+        P1 = 23 ms, P2 = 4 ms, P3 = 9 ms, P4 = 3 ms, all arriving at 0. Your answers match a 5 ms time slice:
+        <div class="fig"><svg viewBox="0 0 510 92" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Round robin Gantt chart with a 5 ms time slice for P1 23 ms, P2 4 ms, P3 9 ms, P4 3 ms"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><rect x="20" y="30" width="60" height="34" rx="2" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="50.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P1</text><rect x="80" y="30" width="48" height="34" rx="2" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="104.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P2</text><rect x="128" y="30" width="60" height="34" rx="2" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="158.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P3</text><rect x="188" y="30" width="36" height="34" rx="2" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="206.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P4</text><rect x="224" y="30" width="60" height="34" rx="2" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="254.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P1</text><rect x="284" y="30" width="48" height="34" rx="2" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="308.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P3</text><rect x="332" y="30" width="156" height="34" rx="2" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="410.0" y="51.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">P1</text><text x="20" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">0</text><text x="80" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">5</text><text x="128" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">9</text><text x="188" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">14</text><text x="224" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">17</text><text x="284" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">22</text><text x="332" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">26</text><text x="488" y="80" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">39</text><text x="20" y="20" text-anchor="start" class="fig-label" style="font-size:10px; font-weight:700">time slice = 5 ms (highlighted = process finishes)</text></svg><div class="cap">Each process gets at most 5 ms, then goes to the back of the ready queue. P1 finishes last, at 39 ms.</div></div>
+        Waiting times: P1 = 39 − 23 = 16 · P2 = 9 − 4 = 5 · P3 = 26 − 9 = 17 · P4 = 17 − 3 = 14 ms<br>
+        Average = (16 + 5 + 17 + 14) ÷ 4 = <strong>13 ms</strong>
+        <p style="font-size:9.5pt; color:var(--ink-soft); margin-bottom:0;">Your notes wrote P1 as "39 − 32"; it should be 39 − 23 (completion − burst). The 16 ms answer was right.</p>
+      </div>
+
+      <h3 class="subtopic">Memory management</h3>
+      <p>Decides which processes should be in main memory and where; allocates and deallocates memory as needed.</p>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Paging</th><th>Segmentation</th></tr>
+        <tr>
+          <td>Memory split into <strong>fixed-size</strong> blocks (not necessarily contiguous): logical blocks = <strong>pages</strong>, physical blocks = <strong>frames</strong>.</td>
+          <td>Logical address space split into <strong>variable-size</strong> blocks called <strong>segments</strong>, each with a name and a size.</td>
+        </tr>
+        <tr>
+          <td>A <strong>page table</strong> (page number, flag status, frame address, time of entry) maps logical → physical addresses.</td>
+          <td>A <strong>segment map table</strong> (segment number + size) maps logical → physical: address = segment number + offset.</td>
+        </tr>
+        <tr>
+          <td>Hardware decides the page size; invisible to the programmer. User gives one value (the address).</td>
+          <td>Visible to the programmer; user gives two values (segment number and offset).</td>
+        </tr>
+        <tr>
+          <td>Fixed size → <strong>internal fragmentation</strong> (last page not fully used).</td>
+          <td>Variable size → less internal but more <strong>external fragmentation</strong>.</td>
+        </tr>
+      </table></div>
+      <div class="gap box">
+        Not in your notes, but on the syllabus:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Virtual memory</span>
+          Secondary storage used as an extension of RAM. Only the pages a process needs right now are kept in RAM; the rest wait on disk and are swapped in when needed.
+        </div>
+        <div class="def box">
+          <span class="label">Page replacement</span>
+          When RAM is full and a new page is needed, one page is swapped out. Common rules: <strong>FIFO</strong> (oldest page out — uses "time of entry" in the page table), <strong>LRU</strong> (least recently used out).
+        </div>
+        <div class="def box">
+          <span class="label">Disk thrashing</span>
+          Pages are swapped in and out so often that the system spends more time moving pages than running processes, and performance collapses.
+        </div>
+        <div class="def box">
+          <span class="label">Kernel as interrupt handler</span>
+          The kernel handles interrupts (e.g. timer at the end of a time slice, I/O complete). Each interrupt triggers <strong>low-level scheduling</strong>: save the PCB of the current process, then choose which ready process runs next.
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>A process requests data from the disk. Which state does it move to?</summary>
+        <div class="answer">Running → Blocked.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Can a blocked process go straight to running?</summary>
+        <div class="answer">No — it goes to Ready first.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which scheduling routine gives the lowest average waiting time?</summary>
+        <div class="answer">SRTF.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Paging or segmentation: which uses fixed-size blocks?</summary>
+        <div class="answer">Paging.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 16.1 Purposes of an Operating System</h4>
+    <details class="quiz-item"><summary>1. Give two ways the OS hides the complexity of hardware from the user.</summary><div class="qanswer">Any two: GUI instead of CLI; device drivers; simple save/load of files; background utilities.</div></details>
+    <details class="quiz-item"><summary>2. Name four items stored in a PCB.</summary><div class="qanswer">Any four: process ID, process state, register values, priority/scheduling info, privileges, CPU time still needed.</div></details>
+    <details class="quiz-item"><summary>3. FCFS, burst times P1 = 8, P2 = 2, P3 = 4 ms (all arrive at 0). Find the average waiting time.</summary><div class="qanswer">Waits: P1 = 0, P2 = 8, P3 = 10 → (0 + 8 + 10) ÷ 3 = 6 ms. (SJF order P2, P3, P1 would give (0 + 2 + 6) ÷ 3 ≈ 2.67 ms.)</div></details>
+    <details class="quiz-item"><summary>4. Explain the difference between pre-emptive and non-pre-emptive scheduling.</summary><div class="qanswer">Pre-emptive: the OS can take the CPU away from a running process (time slice ends, higher priority arrives). Non-pre-emptive: the process keeps the CPU until it finishes or blocks.</div></details>
+    <details class="quiz-item"><summary>5. What is disk thrashing?</summary><div class="qanswer">Pages are swapped between RAM and disk so often that the system spends most of its time moving pages instead of running processes.</div></details>
+  </div>
+</section>
+
+<section class="module" id="topic16-2">
+  <h2>16.2 Translation Software</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">Backus-Naur Form (BNF)</h3>
+      <div class="def box">
+        <span class="label">Definition</span>
+        BNF is a <strong>meta-language</strong>: a special language used to define the syntax (grammar) of a programming language <strong>unambiguously</strong>.
+      </div>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Symbol</th><th>Meaning</th></tr>
+        <tr><td><code>&lt; &gt;</code></td><td>encloses an item (a non-terminal)</td></tr>
+        <tr><td><code>::=</code></td><td>"is defined as"</td></tr>
+        <tr><td><code>|</code></td><td>"or" — a choice</td></tr>
+      </table></div>
+      <div class="example box">
+        <span class="label">Example (from your slide)</span>
+        <code>&lt;digit&gt; ::= 1|2|3</code><br>
+        <code>&lt;letter&gt; ::= A|B|C</code><br>
+        <code>&lt;variable&gt; ::= &lt;letter&gt;&lt;digit&gt;</code> — a variable is a letter followed by a digit.<br>
+        Each rule is a <strong>production</strong>. A <strong>recursive</strong> definition lets a rule refer to itself: <code>&lt;variable&gt; ::= &lt;letter&gt;|&lt;variable&gt;&lt;letter&gt;</code> means "any number of letters".
+      </div>
+
+      <h3 class="subtopic">Syntax diagrams</h3>
+      <div class="fig" style="max-width:560px; margin:12px auto;"><svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Syntax diagram symbols: rounded box for terminal, rectangle for non-terminal, loop for repetition"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><rect x="20" y="20" width="90" height="32" rx="16" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="65" y="41" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">digit</text><text x="130" y="41" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:400">terminal — written exactly as shown, can't be broken down</text><rect x="20" y="70" width="90" height="32" rx="0" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><text x="65.0" y="90.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">variable</text><text x="130" y="91" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:400">non-terminal — defined by its own syntax diagram</text><line x1="10" y1="150" x2="50" y2="150" style="stroke:var(--ink); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><rect x="52" y="134" width="90" height="32" rx="0" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><text x="97.0" y="154.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">letter</text><line x1="142" y1="150" x2="230" y2="150" style="stroke:var(--ink); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><path d="M180,150 L180,186 L30,186 L30,150" style="stroke:var(--accent); stroke-width:1.6; fill:none" marker-end="url(#aha)"/><text x="250" y="155" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--accent)">loop back = repeat (one or more letters)</text></svg><div class="cap">Follow the arrows from left to right; every valid path spells out something the language allows.</div></div>
+
+      <h3 class="subtopic">Reverse Polish Notation (RPN)</h3>
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition</span>
+        <strong>RPN</strong> is postfix notation: operands first, then the operator. Infix <code>a + b</code> → prefix <code>+ a b</code> → postfix (RPN) <code>a b +</code>.
+      </div>
+      <div class="fig" style="max-width:480px; margin:12px auto;"><svg viewBox="0 0 420 196" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Expression tree for (a + b) × (c − a): operators at the nodes, operands at the leaves"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><line x1="210" y1="30" x2="140" y2="74" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="210" y1="30" x2="280" y2="74" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="140" y1="88" x2="100" y2="134" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="140" y1="88" x2="180" y2="134" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="280" y1="88" x2="240" y2="134" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="280" y1="88" x2="320" y2="134" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><circle cx="210" cy="28" r="15" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="210" y="31.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">×</text><circle cx="140" cy="86" r="15" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="140" y="89.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">+</text><circle cx="280" cy="86" r="15" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="280" y="89.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">−</text><circle cx="100" cy="140" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="100" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">a</text><circle cx="180" cy="140" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="180" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">b</text><circle cx="240" cy="140" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="240" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">c</text><circle cx="320" cy="140" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="320" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">a</text><text x="210" y="184" text-anchor="middle" class="fig-label" style="font-size:12px; font-weight:700; fill:var(--accent)">Post-order (left, right, root) → a b + c a − ×</text></svg><div class="cap">Operators sit on the branches, operands on the leaves. A post-order traversal of the tree gives the RPN directly.</div></div>
+      <div class="example box">
+        <span class="label">Conversions</span>
+        <code>a + b × c</code> → <code>a b c × +</code> (× first, so it comes first) ✓ your notes<br>
+        <code>(a + b) × (c − a)</code> → <code>a b + c a − ×</code><br>
+        <code>(a + b) − x ^ y × 3</code> → <code>a b + x y ^ 3 × −</code> (^ before ×, × before −)
+      </div>
+      <div class="def box">
+        <span class="label">Why use RPN?</span>
+        Unambiguous; read and evaluated strictly left to right; no brackets needed; no need for operator precedence rules. It's evaluated with a <strong>stack</strong>: push operands; on an operator, pop two, apply, push the result.
+      </div>
+      <div class="example box">
+        <span class="label">Evaluating with a stack — a b + c a − × with a = 2, b = 3, c = 7</span>
+        push 2 · push 3 · <strong>+</strong> → pop 3, 2, push 5 · push 7 · push 2 · <strong>−</strong> → pop 2, 7, push 5 · <strong>×</strong> → pop 5, 5, push <strong>25</strong>
+      </div>
+      <div class="extra box">
+        A <strong>unary operator</strong> needs only one operand (e.g. the minus in −3). It's applied before everything else.
+      </div>
+
+      <div class="gap box">
+        Not in your notes, but on the syllabus:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Interpreter</span>
+          Translates and executes the source code one statement at a time. It never produces a separate translated (object code) file, which is why it must be present every time the program runs.
+        </div>
+        <div class="def box">
+          <span class="label">Stages of compilation</span>
+          <strong>1. Lexical analysis</strong>: removes whitespace/comments, splits code into tokens, builds the symbol table.<br>
+          <strong>2. Syntax analysis</strong>: checks the tokens follow the grammar (BNF rules); builds a parse tree.<br>
+          <strong>3. Code generation</strong>: produces object code.<br>
+          <strong>4. Optimisation</strong>: makes the code use less memory or run faster.
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What does ::= mean in BNF?</summary>
+        <div class="answer">"Is defined as".</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>In a syntax diagram, oval or rectangle for a terminal?</summary>
+        <div class="answer">Oval (rounded box).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Convert a × (b + c) to RPN.</summary>
+        <div class="answer">a b c + ×</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 16.2 Translation Software</h4>
+    <details class="quiz-item"><summary>1. Write a BNF rule for &lt;number&gt; as one or more &lt;digit&gt;s.</summary><div class="qanswer">&lt;number&gt; ::= &lt;digit&gt; | &lt;number&gt;&lt;digit&gt;</div></details>
+    <details class="quiz-item"><summary>2. Convert (x − y) × z + w to RPN.</summary><div class="qanswer">x y − z × w +</div></details>
+    <details class="quiz-item"><summary>3. Evaluate the RPN 6 2 ÷ 3 +.</summary><div class="qanswer">6 ÷ 2 = 3, then 3 + 3 = 6.</div></details>
+    <details class="quiz-item"><summary>4. Give two reasons compilers use RPN.</summary><div class="qanswer">No brackets needed; no precedence rules; evaluated left to right with a simple stack.</div></details>
+    <details class="quiz-item"><summary>5. Name the four stages of compilation in order.</summary><div class="qanswer">Lexical analysis, syntax analysis, code generation, optimisation.</div></details>
+  </div>
+</section>
+
+<!-- ===================== TOPIC 19 ===================== -->
+<section class="topictitle" id="topic19">
+  <h1 class="topicnum">Topic 19 · Computational Thinking &amp; Problem-solving</h1>
+  <div class="topicsub">Syllabus 19.1 Algorithms · 19.2 Recursion</div>
+</section>
+
+<section class="module" id="topic19-1">
+  <h2>19.1 Algorithms</h2>
+  <div class="cornell">
+    <div class="main">
+      <h3 class="subtopic">Linear search</h3>
+      <p>Check each item in turn, from the start, until the key is found or the list ends. Works on <strong>unsorted</strong> data.</p>
+      <div class="example box">
+        <span class="label">Pseudocode</span>
+<pre style="margin:0; font-family:'SF Mono',Menlo,monospace; font-size:10pt; white-space:pre-wrap;">Index ← 0
+Found ← FALSE
+WHILE Found = FALSE AND Index &lt; Length
+    IF List[Index] = Key THEN
+        Found ← TRUE
+    ELSE
+        Index ← Index + 1
+    ENDIF
+ENDWHILE</pre>
+      </div>
+
+      <h3 class="subtopic">Binary search</h3>
+      <span class="priority">high-yield</span>
+      <p>Condition: the data <strong>must be sorted</strong>. Look at the middle item and discard the half the key can't be in.</p>
+      <div class="fig"><svg viewBox="0 0 540 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Binary search trace for key 12 in 3, 5, 9, 12, 15: two passes"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><rect x="30" y="30" width="50" height="32" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.2; opacity:1"/><text x="55" y="51" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400">3</text><text x="55" y="24" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">0</text><rect x="80" y="30" width="50" height="32" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.2; opacity:1"/><text x="105" y="51" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400">5</text><text x="105" y="24" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">1</text><rect x="130" y="30" width="50" height="32" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:2; opacity:1"/><text x="155" y="51" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:700">9</text><text x="155" y="24" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">2</text><rect x="180" y="30" width="50" height="32" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.2; opacity:1"/><text x="205" y="51" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400">12</text><text x="205" y="24" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">3</text><rect x="230" y="30" width="50" height="32" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.2; opacity:1"/><text x="255" y="51" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400">15</text><text x="255" y="24" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">4</text><text x="55" y="78" text-anchor="middle" class="fig-label" style="font-size:9.5px; font-weight:700; fill:var(--module)">lower</text><text x="255" y="78" text-anchor="middle" class="fig-label" style="font-size:9.5px; font-weight:700; fill:var(--module)">upper</text><text x="300" y="51" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:700">Pass 1: mid = (0+4) DIV 2 = 2</text><text x="300" y="68" text-anchor="start" class="fig-label" style="font-size:10px; font-weight:400">x[2] = 9 < 12 → lower = mid + 1 = 3</text><rect x="30" y="104" width="50" height="32" style="fill:var(--panel); stroke:var(--module); stroke-width:1.2; opacity:0.45"/><text x="55" y="125" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400; fill:var(--ink-soft)">3</text><text x="55" y="98" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">0</text><rect x="80" y="104" width="50" height="32" style="fill:var(--panel); stroke:var(--module); stroke-width:1.2; opacity:0.45"/><text x="105" y="125" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400; fill:var(--ink-soft)">5</text><text x="105" y="98" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">1</text><rect x="130" y="104" width="50" height="32" style="fill:var(--panel); stroke:var(--module); stroke-width:1.2; opacity:0.45"/><text x="155" y="125" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400; fill:var(--ink-soft)">9</text><text x="155" y="98" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">2</text><rect x="180" y="104" width="50" height="32" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:2; opacity:1"/><text x="205" y="125" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:700">12</text><text x="205" y="98" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">3</text><rect x="230" y="104" width="50" height="32" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.2; opacity:1"/><text x="255" y="125" text-anchor="middle" class="fig-label" style="font-size:13px; font-weight:400">15</text><text x="255" y="98" text-anchor="middle" class="fig-label" style="font-size:9px; font-weight:400; fill:var(--ink-soft)">4</text><text x="205" y="152" text-anchor="middle" class="fig-label" style="font-size:9.5px; font-weight:700; fill:var(--module)">lower</text><text x="255" y="152" text-anchor="middle" class="fig-label" style="font-size:9.5px; font-weight:700; fill:var(--module)">upper</text><text x="300" y="125" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:700">Pass 2: mid = (3+4) DIV 2 = 3</text><text x="300" y="142" text-anchor="start" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--accent)">x[3] = 12 = key → found at index 3</text></svg><div class="cap">Each pass throws away half of what's left. 5 items need at most 3 passes; 1000 items need at most 10.</div></div>
+      <div class="formula box">
+        <span class="label">Three cases each pass (mid = (lower + upper) DIV 2)</span>
+        x[mid] = key → <strong>found</strong><br>
+        x[mid] &lt; key → key is to the right → <strong>lower ← mid + 1</strong><br>
+        x[mid] &gt; key → key is to the left → <strong>upper ← mid − 1</strong><br>
+        Loop WHILE key not found AND lower ≤ upper.
+      </div>
+      <div class="warn box">
+        <span class="label">Corrected</span>
+        Your notes have the two update rules swapped: "x[mid] &gt; key → change lower to mid + 1" and "x[mid] &lt; key → change upper to mid − 1". It's the other way round (see the box above). Your worked example (9 &lt; 12 → change lower bound) was right, so trust that. Also the loop condition is lower ≤ upper, not lower &lt; upper, or you'd miss the key when one item is left.
+      </div>
+      <div class="example box">
+        <span class="label">Recursive version (your slide, tidied)</span>
+<pre style="margin:0; font-family:'SF Mono',Menlo,monospace; font-size:10pt; white-space:pre-wrap;">def binSearch(x, low, up, key):
+    if low &gt; up:
+        return "not found"
+    mid = (low + up) // 2
+    if x[mid] == key:
+        return mid
+    elif x[mid] &gt; key:
+        return binSearch(x, low, mid - 1, key)
+    else:
+        return binSearch(x, mid + 1, up, key)</pre>
+      </div>
+
+      <h3 class="subtopic">Big O notation</h3>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Algorithm</th><th>Best case</th><th>Worst case</th></tr>
+        <tr><td>Linear search</td><td>O(1) — first item</td><td>O(n) — last item or not there</td></tr>
+        <tr><td>Binary search</td><td>O(1) — middle item</td><td>O(log₂ n) — halves each pass</td></tr>
+      </table></div>
+      <p>Big O describes how time (or memory) grows as the number of items n grows — it's how you compare two algorithms that do the same job. Doubling the data adds one extra pass to a binary search but doubles the work for a linear search.</p>
+
+      <h3 class="subtopic">Queues</h3>
+      <div class="def box">
+        <span class="label">Queue ADT</span>
+        <strong>FIFO</strong> (first in, first out). Operations: <code>Enqueue</code> (add at the rear), <code>Dequeue</code> (remove from the front), <code>IsEmpty</code>, <code>IsFull</code>. Uses a <strong>front pointer</strong> and a <strong>rear pointer</strong>.
+      </div>
+
+      <h3 class="subtopic">Binary trees</h3>
+      <div class="fig" style="max-width:560px; margin:12px auto;"><svg viewBox="0 0 500 302" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Binary search tree built from 27, 19, 36, 16, 21, 17, 42, 89, 55"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><line x1="250" y1="28" x2="150" y2="82" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="250" y1="28" x2="350" y2="82" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="150" y1="82" x2="95" y2="140" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="150" y1="82" x2="205" y2="140" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="95" y1="140" x2="130" y2="196" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="350" y1="82" x2="405" y2="140" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="405" y1="140" x2="450" y2="196" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><line x1="450" y1="196" x2="410" y2="252" style="stroke:var(--ink-soft); stroke-width:1.6; fill:none"/><circle cx="250" cy="28" r="15" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="250" y="31.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">27</text><circle cx="150" cy="82" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="150" y="85.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">19</text><circle cx="350" cy="82" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="350" y="85.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">36</text><circle cx="95" cy="140" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="95" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">16</text><circle cx="205" cy="140" r="15" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><text x="205" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">21</text><circle cx="405" cy="140" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="405" y="143.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">42</text><circle cx="130" cy="196" r="15" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><text x="130" y="199.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">17</text><circle cx="450" cy="196" r="15" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="450" y="199.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">89</text><circle cx="410" cy="252" r="15" style="fill:var(--panel); stroke:var(--module); stroke-width:1.6"/><text x="410" y="255.96" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">55</text><text x="292" y="24" text-anchor="start" class="fig-label" style="font-size:10px; font-weight:700; fill:var(--accent)">root</text><text x="40" y="60" text-anchor="start" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">left subtree: all < 27</text><text x="470" y="60" text-anchor="end" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">right subtree: all > 27</text><text x="250" y="290" text-anchor="middle" class="fig-label" style="font-size:10.5px; font-weight:700">Inserted in order: 27, 19, 36, 16, 21, 17, 42, 89, 55   ·   white = leaf (no children)</text></svg><div class="cap">To insert: start at the root, go left if smaller, right if larger, until you reach an empty branch.</div></div>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td>Root</td><td>The first node; has no parent.</td></tr>
+        <tr><td>Parent / child</td><td>A node and the (up to two) nodes directly below it.</td></tr>
+        <tr><td>Left / right subtree</td><td>Everything below the left / right child — smaller values left, larger right.</td></tr>
+        <tr><td>Leaf</td><td>A node with no children.</td></tr>
+      </table></div>
+      <div class="formula box">
+        <span class="label">Traversals (D = data/root, L = left, R = right)</span>
+        <strong>Pre-order</strong>: D L R &nbsp;·&nbsp; <strong>In-order</strong>: L D R (gives the values in sorted order) &nbsp;·&nbsp; <strong>Post-order</strong>: L R D (gives RPN for an expression tree)
+      </div>
+      <div class="example box">
+        <span class="label">In-order traversal of the tree above</span>
+        16, 17, 19, 21, 27, 36, 42, 55, 89 — sorted, as expected.
+      </div>
+
+      <div class="gap box">
+        Not in your notes, but on the syllabus — you need to write these algorithms:
+        <div class="def box" style="margin-top:8px;">
+          <span class="label">Bubble sort</span>
+          Repeatedly pass through the list, swapping adjacent items that are in the wrong order. Stop when a pass makes no swaps. Worst case O(n²); fast if the data is nearly sorted (with the "no swaps → stop" flag).
+        </div>
+        <div class="def box">
+          <span class="label">Insertion sort</span>
+          Take each item in turn and insert it into the correct place in the already-sorted part to its left. Worst case O(n²); very fast on nearly sorted data.
+        </div>
+        <div class="def box">
+          <span class="label">Other ADTs</span>
+          <strong>Stack</strong> — LIFO; push/pop at the top (top pointer). <strong>Linked list</strong> — each node holds data + a pointer to the next node; start pointer and free list. <strong>Dictionary</strong> — key–value pairs. <strong>Graph</strong> — nodes (vertices) joined by edges, can be weighted/directed; used for maps and networks (no code needed). Any of these can be built from arrays/records, or from another ADT (e.g. a queue from a linked list).
+        </div>
+      </div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What condition must the data meet for a binary search?</summary>
+        <div class="answer">It must be sorted.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>x[mid] &gt; key. Which bound changes, and to what?</summary>
+        <div class="answer">upper ← mid − 1.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Which traversal outputs a binary search tree in order?</summary>
+        <div class="answer">In-order (L D R).</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>Worst-case Big O of linear and binary search?</summary>
+        <div class="answer">O(n) and O(log n).</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 19.1 Algorithms</h4>
+    <details class="quiz-item"><summary>1. List = 2, 6, 8, 11, 14, 20, 25. Trace a binary search for 20.</summary><div class="qanswer">lower 0, upper 6 → mid 3 (11 &lt; 20) → lower 4. mid = (4+6) DIV 2 = 5 → x[5] = 20 → found at index 5 (2 passes).</div></details>
+    <details class="quiz-item"><summary>2. Why is a binary search faster than a linear search on 1000 sorted items?</summary><div class="qanswer">It halves the search space each pass, so it needs at most about 10 comparisons (log₂ 1000 ≈ 10) instead of up to 1000.</div></details>
+    <details class="quiz-item"><summary>3. Insert 50, 30, 70, 20, 40 into an empty binary search tree. Give the pre-order traversal.</summary><div class="qanswer">Tree: 50 root, 30 left, 70 right, 20 and 40 under 30. Pre-order (D L R): 50, 30, 20, 40, 70.</div></details>
+    <details class="quiz-item"><summary>4. Which pointers does a queue need, and which one changes on Dequeue?</summary><div class="qanswer">Front and rear pointers. Dequeue moves the front pointer.</div></details>
+    <details class="quiz-item"><summary>5. Why can bubble sort finish early on nearly sorted data?</summary><div class="qanswer">If a full pass makes no swaps, the list is sorted, so a flag can stop the algorithm straight away.</div></details>
+  </div>
+</section>
+
+<section class="module" id="topic19-2">
+  <h2>19.2 Recursion</h2>
+  <div class="cornell">
+    <div class="main">
+      <span class="priority">high-yield</span>
+      <div class="def box">
+        <span class="label">Definition</span>
+        <strong>Recursion</strong>: a function or procedure that is defined in terms of itself and calls itself.
+      </div>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Base case</th><th>General case</th></tr>
+        <tr>
+          <td>A terminating solution that is <strong>not</strong> recursive. e.g. <code>0! = 1</code></td>
+          <td>A solution defined recursively — it moves towards the base case. e.g. <code>n! = n × (n − 1)!</code></td>
+        </tr>
+      </table></div>
+      <div class="example box">
+        <span class="label">Factorial in pseudocode</span>
+<pre style="margin:0; font-family:'SF Mono',Menlo,monospace; font-size:10pt; white-space:pre-wrap;">FUNCTION Factorial(n : INTEGER) RETURNS INTEGER
+    IF n = 0 THEN
+        RETURN 1                       // base case
+    ELSE
+        RETURN n * Factorial(n - 1)    // general case
+    ENDIF
+ENDFUNCTION</pre>
+      </div>
+
+      <h3 class="subtopic">Winding and unwinding</h3>
+      <div class="table-wrap"><table class="keyline">
+        <tr><th>Winding</th><th>Unwinding</th></tr>
+        <tr><td>The recursive function keeps being called until the base case is reached.</td><td>Once the base case is reached, each call returns its value, back down the chain.</td></tr>
+      </table></div>
+      <div class="fig" style="max-width:540px; margin:12px auto;"><svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Call stack for Factorial(3): four frames pushed while winding, popped while unwinding"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--module)"/></marker><marker id="aha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/></marker></defs><rect x="150" y="200" width="150" height="34" rx="2" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="225.0" y="221.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Factorial(3)</text><text x="310" y="222" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:400">3 × 2 = 6</text><rect x="150" y="160" width="150" height="34" rx="2" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="225.0" y="181.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Factorial(2)</text><text x="310" y="182" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:400">2 × 1 = 2</text><rect x="150" y="120" width="150" height="34" rx="2" style="fill:var(--formula-bg); stroke:var(--module); stroke-width:1.6"/><text x="225.0" y="141.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Factorial(1)</text><text x="310" y="142" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:400">1 × 1 = 1</text><rect x="150" y="80" width="150" height="34" rx="2" style="fill:var(--priority-bg); stroke:var(--accent); stroke-width:1.6"/><text x="225.0" y="101.0" text-anchor="middle" class="fig-label" style="font-size:11px; font-weight:700">Factorial(0)</text><text x="310" y="102" text-anchor="start" class="fig-label" style="font-size:10.5px; font-weight:700; fill:var(--accent)">returns 1 (base case)</text><line x1="120" y1="230" x2="120" y2="82" style="stroke:var(--module); stroke-width:1.6; fill:none" marker-end="url(#ah)"/><text x="110" y="120" text-anchor="end" class="fig-label" style="font-size:11px; font-weight:700">winding</text><text x="110" y="136" text-anchor="end" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">(push)</text><line x1="135" y1="82" x2="135" y2="230" style="stroke:var(--accent); stroke-width:1.6; fill:none" marker-end="url(#aha)"/><text x="225" y="260" text-anchor="middle" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">stack (top of stack = most recent call)</text><text x="110" y="190" text-anchor="end" class="fig-label" style="font-size:11px; font-weight:700; fill:var(--accent)">unwinding</text><text x="110" y="206" text-anchor="end" class="fig-label" style="font-size:10px; font-weight:400; fill:var(--ink-soft)">(pop)</text></svg><div class="cap">Each call pushes a frame (return address + local variables). The base case stops the pushing; the returns then pop the frames in reverse order.</div></div>
+
+      <h3 class="subtopic">How a compiler implements recursion</h3>
+      <ul class="steps">
+        <li>Uses a <strong>stack</strong>.</li>
+        <li>Winding: the object code <strong>pushes</strong> the return address and the values of local variables onto the stack with each recursive call.</li>
+        <li>Unwinding: the object code <strong>pops</strong> the return address and local variables off the stack.</li>
+      </ul>
+
+      <h3 class="subtopic">When to use recursion</h3>
+      <div class="table-wrap"><table class="filetable">
+        <tr><th>Benefits</th><th>Drawbacks</th></tr>
+        <tr>
+          <td>Less code than an iterative solution.<br>Solves some complex problems (trees, divide-and-conquer) more simply.</td>
+          <td>Many recursive calls use a lot of stack memory, which can cause a <strong>stack overflow</strong>.<br>Usually slower than iteration (overhead of each call).</td>
+        </tr>
+      </table></div>
+    </div>
+    <div class="margin">
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What happens if a recursive function has no base case?</summary>
+        <div class="answer">It never stops calling itself; the stack fills up and overflows.</div>
+      </details>
+      <details class="recall">
+        <summary><span class="label">Self-test</span>What two things are pushed onto the stack for each call?</summary>
+        <div class="answer">The return address and the values of local variables.</div>
+      </details>
+    </div>
+  </div>
+
+  <div class="quiz">
+    <h4>Quiz — 19.2 Recursion</h4>
+    <details class="quiz-item"><summary>1. State the three essential features of a recursive algorithm.</summary><div class="qanswer">It calls itself; it has a base case that stops the recursion; each general-case call moves towards the base case.</div></details>
+    <details class="quiz-item"><summary>2. Trace Factorial(4). How many calls are made?</summary><div class="qanswer">Factorial(4) → (3) → (2) → (1) → (0) = 5 calls. Unwinding: 1, 1, 2, 6, 24.</div></details>
+    <details class="quiz-item"><summary>3. Write a recursive function Sum(n) that returns 1 + 2 + … + n.</summary><div class="qanswer">IF n = 0 THEN RETURN 0 ELSE RETURN n + Sum(n − 1) ENDIF</div></details>
+    <details class="quiz-item"><summary>4. Explain "unwinding".</summary><div class="qanswer">After the base case is reached, each call returns its value to the call that made it; the stack frames are popped in reverse order.</div></details>
+    <details class="quiz-item"><summary>5. Give one reason to choose an iterative solution over a recursive one.</summary><div class="qanswer">Iteration uses far less stack memory, so there's no risk of stack overflow, and it's usually faster.</div></details>
   </div>
 </section>
 
